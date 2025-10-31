@@ -8,6 +8,7 @@ nav:
   - Workflows:
       - Symmetry Index: symmetry.md
       - RESP Hyperbolic Solver: workflows/resp-hyperbolic-solver.md
+      - Two-Step RESP Workflow: workflows/twostep-resp.md
       - Linear ESP Solver: workflows/linear-esp-solver.md
       - Dipole Cross-Validation: workflows/dipole-cross-validation.md
       - ESP Charge Distributions: workflows/esp-charge-distributions.md
