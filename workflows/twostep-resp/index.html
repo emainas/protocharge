@@ -4,27 +4,27 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Utilities for parsing RESP outputs, fitting ESP charges, and validating dipoles.">
+        
         <meta name="author" content="E. Mainas">
         
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <title>BiliResp</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/fontawesome.min.css" rel="stylesheet">
-        <link href="css/brands.min.css" rel="stylesheet">
-        <link href="css/solid.min.css" rel="stylesheet">
-        <link href="css/v4-font-face.min.css" rel="stylesheet">
-        <link href="css/base.css" rel="stylesheet">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Two-Step RESP Workflow - BiliResp</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
         <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
         <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
         <script>hljs.highlightAll();</script> 
     </head>
 
-    <body class="homepage">
+    <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" href=".">BiliResp</a>
+                <a class="navbar-brand" href="../..">BiliResp</a>
                 <!-- Expander button -->
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -35,37 +35,37 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li class="nav-item">
-                                <a href="." class="nav-link active" aria-current="page">Home</a>
+                                <a href="../.." class="nav-link">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a href="getting-started/" class="nav-link">Getting Started</a>
+                                <a href="../../getting-started/" class="nav-link">Getting Started</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Workflows</a>
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Workflows</a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="symmetry/" class="dropdown-item">Symmetry Index</a>
+    <a href="../../symmetry/" class="dropdown-item">Symmetry Index</a>
 </li>
                                     
 <li>
-    <a href="workflows/resp-hyperbolic-solver/" class="dropdown-item">RESP Hyperbolic Solver</a>
+    <a href="../resp-hyperbolic-solver/" class="dropdown-item">RESP Hyperbolic Solver</a>
 </li>
                                     
 <li>
-    <a href="workflows/twostep-resp/" class="dropdown-item">Two-Step RESP Workflow</a>
+    <a href="./" class="dropdown-item active" aria-current="page">Two-Step RESP Workflow</a>
 </li>
                                     
 <li>
-    <a href="workflows/linear-esp-solver/" class="dropdown-item">Linear ESP Solver</a>
+    <a href="../linear-esp-solver/" class="dropdown-item">Linear ESP Solver</a>
 </li>
                                     
 <li>
-    <a href="workflows/dipole-cross-validation/" class="dropdown-item">Dipole Cross-Validation</a>
+    <a href="../dipole-cross-validation/" class="dropdown-item">Dipole Cross-Validation</a>
 </li>
                                     
 <li>
-    <a href="workflows/esp-charge-distributions/" class="dropdown-item">ESP Charge Distributions</a>
+    <a href="../esp-charge-distributions/" class="dropdown-item">ESP Charge Distributions</a>
 </li>
                                 </ul>
                             </li>
@@ -78,12 +78,12 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" class="nav-link disabled">
+                                <a rel="prev" href="../resp-hyperbolic-solver/" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="getting-started/" class="nav-link">
+                                <a rel="next" href="../linear-esp-solver/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -105,8 +105,24 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#biliresp" class="nav-link">biliresp</a>
+            <li class="nav-item" data-bs-level="1"><a href="#two-step-resp-workflow" class="nav-link">Two-Step RESP Workflow</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#stages-at-a-glance" class="nav-link">Stages at a Glance</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#command-line-entry-point" class="nav-link">Command-Line Entry Point</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#retrying-a-single-configuration" class="nav-link">Retrying a Single Configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#consuming-the-results" class="nav-link">Consuming the Results</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -114,13 +130,42 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="biliresp">biliresp</h1>
-<p>Utilities for analyzing electrostatic potential (ESP) outputs. The project includes a RESP parser for Terachem, a linear-ESP (raw, unrestrained) charge constraint optimization solver, examples for validating dipoles, and a mass-weighted center-of-mass calculator that can operate on RESP or xyz geometries.</p>
-<p>Use the navigation to find quick-start installation instructions and focused walkthroughs for the two shipped command-line entry points:</p>
+<h1 id="two-step-resp-workflow">Two-Step RESP Workflow</h1>
+<p>The two-step RESP pipeline reproduces the AMBER-style restrained electrostatic potential fit used by the TeraChem <code>DYES</code> protocol.[^amber-dyes] It applies the Weisfeiler–Lehman symmetry buckets computed for each microstate, enforces total and bucket-specific charge constraints, and reruns a second RESP optimisation that selectively relaxes atoms flagged in project-specific masks.</p>
+<h2 id="stages-at-a-glance">Stages at a Glance</h2>
+<ol>
+<li><strong>Linear warm start</strong> – <code>solve_least_squares_with_constraints</code> (in <code>twostepresp.tsresp</code>) fits bucket charges that satisfy the aggregate constraints and provides an initial KKT solution.</li>
+<li><strong>Step-one RESP</strong> – <code>resp_step</code> runs a Newton–Krylov solve with the hyperbolic restraint active on the mask defined in <code>mask_step_1.yaml</code>, producing <code>step1</code> charges for every configuration.</li>
+<li><strong>Step-two RESP</strong> – The solver reuses converged bucket charges but frees the subset flagged in <code>mask_step_2.yaml</code>, recomputing the fit while holding the remaining buckets fixed. The result is stored as <code>step2</code>, our recommended production charge set.</li>
+</ol>
+<p>Both RESP steps log the KKT residual, gradient norm, and the charge vector, matching the diagnostics in <code>resp.resp</code>.</p>
+<h2 id="command-line-entry-point">Command-Line Entry Point</h2>
+<p><code>scripts/generate_twostep_resp.py</code> batches the workflow across all TeraChem configurations in a microstate directory:</p>
+<pre><code class="language-bash">python scripts/generate_twostep_resp.py \
+  --microstate-root data/microstates/PPP \
+  --maxiter 400
+</code></pre>
+<p>The script automatically:</p>
 <ul>
-<li>Fitting charges with the linear ESP solver.</li>
-<li>Cross-validating dipoles between RESP and fitted charges (and reconciling centers of mass) using the helper in <code>scripts/print_dipoles.py</code> or the reference implementation in <code>tests/test_dipole.py</code>.</li>
-</ul></div>
+<li>Loads <code>symmetry-buckets/r8.dat</code> to build the expansion matrix.</li>
+<li>Reads total and bucket charge constraints from <code>charge-contraints/</code>.</li>
+<li>Applies step-one and step-two masks from YAML templates co-located in the microstate root.</li>
+<li>Persists <code>labels</code> (configuration stems), <code>step1</code>, and <code>step2</code> matrices to <code>twostepRESP/charges.npz</code>.</li>
+</ul>
+<p>Use <code>--dry-run</code> to list the configuration stems without running RESP, or <code>--max-configs</code> to limit the number of fits during debugging.</p>
+<h2 id="retrying-a-single-configuration">Retrying a Single Configuration</h2>
+<p><code>scripts/retry_twostep_resp.py</code> mirrors the batch workflow for a single stem:</p>
+<pre><code class="language-bash">python scripts/retry_twostep_resp.py \
+  --microstate-root data/microstates/PPP \
+  --config conf2371 \
+  --step1-maxiter 120 \
+  --step2-maxiter 240 \
+  --show-charges
+</code></pre>
+<p>The retrier reuses the masks, symmetry buckets, and constraints from the batch script, but exposes separate iteration limits for each stage and can print the atom-wise charges, making it ideal for diagnosing non-convergent fits.</p>
+<h2 id="consuming-the-results">Consuming the Results</h2>
+<p>The resulting NPZ files provide configuration-major charge matrices. Pair them with the atom labels from the raw ESP workflow to slice by atom type, compare against single-step RESP, or feed into downstream notebooks such as <code>notebooks/twostepRESP.ipynb</code>. Because <code>step2</code> aligns with the AMBER two-stage procedure, it should be used as the primary source for production charge analyses unless diagnostics show step-two convergence issues.</p>
+<p>[^amber-dyes]: AMBER DYES two-stage RESP protocol (<code>bibliography/amber-dyes.pdf</code>), bundled with the repository for reference.</p></div>
             </div>
         </div>
 
@@ -128,15 +173,15 @@
             <hr>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
-        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
         <script>
-            var base_url = ".",
+            var base_url = "../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="js/base.js"></script>
-        <script src="javascripts/mathjax.js"></script>
+        <script src="../../js/base.js"></script>
+        <script src="../../javascripts/mathjax.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-        <script src="search/main.js"></script>
+        <script src="../../search/main.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -201,8 +246,3 @@
 
     </body>
 </html>
-
-<!--
-MkDocs version : 1.6.1
-Build Date UTC : 2025-10-31 01:58:35.347752+00:00
--->
