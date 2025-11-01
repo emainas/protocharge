@@ -71,6 +71,56 @@ python scripts/print_dipoles.py data/raw/resp.out data/raw/esp.xyz data/raw/1.po
 
 Both scripts accept `--help` for a summary of arguments.
 
+## Multiconfigurational RESP on HPC (Slurm) 🖥️
+
+The multiconfiguration workflow builds very large Coulomb matrices. For production fits we
+recommend running on a Slurm cluster:
+
+1. **Precompute the stacked matrices locally (optional).**
+   From your workstation, generate the Coulomb matrix `A` and ESP vector `Y` once:
+
+   ```bash
+   python -m multiconfresp.mcresp --microstate <MICROSTATE> --save
+   ```
+
+   This creates `data/microstates/<microstate>/multiconfRESP/coulomb_matrix.npz` and
+   `esp_vector.npz`. Copy the relevant `data/` subtree and `src/` directory to your cluster
+   workspace (for example with `rsync` or `scp`).
+
+2. **Create the Conda environment on the cluster.**
+
+   ```bash
+   conda env create -f environment.yml
+   conda activate biliresp
+   python -m pip install -e .
+   ```
+
+   The environment depends on `numpy`, `scipy`, `PyYAML`, `rdkit`, and friends. Installing
+   from `environment.yml` ensures compatible versions on the HPC nodes.
+
+3. **Submit the Slurm job.**
+
+   A ready-to-edit submission script lives in `scripts/run_multiconfresp.slurm`.
+   Update the email address, microstate name, and resource requests as needed, then
+   submit:
+
+   ```bash
+   sbatch scripts/run_multiconfresp.slurm
+   ```
+
+   By default the script runs
+
+   ```bash
+   python -m multiconfresp.mcresp --microstate <MICROSTATE> --load-and-resp --maxiter 400
+   ```
+
+   and emails you if the job fails.
+
+4. **Collect results.**
+   The RESP step-one and final charges, along with JSON loggers for both RESP passes,
+   are written to `data/microstates/<microstate>/multiconfRESP/` on the cluster.
+   Copy them back to your workstation after the job finishes.
+
 ## Under development 🧪
 
 1. Restraint ESP charges
