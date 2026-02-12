@@ -43,6 +43,9 @@ htmlcov/
 site/
 docs/site/
 
+# data
+data/
+
 # macOS
 .DS_Store
 
