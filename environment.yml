@@ -2,7 +2,7 @@ name: biliresp
 channels:
   - conda-forge
 dependencies:
-  - python=3.10
+  - "python=3.10"
   - numpy>=1.21
   - networkx>=3.1
   - rdkit>=2023.9.5
