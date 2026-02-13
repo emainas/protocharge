@@ -33,24 +33,24 @@ def _find_frame_dirs(qmmm_dir: Path) -> List[Path]:
 
 def process_terachem_outputs(
     microstate_path: Path,
-    qmmm_subdir: str = "qmmm",
+    tc_raw_subdir: str = "raw_terachem_outputs",
 ) -> Dict[str, object]:
     microstate_path = microstate_path.resolve()
-    qmmm_dir = microstate_path / qmmm_subdir
-    if microstate_path.name == qmmm_subdir:
-        qmmm_dir = microstate_path
+    tc_raw_dir = microstate_path / tc_raw_subdir
+    if microstate_path.name == tc_raw_subdir:
+        tc_raw_dir = microstate_path
         microstate_path = microstate_path.parent
-    if not qmmm_dir.is_dir():
-        raise FileNotFoundError(f"qmmm directory not found: {qmmm_dir}")
+    if not tc_raw_dir.is_dir():
+        raise FileNotFoundError(f"raw TeraChem directory not found: {tc_raw_dir}")
 
     resp_dir = microstate_path / "terachem" / "respout"
     esp_dir = microstate_path / "terachem" / "espxyz"
     resp_dir.mkdir(parents=True, exist_ok=True)
     esp_dir.mkdir(parents=True, exist_ok=True)
 
-    frames = _find_frame_dirs(qmmm_dir)
+    frames = _find_frame_dirs(tc_raw_dir)
     if not frames:
-        raise FileNotFoundError(f"No frame directories found under {qmmm_dir}")
+        raise FileNotFoundError(f"No frame directories found under {tc_raw_dir}")
 
     counter = 1
     copied_resp = 0
@@ -83,7 +83,7 @@ def process_terachem_outputs(
 
     return {
         "microstate": microstate_path.name,
-        "qmmm_dir": qmmm_dir,
+        "tc_raw_dir": tc_raw_dir,
         "resp_dir": resp_dir,
         "esp_dir": esp_dir,
         "frames": len(frames),

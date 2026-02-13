@@ -52,8 +52,8 @@ If you have raw TeraChem outputs under a microstate `raw_terachem_outputs/` fold
 biliresp --process data/microstates/HID
 ```
 
-If your raw outputs live in a different subdirectory, pass `--qmmm-subdir`:
+If your raw outputs live in a different subdirectory, pass `--tc-raw-subdir`:
 
 ```bash
-biliresp --process data/microstates/HID --qmmm-subdir raw_qmmm
+biliresp --process data/microstates/HID --tc-raw-subdir raw_qmmm
 ```

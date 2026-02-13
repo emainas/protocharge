@@ -48,7 +48,7 @@ def test_process_terachem_outputs(tmp_path: Path) -> None:
         "RESP3\n",
     )
 
-    summary = process_terachem_outputs(microstate)
+    summary = process_terachem_outputs(microstate, tc_raw_subdir="raw_terachem_outputs")
 
     resp_dir = microstate / "terachem" / "respout"
     esp_dir = microstate / "terachem" / "espxyz"

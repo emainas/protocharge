@@ -262,7 +262,7 @@ def main(argv: Iterable[str] | None = None) -> None:
     parser.add_argument("--yaml", dest="yaml_path", help="YAML config path or name under configs/.")
     parser.add_argument("--process", dest="process_path", help="Process raw TeraChem outputs under a microstate path.")
     parser.add_argument(
-        "--qmmm-subdir",
+        "--tc-raw-subdir",
         default="raw_terachem_outputs",
         help="Subdirectory name that holds raw TeraChem outputs.",
     )
@@ -271,7 +271,7 @@ def main(argv: Iterable[str] | None = None) -> None:
     args = parser.parse_args(list(argv) if argv is not None else None)
 
     if args.process_path:
-        summary = process_terachem_outputs(Path(args.process_path), qmmm_subdir=args.qmmm_subdir)
+        summary = process_terachem_outputs(Path(args.process_path), tc_raw_subdir=args.tc_raw_subdir)
         print(
             "Processed",
             summary["confs"],
