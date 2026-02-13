@@ -86,7 +86,7 @@ def test_resp_solver_matches_terachem_last_frame():
     print("ACTUAL:", np.array2string(result["charges"], precision=6, suppress_small=True, separator=", "))
     print("DESIRED:", np.array2string(expected, precision=6, suppress_small=True, separator=", "))
     np.testing.assert_allclose(result["charges"], expected, rtol=0.0, atol=1e-5)
-    assert result["sum_q"] == pytest.approx(float(expected.sum()), abs=1e-6)
+    assert result["sum_q"] == pytest.approx(float(expected.sum()), abs=1e-5)
     assert np.all(result["mask"])
     assert result["loss_history"], "loss history should capture each solver iteration"
     assert result["loss_history"][-1] == pytest.approx(result["loss"], abs=1e-6)

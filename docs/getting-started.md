@@ -20,7 +20,7 @@ Run pytest from the repository root:
 pytest -q
 ```
 
-Use `-k` to narrow to a single test module when iterating, for example:
+To run a single test module:
 
 ```bash
 pytest -q tests/test_dipole.py
