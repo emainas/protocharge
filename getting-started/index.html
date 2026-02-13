@@ -866,8 +866,8 @@ python -m pip install -e .
 <p>If you have raw TeraChem outputs under a microstate <code>raw_terachem_outputs/</code> folder, you can process them into the expected <code>terachem/respout</code> and <code>terachem/espxyz</code> layout:</p>
 <pre><code class="language-bash">biliresp --process data/microstates/HID
 </code></pre>
-<p>If your raw outputs live in a different subdirectory, pass <code>--qmmm-subdir</code>:</p>
-<pre><code class="language-bash">biliresp --process data/microstates/HID --qmmm-subdir raw_qmmm
+<p>If your raw outputs live in a different subdirectory, pass <code>--tc-raw-subdir</code>:</p>
+<pre><code class="language-bash">biliresp --process data/microstates/HID --tc-raw-subdir raw_tc
 </code></pre>
 
 
