@@ -1,0 +1,52 @@
+# Backbone tied across HIP/HIE/HID
+- ["HIP:0",  "HIE:0",  "HID:0", "HIP:2",  "HIE:2",  "HID:2", "HIP:3",  "HIE:3",  "HID:3"]   # HH31 - HH32 - HH33
+- ["HIP:1",  "HIE:1",  "HID:1"]   # CH3
+- ["HIP:4",  "HIE:4",  "HID:4"]   # C1
+- ["HIP:5",  "HIE:5",  "HID:5"]   # O1
+- ["HIP:6",  "HIE:6",  "HID:6"]   # N
+- ["HIP:7",  "HIE:7",  "HID:7"]   # H
+- ["HIP:8",  "HIE:8",  "HID:8"]   # CA
+- ["HIP:9",  "HIE:9",  "HID:9"]   # HA
+- ["HIP:22", "HIE:21", "HID:21"]  # C
+- ["HIP:23", "HIE:22", "HID:22"]  # O
+- ["HIP:24", "HIE:23", "HID:23"]  # N3
+- ["HIP:25", "HIE:24", "HID:24"]  # H3
+- ["HIP:26", "HIE:25", "HID:25"]  # CH3 (terminal)
+- ["HIP:27", "HIE:26", "HID:26", "HIP:28", "HIE:27", "HID:27", "HIP:29", "HIE:28", "HID:28"]  # HH31 - HH32 - HH33
+
+# HIP singletons
+- ["HIP:10"]  # CB
+- ["HIP:11", "HIP:12"]  # HB2 - HB3
+- ["HIP:13"]  # CG
+- ["HIP:14"]  # ND1
+- ["HIP:15"]  # HD1
+- ["HIP:16"]  # CE1
+- ["HIP:17"]  # HE1
+- ["HIP:18"]  # NE2
+- ["HIP:19"]  # HE2
+- ["HIP:20"]  # CD2
+- ["HIP:21"]  # HD2
+
+# HIE singletons
+- ["HIE:10"]  # CB
+- ["HIE:11", "HIE:12"]  # HB2 - HB3
+- ["HIE:13"]  # CG
+- ["HIE:14"]  # ND1
+- ["HIE:15"]  # CE1
+- ["HIE:16"]  # HE1
+- ["HIE:17"]  # NE2
+- ["HIE:18"]  # HE2
+- ["HIE:19"]  # CD2
+- ["HIE:20"]  # HD2
+
+# HID singletons
+- ["HID:10"]  # CB
+- ["HID:11", "HID:12"]  # HB2
+- ["HID:13"]  # CG
+- ["HID:14"]  # ND1
+- ["HID:15"]  # HD1
+- ["HID:16"]  # CE1
+- ["HID:17"]  # HE1
+- ["HID:18"]  # NE2
+- ["HID:19"]  # CD2
+- ["HID:20"]  # HD2

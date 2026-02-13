@@ -1,0 +1,18 @@
+molecules:
+  - name: PRN_prot
+    root: ../data/microstates/PRN_prot
+    coulomb: multiconfRESP/coulomb_matrix.npz
+    esp: multiconfRESP/esp_vector.npz
+    pdb: prot.pdb
+    total_constraint: charge-contraints/total_constraint.yaml   # with optional constraint_labels
+    mask_step1: charge-contraints/mask_step_1.yaml
+    mask_step2: charge-contraints/mask_step_2.yaml
+  - name: PRN_deprot
+    root: ../data/microstates/PRN_deprot
+    coulomb: multiconfRESP/coulomb_matrix.npz
+    esp: multiconfRESP/esp_vector.npz
+    pdb: deprot.pdb
+    total_constraint: charge-contraints/total_constraint.yaml   # with optional constraint_labels
+    mask_step1: charge-contraints/mask_step_1.yaml
+    mask_step2: charge-contraints/mask_step_2.yaml
+global_buckets: ../global_buckets_prn.yaml   # list of buckets; each bucket is ["PRN_prot:CA", "PRN_deprot:CA", ...]

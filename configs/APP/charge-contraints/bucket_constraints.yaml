@@ -1,0 +1,28 @@
+bucket_constraints:
+  - bucket: 19
+    labels: [C3B, C2C]
+    value: 0.285985
+  - bucket: 48
+    labels: [CA, CA]
+    value: -0.034450
+  - bucket: 49
+    labels: [CB, CB]
+    value: -0.012900
+  - bucket: 50
+    labels: [CG, CG]
+    value: 0.809350
+  - bucket: 51
+    labels: [O1, O1]
+    value: -0.651100
+  - bucket: 52
+    labels: [O2, O2]
+    value: -0.583800
+  - bucket: 53
+    labels: [HA1, HA2, HA1, HA2]
+    value: 0.004150
+  - bucket: 54
+    labels: [HB1, HB2, HB1, HB2]
+    value: 0.000250
+  - bucket: 55
+    labels: [H11, H11]
+    value: 0.464100

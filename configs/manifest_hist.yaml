@@ -1,0 +1,26 @@
+molecules:
+  - name: HIP
+    root: ../data/microstates/HIP
+    coulomb: multiconfRESP/coulomb_matrix.npz
+    esp: multiconfRESP/esp_vector.npz
+    pdb: hip.pdb
+    group_constraint: charge-contraints/group_constraint.yaml
+    mask_step1: charge-contraints/mask_step_1.yaml
+    mask_step2: charge-contraints/mask_step_2.yaml
+  - name: HIE
+    root: ../data/microstates/HIE
+    coulomb: multiconfRESP/coulomb_matrix.npz
+    esp: multiconfRESP/esp_vector.npz
+    pdb: hie.pdb
+    group_constraint: charge-contraints/group_constraint.yaml
+    mask_step1: charge-contraints/mask_step_1.yaml
+    mask_step2: charge-contraints/mask_step_2.yaml
+  - name: HID
+    root: ../data/microstates/HID
+    coulomb: multiconfRESP/coulomb_matrix.npz
+    esp: multiconfRESP/esp_vector.npz
+    pdb: hid.pdb
+    group_constraint: charge-contraints/group_constraint.yaml
+    mask_step1: charge-contraints/mask_step_1.yaml
+    mask_step2: charge-contraints/mask_step_2.yaml
+global_buckets: ../global_buckets_hist.yaml

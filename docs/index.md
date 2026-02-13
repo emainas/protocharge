@@ -1,8 +1,15 @@
 # biliresp
 
-Utilities for analyzing electrostatic potential (ESP) outputs. The project includes a RESP parser for Terachem, a linear-ESP (raw, unrestrained) charge constraint optimization solver, examples for validating dipoles, and a mass-weighted center-of-mass calculator that can operate on RESP or xyz geometries.
+Utilities for analyzing electrostatic potential (ESP) outputs. The project includes a RESP parser for TeraChem, linear and hyperbolic solvers, two-step RESP workflows, and multi-configuration/multi-molecule pipelines.
 
-Use the navigation to find quick-start installation instructions and focused walkthroughs for the two shipped command-line entry points:
+Use the navigation to find quick-start installation instructions and focused walkthroughs for the workflows:
 
 - Fitting charges with the linear ESP solver.
-- Cross-validating dipoles between RESP and fitted charges (and reconciling centers of mass) using the helper in `scripts/print_dipoles.py` or the reference implementation in `tests/test_dipole.py`.
+- Two-step RESP with symmetry and charge constraints.
+- Multi-configuration and multi-molecule RESP.
+
+Project layout:
+
+- `data/` holds inputs and parameters tied to a microstate (PDB, esp.xyz, resp.out, symmetry buckets).
+- `configs/` holds YAML run configurations and charge-constraint files.
+- `results/` holds outputs organized by microstate and function.

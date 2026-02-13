@@ -29,6 +29,9 @@ dev = [
     "pymdown-extensions>=10.0",
 ]
 
+[project.scripts]
+biliresp = "biliresp.cli:main"
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 

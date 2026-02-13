@@ -6,8 +6,10 @@ from typing import List, Tuple
 
 import numpy as np
 
-from linearESPcharges.linear import prepare_linear_system
-from twostepresp.tsresp import (
+from biliresp.paths import ensure_results_dir, microstate_constraints_root
+
+from biliresp.linearESPcharges.linear import prepare_linear_system
+from biliresp.twostepresp_basic_basic.tsresp import (
     build_atom_constraint_system,
     build_expansion_matrix,
     load_atom_labels_from_pdb,
@@ -33,7 +35,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output",
         type=Path,
-        help="Output NPZ path (default: <microstate-root>/twostepRESP/charges.npz).",
+        help="Output NPZ path (default: results/<microstate>/twostepRESP_basic/charges.npz).",
     )
     parser.add_argument(
         "--bucket-file",
@@ -142,17 +144,16 @@ def main() -> None:
     symmetry_buckets = load_symmetry_buckets(bucket_file)
     P = build_expansion_matrix(symmetry_buckets)
 
+    constraint_root = microstate_constraints_root(microstate_root.name)
     total_constraint_path = (
-        args.total_constraint
-        or microstate_root / "charge-contraints" / "total_constraint.yaml"
+        args.total_constraint or constraint_root / "total_constraint.yaml"
     )
     total_constraint_path = total_constraint_path.resolve()
     if not total_constraint_path.is_file():
         raise FileNotFoundError(f"Total constraint file {total_constraint_path} not found.")
 
     bucket_constraint_path = (
-        args.bucket_constraints
-        or microstate_root / "charge-contraints" / "bucket_constraints.yaml"
+        args.bucket_constraints or constraint_root / "bucket_constraints.yaml"
     )
     bucket_constraint_path = bucket_constraint_path.resolve()
     if not bucket_constraint_path.is_file():
@@ -161,12 +162,12 @@ def main() -> None:
     bucket_constraints = load_bucket_constraints(bucket_constraint_path)
 
     mask_step1 = load_mask_from_yaml(
-        (args.mask_step1 or microstate_root / "charge-contraints" / "mask_step_1.yaml").resolve(),
+        (args.mask_step1 or constraint_root / "mask_step_1.yaml").resolve(),
         atom_labels,
         symmetry_buckets,
     )
     mask_step2 = load_mask_from_yaml(
-        (args.mask_step2 or microstate_root / "charge-contraints" / "mask_step_2.yaml").resolve(),
+        (args.mask_step2 or constraint_root / "mask_step_2.yaml").resolve(),
         atom_labels,
         symmetry_buckets,
     )
@@ -287,7 +288,10 @@ def main() -> None:
         if idx % 50 == 0 or idx == len(configs):
             print(f"Processed {idx}/{len(configs)} configurations.")
 
-    output_path = (args.output or (microstate_root / "twostepRESP" / "charges.npz")).resolve()
+    output_path = (
+        args.output
+        or (ensure_results_dir(microstate_root.name, "twostepRESP_basic") / "charges.npz")
+    ).resolve()
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     np.savez_compressed(

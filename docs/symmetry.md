@@ -9,7 +9,7 @@ constrained charges.
 ```python
 from pathlib import Path
 
-from symmetry import buckets_from_pdb
+from biliresp.symmetry import buckets_from_pdb
 
 buckets = buckets_from_pdb(Path("data/raw/1.pose.pdb"), radius=10)
 print(f"Identified {len(buckets)} equivalence classes")

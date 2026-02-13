@@ -2,33 +2,44 @@
 
 ## Prerequisites
 
-- Python 3.9 or newer.
-- A virtual environment to isolate dependencies is recommended.
+- Python 3.9+ (conda recommended, includes RDKit).
+
+## Install
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-```
-
-## Install the package
-
-Install the project in editable mode so that local code changes are reflected immediately:
-
-```bash
+conda env create -f environment.yml
+conda activate biliresp
 python -m pip install -e .
 ```
 
 ## Run the test suite
 
-Pytest expects the `src/` directory on `PYTHONPATH` so the package can be located:
+Run pytest from the repository root:
 
 ```bash
-PYTHONPATH=src pytest -s tests
+pytest -q
 ```
 
 Use `-k` to narrow to a single test module when iterating, for example:
 
 ```bash
-PYTHONPATH=src pytest -s tests/test_dipole.py
+pytest -q tests/test_dipole.py
 ```
 
+## Run a workflow
+
+Create a config under `configs/<microstate>/<function>/config.yaml` and run:
+
+```bash
+biliresp --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
+```
+
+`--yaml` accepts a full path or a `configs/` subpath. With `--slurm`, the CLI writes a Slurm script under `results/slurm/` and submits it via `sbatch`.
+
+Use `--dry-run` to verify the resolved command without executing it:
+
+```bash
+biliresp --function twostepRESP_basic --yaml HID/twostepRESP_basic --dry-run
+```
+
+See `slurm-quickstart.md` for more detail.

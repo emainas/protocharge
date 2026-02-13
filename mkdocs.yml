@@ -5,16 +5,38 @@ site_author: E. Mainas
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
+  - Slurm Quickstart: slurm-quickstart.md
+  - Modules: modules.md
   - Workflows:
       - Symmetry Index: symmetry.md
       - RESP Hyperbolic Solver: workflows/resp-hyperbolic-solver.md
       - Two-Step RESP Workflow: workflows/twostep-resp.md
+      - Multiconfiguration RESP: workflows/multiconf-resp.md
+      - Reduced-Space RESP: workflows/reduced-resp.md
+      - Multi-Molecule RESP: workflows/multimolecule-resp.md
       - Linear ESP Solver: workflows/linear-esp-solver.md
       - Dipole Cross-Validation: workflows/dipole-cross-validation.md
       - ESP Charge Distributions: workflows/esp-charge-distributions.md
 
 theme:
-  name: mkdocs
+  name: material
+  language: en
+  logo: null
+  favicon: null
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - content.code.copy
+    - search.highlight
+    - toc.follow
+  palette:
+    - scheme: default
+      primary: blue grey
+      accent: cyan
+  font:
+    text: IBM Plex Sans
+    code: IBM Plex Mono
 
 markdown_extensions:
   - pymdownx.arithmatex:

@@ -6,10 +6,10 @@ from typing import Dict
 import numpy as np
 import pytest
 
-from dipole import center_of_mass_bohr_from_xyz
-from dipole.dipole import BOHR_PER_ANG, _dipole_from_charges, _normalize_frame_index
-from parser import ParseDotXYZ, ParseRespDotOut
-from linearESPcharges.linear import explicit_solution, prepare_linear_system
+from biliresp.dipole import center_of_mass_bohr_from_xyz
+from biliresp.dipole.dipole import BOHR_PER_ANG, _dipole_from_charges, _normalize_frame_index
+from biliresp.resp_parser import ParseDotXYZ, ParseRespDotOut
+from biliresp.linearESPcharges.linear import explicit_solution, prepare_linear_system
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data" / "raw"
 RESP_OUT = DATA_DIR / "resp.out"

@@ -7,6 +7,10 @@ __pycache__/
 
 # Slurm log files
 slurm_logs/
+# Legacy slurm submissions
+scripts/slurm_subs/
+# Heavy bootstrap outputs
+scripts/bootstrap_hist_random/
 
 # notebook junk
 notebooks/.DS_Store
@@ -42,6 +46,10 @@ htmlcov/
 # MkDocs site output
 site/
 docs/site/
+
+# Generated results / large outputs
+results/
+reports/
 
 # data
 data/

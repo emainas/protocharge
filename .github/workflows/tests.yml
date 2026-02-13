@@ -1,29 +1,24 @@
-name: Tests
+name: tests
 
 on:
   push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
 
 jobs:
-  tests:
+  pytest:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
         with:
-          python-version: "3.11"
+          auto-update-conda: true
+          environment-file: environment.yml
+          activate-environment: biliresp
+          python-version: 3.11
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install pytest
-          python -m pip install -e .
-
-      - name: Run test suite
-        run: PYTHONPATH=src pytest -s tests
+      - name: Run pytest
+        shell: bash -l {0}
+        run: pytest -q

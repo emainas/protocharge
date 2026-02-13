@@ -5,9 +5,9 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from linearESPcharges.linear import prepare_linear_system, explicit_solution
-from parser import ParseRespDotOut
-from resp.resp import fit_resp_charges, load_geometry_symbols
+from biliresp.linearESPcharges.linear import prepare_linear_system, explicit_solution
+from biliresp.resp_parser import ParseRespDotOut
+from biliresp.resp.resp import fit_resp_charges, load_geometry_symbols
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data" / "raw"
 RESP_OUT = DATA_DIR / "resp.out"

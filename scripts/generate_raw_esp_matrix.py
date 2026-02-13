@@ -6,7 +6,9 @@ from typing import Dict, List, Tuple
 
 import numpy as np
 
-from linearESPcharges import explicit_solution, prepare_linear_system
+from biliresp.paths import ensure_results_dir
+
+from biliresp.linearESPcharges import explicit_solution, prepare_linear_system
 
 
 def parse_args() -> argparse.Namespace:
@@ -44,7 +46,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output",
         type=Path,
-        help="Output NPZ path (default: <microstate-root>/rawESP/charges.npz).",
+        help="Output NPZ path (default: results/<microstate>/rawESP/charges.npz).",
     )
     parser.add_argument(
         "--dry-run",
@@ -152,7 +154,9 @@ def main() -> None:
     rmse_array = np.asarray(rmses, dtype=np.float64)
     sum_array = np.asarray(summed_charges, dtype=np.float64)
 
-    output_path = args.output or (microstate_root / "rawESP" / "charges.npz")
+    output_path = args.output or (
+        ensure_results_dir(microstate_root.name, "rawESP") / "charges.npz"
+    )
     output_path.parent.mkdir(parents=True, exist_ok=True)
     np.savez(
         output_path,

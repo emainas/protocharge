@@ -1,0 +1,12 @@
+total_charge: 0.000000
+constraint_labels:
+  - CA
+  - HA1
+  - HA2
+  - CB
+  - HB1
+  - HB2
+  - CG
+  - O1
+  - O2
+  - H11

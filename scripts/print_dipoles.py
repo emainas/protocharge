@@ -6,9 +6,9 @@ from typing import Dict
 
 import numpy as np
 
-from parser import ParseRespDotOut
-from linearESPcharges.linear import explicit_solution, prepare_linear_system
-from dipole.dipole import (
+from biliresp.resp_parser import ParseRespDotOut
+from biliresp.linearESPcharges.linear import explicit_solution, prepare_linear_system
+from biliresp.dipole.dipole import (
     BOHR_PER_ANG,
     _dipole_from_charges,
     _normalize_frame_index,

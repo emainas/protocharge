@@ -1,10 +1,10 @@
 # Linear ESP Charge Solver
 
-The linear solver fits electrostatic potential (ESP) charges that reproduce grid values exported by RESP/TeraChem. Everything lives in `linearESPcharges.linear` and is backed by numpy.
+The linear solver fits electrostatic potential (ESP) charges that reproduce grid values exported by RESP/TeraChem. Everything lives in `biliresp.linearESPcharges.linear` and is backed by numpy.
 
 ## Pipeline
 
-1. **Parse Terachem RESP output** with `ParseRespDotOut` to obtain atomic positions and RESP ESP charges for each frame.
+1. **Parse Terachem RESP output** with `ParseRespDotOut` (from `biliresp.resp_parser`) to obtain atomic positions and RESP ESP charges for each frame.
 2. **Read ESP grid** points from `esp.xyz`.
 3. **Build the design matrix** `A` where `A[i, j] = 1 / r_ij` for grid point `i` and atom `j`.
 4. **Solve** the constrained optimization problem `A q ≈ V` subject to `Σ q = Q` with `explicit_solution`, a closed-form projection that first finds the unconstrained least squares solution and then enforces the total charge (Lagrange multiplier method). It accepts an optional `ridge` hyper-parameter if you want to add a small diagonal Tikhonov term for numerical stability.
@@ -71,7 +71,7 @@ If numerical damping is requested, $H$ is replaced with $H + \eta I$ (with a sma
 You can access the components directly:
 
 ```python
-from linearESPcharges.linear import prepare_linear_system, explicit_solution
+from biliresp.linearESPcharges.linear import prepare_linear_system, explicit_solution
 
 A, V, Q, resp_charges = prepare_linear_system("data/raw/resp.out", "data/raw/esp.xyz", 78, frame_index=-1)
 solver = explicit_solution(ridge=0.0)

@@ -8,8 +8,10 @@ from typing import Dict, Iterator, List, Sequence, Tuple
 
 import numpy as np
 
-from linearESPcharges import explicit_solution, prepare_linear_system
-from resp.resp import HyperbolicRestraint, fit_resp_charges
+from biliresp.paths import ensure_results_dir
+
+from biliresp.linearESPcharges import explicit_solution, prepare_linear_system
+from biliresp.resp.resp import HyperbolicRestraint, fit_resp_charges
 
 
 def parse_args() -> argparse.Namespace:
@@ -58,7 +60,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output",
         type=Path,
-        help="Output NPZ path (default: <microstate-root>/rawRESP/charges.npz).",
+        help="Output NPZ path (default: results/<microstate>/onestepRESP/charges.npz).",
     )
     parser.add_argument(
         "--a",
@@ -328,7 +330,9 @@ def main() -> None:
     iteration_array = np.asarray(iterations, dtype=np.int32)
     converged_array = np.asarray(converged, dtype=bool)
 
-    output_path = args.output or (microstate_root / "onestepRESP" / "charges.npz")
+    output_path = args.output or (
+        ensure_results_dir(microstate_root.name, "onestepRESP") / "charges.npz"
+    )
     output_path.parent.mkdir(parents=True, exist_ok=True)
     np.savez(
         output_path,

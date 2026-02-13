@@ -1,0 +1,12 @@
+# Each entry is a bucket: list of "mol:ATOM" strings
+- ["PRN_prot:CA", "PRN_deprot:CA"]
+- ["PRN_prot:CB", "PRN_deprot:CB"]
+- ["PRN_deprot:O1", "PRN_deprot:O2"]
+- ["PRN_prot:HA1", "PRN_prot:HA2", "PRN_deprot:HA1", "PRN_deprot:HA2"]
+- ["PRN_prot:HB1", "PRN_prot:HB2", "PRN_deprot:HB1", "PRN_deprot:HB2"]
+- ["PRN_prot:HA3", "PRN_deprot:HA3"]
+- ["PRN_prot:CG"]
+- ["PRN_deprot:CG"]
+- ["PRN_prot:O1"]
+- ["PRN_prot:O2"]
+- ["PRN_prot:H11"]

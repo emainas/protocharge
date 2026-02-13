@@ -1,0 +1,8 @@
+# Populate with atom labels to include in the step-2 mask.
+- CH3
+- CB
+- CG
+- ND1
+- CE1
+- NE2
+- CD2

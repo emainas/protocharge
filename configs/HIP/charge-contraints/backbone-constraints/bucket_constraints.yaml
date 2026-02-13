@@ -1,0 +1,13 @@
+bucket_constraints: 
+  - bucket: 4
+    value: -0.3479
+  - bucket: 5
+    value: 0.2747
+  - bucket: 6
+    value: -0.1354
+  - bucket: 7
+    value: 0.1212
+  - bucket: 8 
+    value: -0.7341
+  - bucket: 9 
+    value: -0.5894 
