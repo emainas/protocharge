@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../../symmetry/">
+        <link rel="prev" href="../terachem-processing/">
       
       
-        <link rel="next" href="../terachem-run/">
+        <link rel="next" href="../resp-hyperbolic-solver/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Raw TeraChem Processing - BiliResp</title>
+        <title>TeraChem RESP Jobs - BiliResp</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#raw-terachem-processing" class="md-skip">
+        <a href="#terachem-resp-job-submission" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Raw TeraChem Processing
+              TeraChem RESP Jobs
             
           </span>
         </div>
@@ -409,6 +409,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../terachem-processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raw TeraChem Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -428,7 +456,7 @@
   <span class="md-ellipsis">
     
   
-    Raw TeraChem Processing
+    TeraChem RESP Jobs
   
 
     
@@ -446,7 +474,7 @@
   <span class="md-ellipsis">
     
   
-    Raw TeraChem Processing
+    TeraChem RESP Jobs
   
 
     
@@ -472,10 +500,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#required-raw-layout" class="md-nav__link">
+  <a href="#expected-inputs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Required raw layout
+        Expected inputs
       
     </span>
   </a>
@@ -483,10 +511,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
+  <a href="#run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Outputs
+        Run
       
     </span>
   </a>
@@ -494,21 +522,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#custom-raw-subdirectory" class="md-nav__link">
+  <a href="#collect-outputs-for-resp-workflows" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Custom raw subdirectory
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-step" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Next step
+        Collect outputs for RESP workflows
       
     </span>
   </a>
@@ -519,34 +536,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../terachem-run/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TeraChem RESP Jobs
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -810,10 +799,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#required-raw-layout" class="md-nav__link">
+  <a href="#expected-inputs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Required raw layout
+        Expected inputs
       
     </span>
   </a>
@@ -821,10 +810,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
+  <a href="#run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Outputs
+        Run
       
     </span>
   </a>
@@ -832,21 +821,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#custom-raw-subdirectory" class="md-nav__link">
+  <a href="#collect-outputs-for-resp-workflows" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Custom raw subdirectory
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-step" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Next step
+        Collect outputs for RESP workflows
       
     </span>
   </a>
@@ -870,42 +848,41 @@
 
 
 
-<h1 id="raw-terachem-processing">Raw TeraChem Processing</h1>
-<p>Most users will start with raw TeraChem output. Before running any RESP workflow, the raw outputs must be organized into the expected layout under <code>data/microstates/&lt;MICROSTATE&gt;/terachem/</code>.</p>
-<p>This command collects the raw files and writes the standardized inputs:</p>
-<pre><code class="language-bash">biliresp --process data/microstates/&lt;MICROSTATE&gt;
+<h1 id="terachem-resp-job-submission">TeraChem RESP Job Submission</h1>
+<p>This workflow writes TeraChem input files (<code>resp.in</code>), generates Slurm submission scripts, and submits jobs for each configuration under a microstate.</p>
+<h2 id="expected-inputs">Expected inputs</h2>
+<pre><code>data/microstates/&lt;MICROSTATE&gt;/input_tc_structures/confs/&lt;conf&gt;/parm7
+data/microstates/&lt;MICROSTATE&gt;/input_tc_structures/confs/&lt;conf&gt;/rst7
+configs/&lt;MICROSTATE&gt;/input_tc_structures/&lt;conf&gt;/config.yaml
 </code></pre>
-<h2 id="required-raw-layout">Required raw layout</h2>
-<p>Place raw outputs under:</p>
-<pre><code>data/microstates/&lt;MICROSTATE&gt;/raw_terachem_outputs/
+<p>Each <code>config.yaml</code> provides the TeraChem settings, including the charge:</p>
+<pre><code class="language-yaml">charge: 1
+basis: 6-31gs
+method: rhf
+spinmult: 1
+maxit: 1000
+run: energy
+resp: yes
+esp_grid_dens: 4.0
 </code></pre>
-<p>Expected structure (mirrors the original TeraChem output layout):</p>
-<pre><code>raw_terachem_outputs/
-  frame1/
-    scr.carved_frame1/
-      splits/
-        conf1/
-          resp-vac.out
-          scr.nowater/esp.xyz
-        conf2/
-          resp-vac.out
-          scr.nowater/esp.xyz
-  frame2/
-    scr.carved_frame2/
-      splits/
-        ...
+<h2 id="run">Run</h2>
+<pre><code class="language-bash">biliresp --run-tc-resp data/microstates/&lt;MICROSTATE&gt;
 </code></pre>
-<h2 id="outputs">Outputs</h2>
-<p>The command writes:</p>
+<p>For each conf, the module writes:</p>
+<ul>
+<li><code>resp.in</code></li>
+<li><code>run_tc_resp.slurm</code></li>
+<li><code>nowater.parm7</code> / <code>nowater.rst7</code> (copies of the provided files)</li>
+</ul>
+<p>Then it submits <code>sbatch run_tc_resp.slurm</code> immediately.</p>
+<h2 id="collect-outputs-for-resp-workflows">Collect outputs for RESP workflows</h2>
+<p>TeraChem writes <code>resp.out</code> in the conf directory and <code>esp.xyz</code> under a scratch folder named <code>scr.&lt;rst7&gt;</code>. Once the jobs finish, collect outputs into the standard layout:</p>
+<pre><code class="language-bash">biliresp --process-tc-resp data/microstates/&lt;MICROSTATE&gt;
+</code></pre>
+<p>This writes:</p>
 <pre><code>data/microstates/&lt;MICROSTATE&gt;/terachem/respout/conf####.resp.out
 data/microstates/&lt;MICROSTATE&gt;/terachem/espxyz/conf####.esp.xyz
 </code></pre>
-<h2 id="custom-raw-subdirectory">Custom raw subdirectory</h2>
-<p>If your raw outputs live in a different folder name:</p>
-<pre><code class="language-bash">biliresp --process data/microstates/&lt;MICROSTATE&gt; --tc-raw-subdir raw_tc
-</code></pre>
-<h2 id="next-step">Next step</h2>
-<p>Once processed, proceed to the RESP workflows (two-step, multiconf, reduced, etc.) using the standard configs under <code>configs/</code>.</p>
 
 
 
