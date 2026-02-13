@@ -352,17 +352,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#process-raw-terachem-outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Process raw TeraChem outputs
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -494,6 +483,34 @@
     
   
     Symmetry Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workflows/terachem-processing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raw TeraChem Processing
   
 
     
@@ -808,17 +825,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#process-raw-terachem-outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Process raw TeraChem outputs
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -862,13 +868,6 @@ python -m pip install -e .
 <pre><code class="language-bash">biliresp --function twostepRESP_basic --yaml HID/twostepRESP_basic --dry-run
 </code></pre>
 <p>See <code>slurm-quickstart.md</code> for more detail.</p>
-<h2 id="process-raw-terachem-outputs">Process raw TeraChem outputs</h2>
-<p>If you have raw TeraChem outputs under a microstate <code>raw_terachem_outputs/</code> folder, you can process them into the expected <code>terachem/respout</code> and <code>terachem/espxyz</code> layout:</p>
-<pre><code class="language-bash">biliresp --process data/microstates/HID
-</code></pre>
-<p>If your raw outputs live in a different subdirectory, pass <code>--tc-raw-subdir</code>:</p>
-<pre><code class="language-bash">biliresp --process data/microstates/HID --tc-raw-subdir raw_tc
-</code></pre>
 
 
 
