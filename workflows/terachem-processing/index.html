@@ -522,17 +522,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#custom-raw-subdirectory" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Custom raw subdirectory
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#next-step" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -832,17 +821,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#custom-raw-subdirectory" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Custom raw subdirectory
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#next-step" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -871,38 +849,28 @@
 
 
 <h1 id="raw-terachem-processing">Raw TeraChem Processing</h1>
-<p>Most users will start with raw TeraChem output. Before running any RESP workflow, the raw outputs must be organized into the expected layout under <code>data/microstates/&lt;MICROSTATE&gt;/terachem/</code>.</p>
-<p>This command collects the raw files and writes the standardized inputs:</p>
-<pre><code class="language-bash">biliresp --process data/microstates/&lt;MICROSTATE&gt;
+<p>Most users should run TeraChem RESP jobs with <code>biliresp --run-tc-resp</code>, then collect outputs with:</p>
+<pre><code class="language-bash">biliresp --process-tc-resp data/microstates/&lt;MICROSTATE&gt;
 </code></pre>
+<p>This gathers <code>resp.out</code> plus the scratch <code>esp.xyz</code> files and writes the standardized inputs under <code>data/microstates/&lt;MICROSTATE&gt;/terachem/</code>.</p>
 <h2 id="required-raw-layout">Required raw layout</h2>
 <p>Place raw outputs under:</p>
 <pre><code>data/microstates/&lt;MICROSTATE&gt;/raw_terachem_outputs/
 </code></pre>
-<p>Expected structure (mirrors the original TeraChem output layout):</p>
+<p>Expected structure:</p>
 <pre><code>raw_terachem_outputs/
-  frame1/
-    scr.carved_frame1/
-      splits/
-        conf1/
-          resp-vac.out
-          scr.nowater/esp.xyz
-        conf2/
-          resp-vac.out
-          scr.nowater/esp.xyz
-  frame2/
-    scr.carved_frame2/
-      splits/
-        ...
+  confs/
+    conf_001/
+      resp.out
+      scr.&lt;rst7_file_name&gt;/esp.xyz
+    conf_002/
+      resp.out
+      scr.&lt;rst7_file_name&gt;/esp.xyz
 </code></pre>
 <h2 id="outputs">Outputs</h2>
 <p>The command writes:</p>
 <pre><code>data/microstates/&lt;MICROSTATE&gt;/terachem/respout/conf####.resp.out
 data/microstates/&lt;MICROSTATE&gt;/terachem/espxyz/conf####.esp.xyz
-</code></pre>
-<h2 id="custom-raw-subdirectory">Custom raw subdirectory</h2>
-<p>If your raw outputs live in a different folder name:</p>
-<pre><code class="language-bash">biliresp --process data/microstates/&lt;MICROSTATE&gt; --tc-raw-subdir raw_tc
 </code></pre>
 <h2 id="next-step">Next step</h2>
 <p>Once processed, proceed to the RESP workflows (two-step, multiconf, reduced, etc.) using the standard configs under <code>configs/</code>.</p>
