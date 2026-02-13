@@ -20,9 +20,9 @@ def _natural_key(name: str) -> Tuple[int | str, ...]:
     return tuple(parts)
 
 
-def _find_frame_dirs(qmmm_dir: Path) -> List[Path]:
+def _find_frame_dirs(tc_raw_dir: Path) -> List[Path]:
     frames = []
-    for frame in qmmm_dir.glob("frame*"):
+    for frame in tc_raw_dir.glob("frame*"):
         if not frame.is_dir():
             continue
         inner = frame / f"scr.carved_{frame.name}" / "splits"

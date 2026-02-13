@@ -55,5 +55,5 @@ biliresp --process data/microstates/HID
 If your raw outputs live in a different subdirectory, pass `--tc-raw-subdir`:
 
 ```bash
-biliresp --process data/microstates/HID --tc-raw-subdir raw_qmmm
+biliresp --process data/microstates/HID --tc-raw-subdir raw_tc
 ```

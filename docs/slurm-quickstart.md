@@ -19,6 +19,12 @@ If you only have raw TeraChem outputs under a `raw_terachem_outputs/` directory,
 biliresp --process data/microstates/<MICROSTATE>
 ```
 
+To override the raw subdirectory name:
+
+```bash
+biliresp --process data/microstates/<MICROSTATE> --tc-raw-subdir raw_tc
+```
+
 ## 2) Create a config
 
 Create `configs/<microstate>/<function>/config.yaml`. Example:
