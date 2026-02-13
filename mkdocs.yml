@@ -9,8 +9,8 @@ nav:
   - Modules: modules.md
   - Workflows:
       - Symmetry Index: symmetry.md
-      - Raw TeraChem Processing: workflows/terachem-processing.md
       - TeraChem RESP Jobs: workflows/terachem-run.md
+      - Raw TeraChem Processing: workflows/terachem-processing.md
       - RESP Hyperbolic Solver: workflows/resp-hyperbolic-solver.md
       - Two-Step RESP Workflow: workflows/twostep-resp.md
       - Multiconfiguration RESP: workflows/multiconf-resp.md
