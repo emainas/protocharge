@@ -10,7 +10,8 @@ from typing import Dict, Iterable, List, Tuple
 import yaml
 
 from biliresp.paths import data_root, project_root, results_root
-from biliresp.terachem_processing import process_terachem_outputs
+from biliresp.run_tc_resp import run_tc_resp
+from biliresp.terachem_processing import process_tc_resp_runs, process_terachem_outputs
 
 
 def _default_microstate_root(microstate: str) -> Path:
@@ -266,6 +267,12 @@ def main(argv: Iterable[str] | None = None) -> None:
         default="raw_terachem_outputs",
         help="Subdirectory name that holds raw TeraChem outputs.",
     )
+    parser.add_argument("--run-tc-resp", dest="tc_resp_path", help="Prepare and submit TeraChem RESP jobs.")
+    parser.add_argument(
+        "--process-tc-resp",
+        dest="process_tc_resp_path",
+        help="Collect TeraChem RESP outputs from input_tc_structures and write to terachem/ folders.",
+    )
     parser.add_argument("--slurm", action="store_true", help="Submit as a Slurm job.")
     parser.add_argument("--dry-run", action="store_true", help="Print the resolved command and exit.")
     args = parser.parse_args(list(argv) if argv is not None else None)
@@ -281,6 +288,22 @@ def main(argv: Iterable[str] | None = None) -> None:
         )
         print("RESP:", summary["resp_dir"])
         print("ESP:", summary["esp_dir"])
+        if summary["missing_resp"] or summary["missing_esp"]:
+            print(
+                "Missing files:",
+                f"resp={summary['missing_resp']}",
+                f"esp={summary['missing_esp']}",
+            )
+        return
+
+    if args.tc_resp_path:
+        results = run_tc_resp(Path(args.tc_resp_path), submit=True)
+        print(f"Submitted {len(results)} TeraChem RESP jobs.")
+        return
+
+    if args.process_tc_resp_path:
+        summary = process_tc_resp_runs(Path(args.process_tc_resp_path))
+        print(f"Collected {summary['copied_resp']} resp.out and {summary['copied_esp']} esp.xyz files.")
         if summary["missing_resp"] or summary["missing_esp"]:
             print(
                 "Missing files:",
