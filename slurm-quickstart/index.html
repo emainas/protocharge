@@ -847,6 +847,9 @@
 <li><code>terachem/respout/*.resp.out</code></li>
 </ul>
 <p>See the minimal example layout in <code>docs/examples/microstates/</code>.</p>
+<p>If you only have raw TeraChem outputs under a <code>raw_terachem_outputs/</code> directory, use:</p>
+<pre><code class="language-bash">biliresp --process data/microstates/&lt;MICROSTATE&gt;
+</code></pre>
 <h2 id="2-create-a-config">2) Create a config</h2>
 <p>Create <code>configs/&lt;microstate&gt;/&lt;function&gt;/config.yaml</code>. Example:</p>
 <pre><code class="language-yaml">microstate: HID
