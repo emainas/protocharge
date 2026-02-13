@@ -1,0 +1,11 @@
+microstate: HID
+args:
+  frame: -1
+  maxiter: 400
+  # Example overrides (resolved relative to this config):
+  # resp_out: ../../../../microstates/HID/terachem/respout/conf0.resp.out
+  # esp_xyz: ../../../../microstates/HID/terachem/espxyz/conf0.esp.xyz
+slurm:
+  time: "24:00:00"
+  mem: "64G"
+  cpus_per_task: 12
