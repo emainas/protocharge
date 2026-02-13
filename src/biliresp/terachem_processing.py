@@ -48,6 +48,10 @@ def process_terachem_outputs(
     resp_dir.mkdir(parents=True, exist_ok=True)
     esp_dir.mkdir(parents=True, exist_ok=True)
 
+    confs_root = tc_raw_dir / "confs"
+    if confs_root.is_dir():
+        return _process_conf_root(microstate_path, confs_root)
+
     frames = _find_frame_dirs(tc_raw_dir)
     if not frames:
         raise FileNotFoundError(f"No frame directories found under {tc_raw_dir}")
@@ -110,15 +114,7 @@ def _find_esp_from_conf(conf_dir: Path, rst7_path: Path) -> Path | None:
     return None
 
 
-def process_tc_resp_runs(
-    microstate_path: Path,
-    confs_subdir: str = "input_tc_structures/confs",
-) -> Dict[str, object]:
-    microstate_path = microstate_path.resolve()
-    confs_root = microstate_path / confs_subdir
-    if not confs_root.is_dir():
-        raise FileNotFoundError(f"Missing confs directory: {confs_root}")
-
+def _process_conf_root(microstate_path: Path, confs_root: Path) -> Dict[str, object]:
     resp_dir = microstate_path / "terachem" / "respout"
     esp_dir = microstate_path / "terachem" / "espxyz"
     resp_dir.mkdir(parents=True, exist_ok=True)
@@ -167,3 +163,15 @@ def process_tc_resp_runs(
         "missing_resp": missing_resp,
         "missing_esp": missing_esp,
     }
+
+
+def process_tc_resp_runs(
+    microstate_path: Path,
+    confs_subdir: str = "input_tc_structures/confs",
+) -> Dict[str, object]:
+    microstate_path = microstate_path.resolve()
+    confs_root = microstate_path / confs_subdir
+    if not confs_root.is_dir():
+        raise FileNotFoundError(f"Missing confs directory: {confs_root}")
+
+    return _process_conf_root(microstate_path, confs_root)
