@@ -10,6 +10,7 @@ from typing import Dict, Iterable, List, Tuple
 import yaml
 
 from biliresp.paths import data_root, project_root, results_root
+from biliresp.terachem_processing import process_terachem_outputs
 
 
 def _default_microstate_root(microstate: str) -> Path:
@@ -257,11 +258,39 @@ def _resolve_config_path(path_or_name: str, function: str | None = None) -> Path
 
 def main(argv: Iterable[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="Run biliresp workflows locally or via Slurm.")
-    parser.add_argument("--function", required=True, help="Workflow function name.")
-    parser.add_argument("--yaml", dest="yaml_path", required=True, help="YAML config path or name under configs/.")
+    parser.add_argument("--function", help="Workflow function name.")
+    parser.add_argument("--yaml", dest="yaml_path", help="YAML config path or name under configs/.")
+    parser.add_argument("--process", dest="process_path", help="Process raw TeraChem outputs under a microstate path.")
+    parser.add_argument(
+        "--qmmm-subdir",
+        default="raw_terachem_outputs",
+        help="Subdirectory name that holds raw TeraChem outputs.",
+    )
     parser.add_argument("--slurm", action="store_true", help="Submit as a Slurm job.")
     parser.add_argument("--dry-run", action="store_true", help="Print the resolved command and exit.")
     args = parser.parse_args(list(argv) if argv is not None else None)
+
+    if args.process_path:
+        summary = process_terachem_outputs(Path(args.process_path), qmmm_subdir=args.qmmm_subdir)
+        print(
+            "Processed",
+            summary["confs"],
+            "configs from",
+            summary["frames"],
+            "frames.",
+        )
+        print("RESP:", summary["resp_dir"])
+        print("ESP:", summary["esp_dir"])
+        if summary["missing_resp"] or summary["missing_esp"]:
+            print(
+                "Missing files:",
+                f"resp={summary['missing_resp']}",
+                f"esp={summary['missing_esp']}",
+            )
+        return
+
+    if not args.function or not args.yaml_path:
+        raise SystemExit("Provide --function and --yaml, or use --process.")
 
     config_path = _resolve_config_path(args.yaml_path, args.function)
     cfg = _load_config(config_path)

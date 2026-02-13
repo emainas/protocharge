@@ -43,3 +43,17 @@ biliresp --function twostepRESP_basic --yaml HID/twostepRESP_basic --dry-run
 ```
 
 See `slurm-quickstart.md` for more detail.
+
+## Process raw TeraChem outputs
+
+If you have raw TeraChem outputs under a microstate `raw_terachem_outputs/` folder, you can process them into the expected `terachem/respout` and `terachem/espxyz` layout:
+
+```bash
+biliresp --process data/microstates/HID
+```
+
+If your raw outputs live in a different subdirectory, pass `--qmmm-subdir`:
+
+```bash
+biliresp --process data/microstates/HID --qmmm-subdir raw_qmmm
+```

@@ -36,6 +36,12 @@ biliresp --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
 
 `--yaml` can be a full path or a `configs/` subpath. With `--slurm`, the CLI generates a Slurm script and submits it.
 
+To process raw TeraChem outputs into `terachem/respout` and `terachem/espxyz`:
+
+```bash
+biliresp --process data/microstates/HID
+```
+
 ## Project layout
 
 - `data/` holds inputs and parameters tied to a microstate (PDB, esp.xyz, resp.out, symmetry buckets).

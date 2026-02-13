@@ -7,8 +7,9 @@ __pycache__/
 
 # Slurm log files
 slurm_logs/
-# Legacy slurm submissions
+# Legacy code
 scripts/slurm_subs/
+legacy_code/
 # Heavy bootstrap outputs
 scripts/bootstrap_hist_random/
 

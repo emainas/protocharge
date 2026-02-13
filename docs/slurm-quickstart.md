@@ -13,6 +13,12 @@ Place your inputs under `data/microstates/<MICROSTATE>/`:
 
 See the minimal example layout in `docs/examples/microstates/`.
 
+If you only have raw TeraChem outputs under a `raw_terachem_outputs/` directory, use:
+
+```bash
+biliresp --process data/microstates/<MICROSTATE>
+```
+
 ## 2) Create a config
 
 Create `configs/<microstate>/<function>/config.yaml`. Example:
