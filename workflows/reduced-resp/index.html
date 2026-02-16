@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Utilities for parsing RESP outputs, fitting ESP charges, and validating dipoles.">
+        <meta name="description" content="Tools for generating ESP datasets, fitting RESP charges, and validating charge models.">
       
       
         <meta name="author" content="E. Mainas">
@@ -27,7 +27,7 @@
     
     
       
-        <title>Reduced-Space RESP - BiliResp</title>
+        <title>Reduced-Space RESP - ProtoCharge</title>
       
     
     
@@ -94,7 +94,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="BiliResp" class="md-header__button md-logo" aria-label="BiliResp" data-md-component="logo">
+    <a href="../.." title="ProtoCharge" class="md-header__button md-logo" aria-label="ProtoCharge" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +108,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            BiliResp
+            ProtoCharge
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -204,13 +204,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="BiliResp" class="md-nav__button md-logo" aria-label="BiliResp" data-md-component="logo">
+    <a href="../.." title="ProtoCharge" class="md-nav__button md-logo" aria-label="ProtoCharge" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    BiliResp
+    ProtoCharge
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1152,12 +1152,12 @@
 <p>Reduced-space solvers enforce the linear constraints exactly by projecting into the nullspace of the constraint matrix. These are useful for large ensemble fits where a direct KKT solve is unstable.</p>
 <h2 id="variants">Variants</h2>
 <ul>
-<li><strong>Basic</strong> – total + bucket constraints: <code>biliresp.reduced_basic</code></li>
-<li><strong>Masked total</strong> – total charge applied to a subset: <code>biliresp.reduced_masked_total</code></li>
-<li><strong>Group constraints</strong> – arbitrary group targets: <code>biliresp.reduced_group_constraints</code></li>
+<li><strong>Basic</strong> – total + bucket constraints: <code>protocharge.reduced_basic</code></li>
+<li><strong>Masked total</strong> – total charge applied to a subset: <code>protocharge.reduced_masked_total</code></li>
+<li><strong>Group constraints</strong> – arbitrary group targets: <code>protocharge.reduced_group_constraints</code></li>
 </ul>
 <h2 id="example">Example</h2>
-<pre><code class="language-bash">python -m biliresp.reduced_group_constraints.reduced \
+<pre><code class="language-bash">python -m protocharge.reduced_group_constraints.reduced \
   --microstate HID \
   --load-and-resp \
   --input-dir-name multiconfRESP \

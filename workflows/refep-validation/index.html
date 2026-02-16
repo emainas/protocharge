@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Utilities for parsing RESP outputs, fitting ESP charges, and validating dipoles.">
+        <meta name="description" content="Tools for generating ESP datasets, fitting RESP charges, and validating charge models.">
       
       
         <meta name="author" content="E. Mainas">
@@ -27,7 +27,7 @@
     
     
       
-        <title>REFEP Validation - BiliResp</title>
+        <title>REFEP Validation - ProtoCharge</title>
       
     
     
@@ -94,7 +94,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="BiliResp" class="md-header__button md-logo" aria-label="BiliResp" data-md-component="logo">
+    <a href="../.." title="ProtoCharge" class="md-header__button md-logo" aria-label="ProtoCharge" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +108,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            BiliResp
+            ProtoCharge
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -204,13 +204,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="BiliResp" class="md-nav__button md-logo" aria-label="BiliResp" data-md-component="logo">
+    <a href="../.." title="ProtoCharge" class="md-nav__button md-logo" aria-label="ProtoCharge" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    BiliResp
+    ProtoCharge
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1224,10 +1224,10 @@
 <li><code>refep.analyze</code>: analyze grid (BAR/TI, plots)</li>
 </ul>
 <h2 id="cli">CLI</h2>
-<pre><code class="language-bash">biliresp --validate refep.prep --yaml configs/HID/refep.yaml
-biliresp --validate refep.run --yaml configs/HID/refep.yaml --slurm
-biliresp --validate refep.grid --yaml configs/HID/refep.yaml --slurm
-biliresp --validate refep.analyze --yaml configs/HID/refep.yaml
+<pre><code class="language-bash">pc --validate refep.prep --yaml configs/HID/refep.yaml
+pc --validate refep.run --yaml configs/HID/refep.yaml --slurm
+pc --validate refep.grid --yaml configs/HID/refep.yaml --slurm
+pc --validate refep.analyze --yaml configs/HID/refep.yaml
 </code></pre>
 <h2 id="config-example">Config example</h2>
 <pre><code class="language-yaml">microstate: HID
@@ -1297,7 +1297,7 @@ refep:
       - [&quot;python&quot;, &quot;plot_refep_du_grid.py&quot;]
 </code></pre>
 <h2 id="charge-overrides">Charge overrides</h2>
-<p>If <code>charges</code> is provided for a <code>tleap_inputs</code> entry, <code>biliresp</code> injects <code>set &lt;res&gt;.&lt;atom&gt; charge &lt;q&gt;</code> lines into the TLEaP template. By default it inserts after the marker line:</p>
+<p>If <code>charges</code> is provided for a <code>tleap_inputs</code> entry, <code>protocharge</code> injects <code>set &lt;res&gt;.&lt;atom&gt; charge &lt;q&gt;</code> lines into the TLEaP template. By default it inserts after the marker line:</p>
 <pre><code># BILIRESP_CHARGES
 </code></pre>
 <p>If the marker is missing, the block is appended at the end of the file.</p>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Utilities for parsing RESP outputs, fitting ESP charges, and validating dipoles.">
+        <meta name="description" content="Tools for generating ESP datasets, fitting RESP charges, and validating charge models.">
       
       
         <meta name="author" content="E. Mainas">
@@ -23,7 +23,7 @@
     
     
       
-        <title>Slurm Quickstart - BiliResp</title>
+        <title>Slurm Quickstart - ProtoCharge</title>
       
     
     
@@ -90,7 +90,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="BiliResp" class="md-header__button md-logo" aria-label="BiliResp" data-md-component="logo">
+    <a href=".." title="ProtoCharge" class="md-header__button md-logo" aria-label="ProtoCharge" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -104,7 +104,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            BiliResp
+            ProtoCharge
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -200,13 +200,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="BiliResp" class="md-nav__button md-logo" aria-label="BiliResp" data-md-component="logo">
+    <a href=".." title="ProtoCharge" class="md-nav__button md-logo" aria-label="ProtoCharge" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    BiliResp
+    ProtoCharge
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1120,10 +1120,10 @@
 </ul>
 <p>See the minimal example layout in <code>docs/examples/microstates/</code>.</p>
 <p>If you only have raw TeraChem outputs under a <code>raw_terachem_outputs/</code> directory, use:</p>
-<pre><code class="language-bash">biliresp --process data/microstates/&lt;MICROSTATE&gt;
+<pre><code class="language-bash">pc --process data/microstates/&lt;MICROSTATE&gt;
 </code></pre>
 <p>To override the raw subdirectory name:</p>
-<pre><code class="language-bash">biliresp --process data/microstates/&lt;MICROSTATE&gt; --tc-raw-subdir raw_tc
+<pre><code class="language-bash">pc --process data/microstates/&lt;MICROSTATE&gt; --tc-raw-subdir raw_tc
 </code></pre>
 <h2 id="2-create-a-config">2) Create a config</h2>
 <p>Create <code>configs/&lt;microstate&gt;/&lt;function&gt;/config.yaml</code>. Example:</p>
@@ -1139,10 +1139,10 @@ slurm:
 <p>A complete example config is in <code>docs/examples/configs/</code>.</p>
 <h2 id="3-dry-run-recommended">3) Dry run (recommended)</h2>
 <p>Use <code>--dry-run</code> to see the resolved command and config path before submitting:</p>
-<pre><code class="language-bash">biliresp --function twostepRESP_basic --yaml HID/twostepRESP_basic --dry-run
+<pre><code class="language-bash">pc --function twostepRESP_basic --yaml HID/twostepRESP_basic --dry-run
 </code></pre>
 <h2 id="4-submit-to-slurm">4) Submit to Slurm</h2>
-<pre><code class="language-bash">biliresp --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
+<pre><code class="language-bash">pc --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
 </code></pre>
 <p>This writes a script under <code>results/slurm/</code> and submits it with <code>sbatch</code>.</p>
 <h2 id="slurm-settings">Slurm settings</h2>
@@ -1158,7 +1158,7 @@ slurm:
 <li><code>account</code></li>
 <li><code>mail_type</code> / <code>mail_user</code></li>
 </ul>
-<p>The template loads <code>anaconda</code>, activates the <code>biliresp</code> conda env, and sets <code>PYTHONPATH</code> to the project <code>src/</code> directory.</p>
+<p>The template loads <code>anaconda</code>, activates the <code>protocharge</code> conda env, and sets <code>PYTHONPATH</code> to the project <code>src/</code> directory.</p>
 
 
 

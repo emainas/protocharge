@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Utilities for parsing RESP outputs, fitting ESP charges, and validating dipoles.">
+        <meta name="description" content="Tools for generating ESP datasets, fitting RESP charges, and validating charge models.">
       
       
         <meta name="author" content="E. Mainas">
@@ -23,7 +23,7 @@
     
     
       
-        <title>Module Overview - BiliResp</title>
+        <title>Module Overview - ProtoCharge</title>
       
     
     
@@ -90,7 +90,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="BiliResp" class="md-header__button md-logo" aria-label="BiliResp" data-md-component="logo">
+    <a href=".." title="ProtoCharge" class="md-header__button md-logo" aria-label="ProtoCharge" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -104,7 +104,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            BiliResp
+            ProtoCharge
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -200,13 +200,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="BiliResp" class="md-nav__button md-logo" aria-label="BiliResp" data-md-component="logo">
+    <a href=".." title="ProtoCharge" class="md-nav__button md-logo" aria-label="ProtoCharge" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    BiliResp
+    ProtoCharge
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1046,7 +1046,7 @@
 
 
 <h1 id="module-overview">Module Overview</h1>
-<p>This project is organized as a single package, <code>biliresp</code>, with focused submodules for parsing, fitting, and analysis. The table below summarizes the main modules and how they fit together.</p>
+<p>This project is organized as a single package, <code>protocharge</code>, with focused submodules for parsing, fitting, and analysis. The table below summarizes the main modules and how they fit together.</p>
 <table>
 <thead>
 <tr>
@@ -1057,72 +1057,72 @@
 </thead>
 <tbody>
 <tr>
-<td><code>biliresp.resp_parser</code></td>
+<td><code>protocharge.resp_parser</code></td>
 <td>Parse TeraChem <code>resp.out</code>, <code>esp.xyz</code>, and <code>.xyz</code> geometry frames.</td>
 <td><code>ParseRespDotOut</code>, <code>ParseESPXYZ</code>, <code>ParseDotXYZ</code></td>
 </tr>
 <tr>
-<td><code>biliresp.linearESPcharges</code></td>
+<td><code>protocharge.linearESPcharges</code></td>
 <td>Build Coulomb matrices and solve the linear (unrestrained) ESP fit.</td>
 <td><code>prepare_linear_system</code>, <code>explicit_solution</code></td>
 </tr>
 <tr>
-<td><code>biliresp.resp</code></td>
+<td><code>protocharge.resp</code></td>
 <td>Single-frame RESP solver with hyperbolic restraint.</td>
 <td><code>fit_resp_charges</code>, <code>kkt_residual_at</code></td>
 </tr>
 <tr>
-<td><code>biliresp.dipole</code></td>
+<td><code>protocharge.dipole</code></td>
 <td>Dipole and center-of-mass helpers.</td>
 <td><code>center_of_mass_bohr_from_xyz</code></td>
 </tr>
 <tr>
-<td><code>biliresp.symmetry</code></td>
+<td><code>protocharge.symmetry</code></td>
 <td>WL refinement and symmetry buckets for charge tying.</td>
 <td><code>buckets_from_pdb</code></td>
 </tr>
 <tr>
-<td><code>biliresp.twostepresp_basic</code></td>
+<td><code>protocharge.twostepresp_basic</code></td>
 <td>Two-step RESP with total + bucket constraints.</td>
 <td><code>resp_step</code>, <code>solve_least_squares_with_constraints</code></td>
 </tr>
 <tr>
-<td><code>biliresp.twostepresp_masked_total</code></td>
+<td><code>protocharge.twostepresp_masked_total</code></td>
 <td>Two-step RESP with a masked total-charge constraint.</td>
 <td><code>load_total_constraint</code>, <code>build_total_constraint_mask</code></td>
 </tr>
 <tr>
-<td><code>biliresp.twostepresp_group_constraints</code></td>
+<td><code>protocharge.twostepresp_group_constraints</code></td>
 <td>Two-step RESP with group constraints (no implicit total).</td>
 <td><code>load_group_constraints</code></td>
 </tr>
 <tr>
-<td><code>biliresp.twostepresp_frozen_buckets</code></td>
+<td><code>protocharge.twostepresp_frozen_buckets</code></td>
 <td>Two-step RESP with frozen bucket values.</td>
 <td><code>load_frozen_buckets</code></td>
 </tr>
 <tr>
-<td><code>biliresp.multiconfresp</code></td>
+<td><code>protocharge.multiconfresp</code></td>
 <td>Multi-configuration assembly for a microstate.</td>
 <td><code>mcresp.py</code> CLI</td>
 </tr>
 <tr>
-<td><code>biliresp.reduced_basic</code></td>
+<td><code>protocharge.reduced_basic</code></td>
 <td>Reduced-space RESP solver (total + bucket constraints).</td>
 <td><code>reduced.py</code> CLI</td>
 </tr>
 <tr>
-<td><code>biliresp.reduced_masked_total</code></td>
+<td><code>protocharge.reduced_masked_total</code></td>
 <td>Reduced-space solver with masked total constraint.</td>
 <td><code>reduced.py</code> CLI</td>
 </tr>
 <tr>
-<td><code>biliresp.reduced_group_constraints</code></td>
+<td><code>protocharge.reduced_group_constraints</code></td>
 <td>Reduced-space solver with group constraints.</td>
 <td><code>reduced.py</code> CLI</td>
 </tr>
 <tr>
-<td><code>biliresp.multimoleculeresp</code></td>
+<td><code>protocharge.multimoleculeresp</code></td>
 <td>Multi-molecule, multi-config RESP (global buckets + optional freezing).</td>
 <td><code>mmresp.py</code> CLI</td>
 </tr>

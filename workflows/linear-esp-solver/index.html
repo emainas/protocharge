@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Utilities for parsing RESP outputs, fitting ESP charges, and validating dipoles.">
+        <meta name="description" content="Tools for generating ESP datasets, fitting RESP charges, and validating charge models.">
       
       
         <meta name="author" content="E. Mainas">
@@ -27,7 +27,7 @@
     
     
       
-        <title>Linear ESP Solver - BiliResp</title>
+        <title>Linear ESP Solver - ProtoCharge</title>
       
     
     
@@ -94,7 +94,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="BiliResp" class="md-header__button md-logo" aria-label="BiliResp" data-md-component="logo">
+    <a href="../.." title="ProtoCharge" class="md-header__button md-logo" aria-label="ProtoCharge" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +108,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            BiliResp
+            ProtoCharge
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -204,13 +204,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="BiliResp" class="md-nav__button md-logo" aria-label="BiliResp" data-md-component="logo">
+    <a href="../.." title="ProtoCharge" class="md-nav__button md-logo" aria-label="ProtoCharge" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    BiliResp
+    ProtoCharge
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1193,10 +1193,10 @@
 
 
 <h1 id="linear-esp-charge-solver">Linear ESP Charge Solver</h1>
-<p>The linear solver fits electrostatic potential (ESP) charges that reproduce grid values exported by RESP/TeraChem. Everything lives in <code>biliresp.linearESPcharges.linear</code> and is backed by numpy.</p>
+<p>The linear solver fits electrostatic potential (ESP) charges that reproduce grid values exported by RESP/TeraChem. Everything lives in <code>protocharge.linearESPcharges.linear</code> and is backed by numpy.</p>
 <h2 id="pipeline">Pipeline</h2>
 <ol>
-<li><strong>Parse Terachem RESP output</strong> with <code>ParseRespDotOut</code> (from <code>biliresp.resp_parser</code>) to obtain atomic positions and RESP ESP charges for each frame.</li>
+<li><strong>Parse Terachem RESP output</strong> with <code>ParseRespDotOut</code> (from <code>protocharge.resp_parser</code>) to obtain atomic positions and RESP ESP charges for each frame.</li>
 <li><strong>Read ESP grid</strong> points from <code>esp.xyz</code>.</li>
 <li><strong>Build the design matrix</strong> <code>A</code> where <code>A[i, j] = 1 / r_ij</code> for grid point <code>i</code> and atom <code>j</code>.</li>
 <li><strong>Solve</strong> the constrained optimization problem <code>A q ≈ V</code> subject to <code>Σ q = Q</code> with <code>explicit_solution</code>, a closed-form projection that first finds the unconstrained least squares solution and then enforces the total charge (Lagrange multiplier method). It accepts an optional <code>ridge</code> hyper-parameter if you want to add a small diagonal Tikhonov term for numerical stability.</li>
@@ -1249,7 +1249,7 @@ Q
 <p>If numerical damping is requested, <span class="arithmatex">\(H\)</span> is replaced with <span class="arithmatex">\(H + \eta I\)</span> (with a small <span class="arithmatex">\(\eta &gt; 0\)</span>) in the two linear solves above. The procedure yields the same result as the full KKT solve but avoids explicitly forming the block matrix.</p>
 <h2 id="programmatic-use">Programmatic use</h2>
 <p>You can access the components directly:</p>
-<pre><code class="language-python">from biliresp.linearESPcharges.linear import prepare_linear_system, explicit_solution
+<pre><code class="language-python">from protocharge.linearESPcharges.linear import prepare_linear_system, explicit_solution
 
 A, V, Q, resp_charges = prepare_linear_system(&quot;data/raw/resp.out&quot;, &quot;data/raw/esp.xyz&quot;, 78, frame_index=-1)
 solver = explicit_solution(ridge=0.0)
