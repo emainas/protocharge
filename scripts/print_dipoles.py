@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from biliresp.validation.dipole import run_dipole_validation
+from protocharge.validation.dipole import run_dipole_validation
 
 
 def main() -> None:

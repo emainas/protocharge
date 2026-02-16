@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from biliresp.training.md_qmmm import run_qmmm_stage
+from protocharge.training.md_qmmm import run_qmmm_stage
 
 
 def test_qmmm_prep_writes_region_and_inputs(tmp_path: Path) -> None:

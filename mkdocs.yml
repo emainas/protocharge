@@ -1,5 +1,5 @@
-site_name: BiliResp
-site_description: Utilities for parsing RESP outputs, fitting ESP charges, and validating dipoles.
+site_name: ProtoCharge
+site_description: Tools for generating ESP datasets, fitting RESP charges, and validating charge models.
 site_author: E. Mainas
 
 nav:

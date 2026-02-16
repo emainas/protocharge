@@ -8,10 +8,10 @@ from typing import Dict, Iterator, List, Sequence, Tuple
 
 import numpy as np
 
-from biliresp.paths import ensure_results_dir
+from protocharge.paths import ensure_results_dir
 
-from biliresp.linearESPcharges import explicit_solution, prepare_linear_system
-from biliresp.resp.resp import HyperbolicRestraint, fit_resp_charges
+from protocharge.linearESPcharges import explicit_solution, prepare_linear_system
+from protocharge.resp.resp import HyperbolicRestraint, fit_resp_charges
 
 
 def parse_args() -> argparse.Namespace:

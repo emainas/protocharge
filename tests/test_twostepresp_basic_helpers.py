@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from biliresp.twostepresp_basic.tsresp import build_atom_constraint_system, build_expansion_matrix
+from protocharge.twostepresp_basic.tsresp import build_atom_constraint_system, build_expansion_matrix
 
 
 def test_build_expansion_matrix_basic():

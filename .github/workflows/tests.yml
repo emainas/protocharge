@@ -18,7 +18,7 @@ jobs:
           miniforge-variant: Miniforge3
           use-mamba: true
           environment-file: environment.yml
-          activate-environment: biliresp
+          activate-environment: protocharge
           auto-activate-base: false
 
       - name: Run pytest

@@ -1,4 +1,4 @@
-# biliresp
+# protocharge
 
 Utilities for analyzing electrostatic potential (ESP) outputs. The project includes a RESP parser for TeraChem, linear and hyperbolic solvers, two-step RESP workflows, and multi-configuration/multi-molecule pipelines.
 

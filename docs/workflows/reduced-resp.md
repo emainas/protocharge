@@ -4,14 +4,14 @@ Reduced-space solvers enforce the linear constraints exactly by projecting into 
 
 ## Variants
 
-- **Basic** – total + bucket constraints: `biliresp.reduced_basic`
-- **Masked total** – total charge applied to a subset: `biliresp.reduced_masked_total`
-- **Group constraints** – arbitrary group targets: `biliresp.reduced_group_constraints`
+- **Basic** – total + bucket constraints: `protocharge.reduced_basic`
+- **Masked total** – total charge applied to a subset: `protocharge.reduced_masked_total`
+- **Group constraints** – arbitrary group targets: `protocharge.reduced_group_constraints`
 
 ## Example
 
 ```bash
-python -m biliresp.reduced_group_constraints.reduced \
+python -m protocharge.reduced_group_constraints.reduced \
   --microstate HID \
   --load-and-resp \
   --input-dir-name multiconfRESP \

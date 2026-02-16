@@ -19,7 +19,7 @@ with coordinates expressed in bohr. It also reports a mass-weighted center of ma
 Use the validation module:
 
 ```bash
-biliresp --validate dipole.print --yaml configs/HID/dipole.yaml
+pc --validate dipole.print --yaml configs/HID/dipole.yaml
 ```
 
 Example `configs/HID/dipole.yaml`:

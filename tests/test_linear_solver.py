@@ -6,11 +6,11 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from biliresp.linearESPcharges.linear import (
+from protocharge.linearESPcharges.linear import (
     explicit_solution,
     prepare_linear_system,
 )
-from biliresp.resp_parser import ParseRespDotOut
+from protocharge.resp_parser import ParseRespDotOut
 
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data" / "raw"

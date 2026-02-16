@@ -8,7 +8,7 @@ from typing import Dict, List, Tuple
 
 import numpy as np
 
-from biliresp.linearESPcharges.linear import prepare_linear_system
+from protocharge.linearESPcharges.linear import prepare_linear_system
 
 MICROSTATES = ["HIP", "HIE", "HID"]
 N_BLOCKS = 10  # blocks (frames) per microstate

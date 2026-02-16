@@ -3,7 +3,7 @@ import numpy as np
 import pytest
 import yaml
 
-from biliresp.twostepresp_masked_total.tsresp import (
+from protocharge.twostepresp_masked_total.tsresp import (
     build_total_constraint_mask,
     load_total_constraint,
     build_atom_constraint_system,

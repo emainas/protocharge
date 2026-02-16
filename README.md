@@ -1,8 +1,8 @@
-# biliresp
+# protocharge
 
-<!-- [![Release](https://img.shields.io/github/v/release/emainas/biliresp)](https://github.com/emainas/biliresp/releases/latest) -->
-[![Tests](https://github.com/emainas/biliresp/actions/workflows/tests.yml/badge.svg)](https://github.com/emainas/biliresp/actions/workflows/tests.yml)
-[![Docs](https://img.shields.io/badge/docs-online-blue)](https://emainas.github.io/biliresp/getting-started/)
+<!-- [![Release](https://img.shields.io/github/v/release/emainas/protocharge)](https://github.com/emainas/protocharge/releases/latest) -->
+[![Tests](https://github.com/emainas/protocharge/actions/workflows/tests.yml/badge.svg)](https://github.com/emainas/protocharge/actions/workflows/tests.yml)
+[![Docs](https://img.shields.io/badge/docs-online-blue)](https://emainas.github.io/protocharge/getting-started/)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
@@ -10,13 +10,13 @@ Tools for generating ESP datasets, fitting RESP charges, and validating charge m
 
 ## Documentation
 
-Project documentation (workflows + API notes): https://emainas.github.io/biliresp/getting-started/
+Project documentation (workflows + API notes): https://emainas.github.io/protocharge/getting-started/
 
 ## Install
 
 ```bash
 conda env create -f environment.yml
-conda activate biliresp
+conda activate protocharge
 python -m pip install -e .
 ```
 
@@ -31,7 +31,7 @@ pytest -q
 Create a YAML config under `configs/<microstate>/<function>/config.yaml` and run:
 
 ```bash
-biliresp --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
+pc --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
 ```
 
 `--yaml` can be a full path or a `configs/` subpath. With `--slurm`, the CLI generates a Slurm script and submits it.

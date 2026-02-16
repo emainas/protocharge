@@ -8,7 +8,7 @@
 
 ```bash
 conda env create -f environment.yml
-conda activate biliresp
+conda activate protocharge
 python -m pip install -e .
 ```
 
@@ -31,7 +31,7 @@ pytest -q tests/test_dipole.py
 Create a config under `configs/<microstate>/<function>/config.yaml` and run:
 
 ```bash
-biliresp --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
+pc --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
 ```
 
 `--yaml` accepts a full path or a `configs/` subpath. With `--slurm`, the CLI writes a Slurm script under `results/slurm/` and submits it via `sbatch`.
@@ -39,7 +39,7 @@ biliresp --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
 Use `--dry-run` to verify the resolved command without executing it:
 
 ```bash
-biliresp --function twostepRESP_basic --yaml HID/twostepRESP_basic --dry-run
+pc --function twostepRESP_basic --yaml HID/twostepRESP_basic --dry-run
 ```
 
 See `slurm-quickstart.md` for more detail.

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from biliresp.terachem_processing import process_tc_resp_runs
+from protocharge.terachem_processing import process_tc_resp_runs
 
 
 def _write(path: Path, text: str) -> None:

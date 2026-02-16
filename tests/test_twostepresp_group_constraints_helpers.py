@@ -3,7 +3,7 @@ import numpy as np
 import pytest
 import yaml
 
-from biliresp.twostepresp_group_constraints.tsresp import (
+from protocharge.twostepresp_group_constraints.tsresp import (
     build_group_mask_from_indices,
     load_group_constraints,
     build_atom_constraint_system,

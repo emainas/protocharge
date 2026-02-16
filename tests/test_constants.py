@@ -1,4 +1,4 @@
-from biliresp.constants.atomic_masses import atomic_masses
+from protocharge.constants.atomic_masses import atomic_masses
 
 
 def test_atomic_masses_has_common_elements():

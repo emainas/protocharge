@@ -6,10 +6,10 @@ from typing import List, Tuple
 
 import numpy as np
 
-from biliresp.paths import ensure_results_dir, microstate_constraints_root
+from protocharge.paths import ensure_results_dir, microstate_constraints_root
 
-from biliresp.linearESPcharges.linear import prepare_linear_system
-from biliresp.twostepresp_masked_total.tsresp import (
+from protocharge.linearESPcharges.linear import prepare_linear_system
+from protocharge.twostepresp_masked_total.tsresp import (
     build_atom_constraint_system,
     build_expansion_matrix,
     build_total_constraint_mask,

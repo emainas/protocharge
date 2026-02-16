@@ -12,10 +12,10 @@ This validation layer uses Hamiltonian replica exchange and REFEP energy grids t
 ## CLI
 
 ```bash
-biliresp --validate refep.prep --yaml configs/HID/refep.yaml
-biliresp --validate refep.run --yaml configs/HID/refep.yaml --slurm
-biliresp --validate refep.grid --yaml configs/HID/refep.yaml --slurm
-biliresp --validate refep.analyze --yaml configs/HID/refep.yaml
+pc --validate refep.prep --yaml configs/HID/refep.yaml
+pc --validate refep.run --yaml configs/HID/refep.yaml --slurm
+pc --validate refep.grid --yaml configs/HID/refep.yaml --slurm
+pc --validate refep.analyze --yaml configs/HID/refep.yaml
 ```
 
 ## Config example
@@ -90,7 +90,7 @@ refep:
 
 ## Charge overrides
 
-If `charges` is provided for a `tleap_inputs` entry, `biliresp` injects `set <res>.<atom> charge <q>` lines into the TLEaP template. By default it inserts after the marker line:
+If `charges` is provided for a `tleap_inputs` entry, `protocharge` injects `set <res>.<atom> charge <q>` lines into the TLEaP template. By default it inserts after the marker line:
 
 ```
 # BILIRESP_CHARGES

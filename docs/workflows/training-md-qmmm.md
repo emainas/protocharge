@@ -5,12 +5,12 @@ This workflow generates the RESP training set from classical MD followed by QMMM
 ## CLI
 
 ```bash
-biliresp --generator md.prep --yaml configs/HID/training.yaml
-biliresp --generator md.run --yaml configs/HID/training.yaml --slurm
+pc --generator md.prep --yaml configs/HID/training.yaml
+pc --generator md.run --yaml configs/HID/training.yaml --slurm
 
-biliresp --generator qmmm.prep --yaml configs/HID/training.yaml
-biliresp --generator qmmm.run --yaml configs/HID/training.yaml --slurm
-biliresp --generator qmmm.esp --yaml configs/HID/training.yaml --slurm
+pc --generator qmmm.prep --yaml configs/HID/training.yaml
+pc --generator qmmm.run --yaml configs/HID/training.yaml --slurm
+pc --generator qmmm.esp --yaml configs/HID/training.yaml --slurm
 ```
 
 ## Config example
@@ -88,5 +88,5 @@ qmmm:
 - QMMM RESP outputs can be collected with:
 
 ```bash
-biliresp --process data/microstates/<MICROSTATE>
+pc --process data/microstates/<MICROSTATE>
 ```

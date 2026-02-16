@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from biliresp.run_tc_resp import run_tc_resp
+from protocharge.run_tc_resp import run_tc_resp
 
 
 def _write(path: Path, text: str) -> None:

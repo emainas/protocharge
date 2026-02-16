@@ -1,9 +1,9 @@
 # Raw TeraChem Processing
 
-Most users should run TeraChem RESP jobs with `biliresp --run-tc-resp`, then collect outputs with:
+Most users should run TeraChem RESP jobs with `pc --run-tc-resp`, then collect outputs with:
 
 ```bash
-biliresp --process-tc-resp data/microstates/<MICROSTATE>
+pc --process-tc-resp data/microstates/<MICROSTATE>
 ```
 
 This gathers `resp.out` plus the scratch `esp.xyz` files and writes the standardized inputs under `data/microstates/<MICROSTATE>/terachem/`.

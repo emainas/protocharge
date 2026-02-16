@@ -4,7 +4,7 @@ The two-step RESP pipeline reproduces the AMBER-style restrained electrostatic p
 
 ## Stages at a Glance
 
-1. **Linear warm start** – `solve_least_squares_with_constraints` (in `biliresp.twostepresp_basic.tsresp`) fits bucket charges that satisfy the aggregate constraints and provides an initial KKT solution.
+1. **Linear warm start** – `solve_least_squares_with_constraints` (in `protocharge.twostepresp_basic.tsresp`) fits bucket charges that satisfy the aggregate constraints and provides an initial KKT solution.
 2. **Step-one RESP** – `resp_step` runs a Newton–Krylov solve with the hyperbolic restraint active on the mask defined in `mask_step_1.yaml`, producing `step1` charges for every configuration.
 3. **Step-two RESP** – The solver reuses converged bucket charges but frees the subset flagged in `mask_step_2.yaml`, recomputing the fit while holding the remaining buckets fixed. The result is stored as `step2`, our recommended production charge set.
 

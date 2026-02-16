@@ -4,10 +4,10 @@ The multiconfiguration workflow stacks multiple conformations of a single micros
 
 ## Assemble and Run
 
-The CLI lives in `biliresp.multiconfresp.mcresp`.
+The CLI lives in `protocharge.multiconfresp.mcresp`.
 
 ```bash
-python -m biliresp.multiconfresp.mcresp \
+python -m protocharge.multiconfresp.mcresp \
   --microstate PPP \
   --load-and-resp \
   --maxiter 400

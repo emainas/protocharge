@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-from biliresp.linearESPcharges import explicit_solution, prepare_linear_system
+from protocharge.linearESPcharges import explicit_solution, prepare_linear_system
 
 
 def main() -> None:

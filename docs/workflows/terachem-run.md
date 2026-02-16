@@ -26,7 +26,7 @@ esp_grid_dens: 4.0
 ## Run
 
 ```bash
-biliresp --run-tc-resp data/microstates/<MICROSTATE>
+pc --run-tc-resp data/microstates/<MICROSTATE>
 ```
 
 For each conf, the module writes:
@@ -42,7 +42,7 @@ Then it submits `sbatch run_tc_resp.slurm` immediately.
 TeraChem writes `resp.out` in the conf directory and `esp.xyz` under a scratch folder named `scr.<rst7>`. Once the jobs finish, collect outputs into the standard layout:
 
 ```bash
-biliresp --process-tc-resp data/microstates/<MICROSTATE>
+pc --process-tc-resp data/microstates/<MICROSTATE>
 ```
 
 This writes:

@@ -1,9 +1,0 @@
-README.md
-pyproject.toml
-src/parsers/__init__.py
-src/parsers/resp.py
-src/resp_model.egg-info/PKG-INFO
-src/resp_model.egg-info/SOURCES.txt
-src/resp_model.egg-info/dependency_links.txt
-src/resp_model.egg-info/top_level.txt
-tests/test_resp_parser.py

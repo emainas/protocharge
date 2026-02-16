@@ -6,9 +6,9 @@ from typing import Dict, Iterable, List, Sequence, Tuple
 
 import numpy as np
 
-from biliresp.paths import ensure_results_dir
+from protocharge.paths import ensure_results_dir
 
-from biliresp.linearESPcharges import prepare_linear_system
+from protocharge.linearESPcharges import prepare_linear_system
 
 
 def parse_args() -> argparse.Namespace:

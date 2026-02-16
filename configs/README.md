@@ -1,6 +1,6 @@
 # Configs
 
-This folder holds YAML configuration files for `biliresp` runs.
+This folder holds YAML configuration files for `protocharge` runs.
 
 Recommended layout:
 

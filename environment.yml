@@ -1,4 +1,4 @@
-name: biliresp
+name: protocharge
 channels:
   - conda-forge
 dependencies:

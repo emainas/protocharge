@@ -4,7 +4,7 @@ from pathlib import Path
 
 import numpy as np
 
-from biliresp.validation.refep import run_refep_stage
+from protocharge.validation.refep import run_refep_stage
 
 
 def _write(path: Path, text: str) -> None:

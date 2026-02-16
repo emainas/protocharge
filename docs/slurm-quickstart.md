@@ -16,13 +16,13 @@ See the minimal example layout in `docs/examples/microstates/`.
 If you only have raw TeraChem outputs under a `raw_terachem_outputs/` directory, use:
 
 ```bash
-biliresp --process data/microstates/<MICROSTATE>
+pc --process data/microstates/<MICROSTATE>
 ```
 
 To override the raw subdirectory name:
 
 ```bash
-biliresp --process data/microstates/<MICROSTATE> --tc-raw-subdir raw_tc
+pc --process data/microstates/<MICROSTATE> --tc-raw-subdir raw_tc
 ```
 
 ## 2) Create a config
@@ -47,13 +47,13 @@ A complete example config is in `docs/examples/configs/`.
 Use `--dry-run` to see the resolved command and config path before submitting:
 
 ```bash
-biliresp --function twostepRESP_basic --yaml HID/twostepRESP_basic --dry-run
+pc --function twostepRESP_basic --yaml HID/twostepRESP_basic --dry-run
 ```
 
 ## 4) Submit to Slurm
 
 ```bash
-biliresp --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
+pc --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
 ```
 
 This writes a script under `results/slurm/` and submits it with `sbatch`.
@@ -72,4 +72,4 @@ You can override these keys under `slurm:` in the config:
 - `account`
 - `mail_type` / `mail_user`
 
-The template loads `anaconda`, activates the `biliresp` conda env, and sets `PYTHONPATH` to the project `src/` directory.
+The template loads `anaconda`, activates the `protocharge` conda env, and sets `PYTHONPATH` to the project `src/` directory.

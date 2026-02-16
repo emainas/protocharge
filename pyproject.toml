@@ -6,7 +6,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "biliresp"
+name = "protocharge"
 version = "0.1.0-alpha"
 description = "Tools for parsing RESP output and ESP grid data"
 readme = "README.md"
@@ -30,7 +30,7 @@ dev = [
 ]
 
 [project.scripts]
-biliresp = "biliresp.cli:main"
+pc = "protocharge.cli:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

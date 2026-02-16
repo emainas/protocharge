@@ -3,7 +3,7 @@ import numpy as np
 import pytest
 import yaml
 
-from biliresp.multimoleculeresp.mmresp import (
+from protocharge.multimoleculeresp.mmresp import (
     build_expansion_matrix,
     load_global_buckets,
     load_group_constraints,
