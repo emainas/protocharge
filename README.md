@@ -1,12 +1,12 @@
 # biliresp
 
-[![Release](https://img.shields.io/github/v/release/emainas/biliresp)](https://github.com/emainas/biliresp/releases/latest)
+[comment]: # ([![Release](https://img.shields.io/github/v/release/emainas/biliresp)](https://github.com/emainas/biliresp/releases/latest))
 [![Tests](https://github.com/emainas/biliresp/actions/workflows/tests.yml/badge.svg)](https://github.com/emainas/biliresp/actions/workflows/tests.yml)
 [![Docs](https://img.shields.io/badge/docs-online-blue)](https://emainas.github.io/biliresp/getting-started/)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](pyproject.toml)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-Utilities for parsing TeraChem RESP/ESP outputs, fitting electrostatic potential (ESP) charges, and validating dipoles. The project provides RESP/ESP parsing, linear and hyperbolic solvers, two-step workflows, and ensemble/multi-molecule pipelines.
+Tools for generating ESP datasets, fitting RESP charges, and validating charge models.
 
 ## Documentation
 
