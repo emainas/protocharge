@@ -1,6 +1,6 @@
 # biliresp
 
-[comment]: # ([![Release](https://img.shields.io/github/v/release/emainas/biliresp)](https://github.com/emainas/biliresp/releases/latest))
+<!-- [![Release](https://img.shields.io/github/v/release/emainas/biliresp)](https://github.com/emainas/biliresp/releases/latest) -->
 [![Tests](https://github.com/emainas/biliresp/actions/workflows/tests.yml/badge.svg)](https://github.com/emainas/biliresp/actions/workflows/tests.yml)
 [![Docs](https://img.shields.io/badge/docs-online-blue)](https://emainas.github.io/biliresp/getting-started/)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](pyproject.toml)

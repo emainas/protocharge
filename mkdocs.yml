@@ -3,9 +3,8 @@ site_description: Utilities for parsing RESP outputs, fitting ESP charges, and v
 site_author: E. Mainas
 
 nav:
-  - BiliResp:
-      - Workflow: workflow.md
-      - Installation: getting-started.md
+  - Workflow: workflow.md
+  - Installation: getting-started.md
   - Layers:
       - Generator:
           - Overview: workflows/generator.md
