@@ -12,6 +12,9 @@ import yaml
 from biliresp.paths import data_root, project_root, results_root
 from biliresp.run_tc_resp import run_tc_resp
 from biliresp.terachem_processing import process_tc_resp_runs, process_terachem_outputs
+from biliresp.validation.refep import run_refep_stage
+from biliresp.validation.dipole import run_dipole_validation
+from biliresp.training.md_qmmm import run_md_stage, run_qmmm_stage
 
 
 def _default_microstate_root(microstate: str) -> Path:
@@ -273,6 +276,9 @@ def main(argv: Iterable[str] | None = None) -> None:
         dest="process_tc_resp_path",
         help="Collect TeraChem RESP outputs from input_tc_structures and write to terachem/ folders.",
     )
+    parser.add_argument("--validate", dest="validate_stage", help="Validation stage name, e.g. refep.prep.")
+    parser.add_argument("--generator", dest="generator_stage", help="Generator stage name, e.g. md.prep or qmmm.prep.")
+    parser.add_argument("--train", dest="train_stage", help="Training stage name, e.g. resp.twostepRESP_basic.")
     parser.add_argument("--slurm", action="store_true", help="Submit as a Slurm job.")
     parser.add_argument("--dry-run", action="store_true", help="Print the resolved command and exit.")
     args = parser.parse_args(list(argv) if argv is not None else None)
@@ -311,6 +317,78 @@ def main(argv: Iterable[str] | None = None) -> None:
                 f"esp={summary['missing_esp']}",
             )
         return
+
+    if args.validate_stage:
+        if not args.yaml_path:
+            raise SystemExit("Provide --yaml for validation stages.")
+        stage = args.validate_stage
+        if stage.startswith("refep."):
+            stage = stage.split(".", 1)[1]
+            config_path = _resolve_config_path(args.yaml_path, "refep")
+            run_refep_stage(stage, config_path, slurm=args.slurm, dry_run=args.dry_run)
+            return
+        if stage.startswith("dipole."):
+            config_path = _resolve_config_path(args.yaml_path, "dipole")
+            dipoles = run_dipole_validation(config_path)
+            print("QM (from resp.out log)")
+            print("  vector (Debye):", dipoles["qm_dipole_vec_D"])
+            print("  |μ| (Debye):   {:.6f}".format(dipoles["qm_dipole_mag_D"]))
+            print()
+            print("Terachem charges (RESP log)")
+            print("  vector (Debye):", dipoles["terachem_dipole_vec_D"])
+            print("  |μ| (Debye):   {:.6f}".format(dipoles["terachem_dipole_mag_D"]))
+            print("  Δ vector vs QM (Debye):", dipoles["delta_terachem_vs_qm_vec_D"])
+            print("  Δ|μ| vs QM (Debye):     {:.6f}".format(dipoles["delta_terachem_vs_qm_mag_D"]))
+            print()
+            print("Lagrange multiplier fit (explicit)")
+            print("  vector (Debye):", dipoles["lagrange_dipole_vec_D"])
+            print("  |μ| (Debye):   {:.6f}".format(dipoles["lagrange_dipole_mag_D"]))
+            print("  Δ vector vs QM (Debye):", dipoles["delta_lagrange_vs_qm_vec_D"])
+            print("  Δ|μ| vs QM (Debye):     {:.6f}".format(dipoles["delta_lagrange_vs_qm_mag_D"]))
+            return
+        raise SystemExit("Validation stage must start with refep. or dipole.")
+
+    if args.generator_stage:
+        if not args.yaml_path:
+            raise SystemExit("Provide --yaml for generator stages.")
+        stage = args.generator_stage
+        config_path = _resolve_config_path(args.yaml_path, "training")
+        if stage.startswith("md."):
+            run_md_stage(stage.split(".", 1)[1], config_path, slurm=args.slurm, dry_run=args.dry_run)
+            return
+        if stage.startswith("qmmm."):
+            run_qmmm_stage(stage.split(".", 1)[1], config_path, slurm=args.slurm, dry_run=args.dry_run)
+            return
+        raise SystemExit("Generator stage must start with md. or qmmm.")
+
+    if args.train_stage:
+        if not args.yaml_path:
+            raise SystemExit("Provide --yaml for training stages.")
+        stage = args.train_stage
+        if stage.startswith("resp."):
+            function = stage.split(".", 1)[1]
+            config_path = _resolve_config_path(args.yaml_path, function)
+            cfg = _load_config(config_path)
+            command, _ = _command_for_function(function, cfg)
+            if args.dry_run:
+                print("Command:", " ".join(command))
+                print("Config:", str(config_path))
+                return
+            if args.slurm:
+                slurm_cfg = dict(cfg.get("slurm", {}) or {})
+                slurm_cfg.setdefault("job_name", f"{function}_{cfg.get('microstate', 'job')}")
+                script_body = _render_slurm_script(command, slurm_cfg)
+                stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                slurm_dir = results_root() / "slurm"
+                slurm_dir.mkdir(parents=True, exist_ok=True)
+                script_path = slurm_dir / f"{function}_{cfg.get('microstate', 'job')}_{stamp}.slurm"
+                script_path.write_text(script_body, encoding="utf-8")
+                subprocess.run(["sbatch", str(script_path)], check=True)
+                print(f"Submitted Slurm job via {script_path}")
+                return
+            subprocess.run(command, check=True)
+            return
+        raise SystemExit("Training stage must start with resp.")
 
     if not args.function or not args.yaml_path:
         raise SystemExit("Provide --function and --yaml, or use --process.")

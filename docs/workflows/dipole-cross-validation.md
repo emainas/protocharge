@@ -14,16 +14,26 @@ $$
 
 with coordinates expressed in bohr. It also reports a mass-weighted center of mass derived from the supplied geometry `.xyz` file; you can override the coordinates (Å or bohr) when calling `center_of_mass_bohr_from_xyz` if you need to reuse RESP geometries directly. The return dictionary contains each dipole vector/magnitude, their deltas relative to the QM reference, and both COM estimates.
 
-## Script entry point
+## Validation entry point
 
-`scripts/print_dipoles.py` bundles the full workflow:
+Use the validation module:
 
 ```bash
-python scripts/print_dipoles.py data/raw/resp.out data/raw/esp.xyz data/raw/1.pose.xyz 78 --frame -1
+biliresp --validate dipole.print --yaml configs/HID/dipole.yaml
 ```
 
-- The script builds the linear system, fits charges with the explicit Lagrange projection, and prints the QM, TeraChem, and Lagrange dipoles plus their deltas.
-- `--frame` chooses which RESP frame to analyze (`-1` = last). The geometry `.xyz` supplies element ordering for mass lookup when computing the mass-weighted COM.
+Example `configs/HID/dipole.yaml`:
+
+```yaml
+resp_out: data/raw/resp.out
+esp_xyz: data/raw/esp.xyz
+geom_xyz: data/raw/1.pose.xyz
+n_atoms: 78
+frame: -1
+```
+
+- The validation module builds the linear system, fits charges with the explicit Lagrange projection, and prints the QM, TeraChem, and Lagrange dipoles plus their deltas.
+- `frame` chooses which RESP frame to analyze (`-1` = last). The geometry `.xyz` supplies element ordering for mass lookup when computing the mass-weighted COM.
 
 ## Typical output
 
