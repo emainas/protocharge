@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../refep-validation/">
+        <link rel="prev" href="../validation/">
       
       
-        <link rel="next" href="../esp-charge-distributions/">
+        <link rel="next" href="../dipole-cross-validation/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Dipole Cross-Validation - BiliResp</title>
+        <title>REFEP Validation - BiliResp</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#dipole-cross-validation" class="md-skip">
+        <a href="#validation-refep" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Dipole Cross-Validation
+              REFEP Validation
             
           </span>
         </div>
@@ -830,34 +830,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../refep-validation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    REFEP Validation
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -877,7 +849,7 @@
   <span class="md-ellipsis">
     
   
-    Dipole Cross-Validation
+    REFEP Validation
   
 
     
@@ -895,7 +867,7 @@
   <span class="md-ellipsis">
     
   
-    Dipole Cross-Validation
+    REFEP Validation
   
 
     
@@ -921,10 +893,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#validation-entry-point" class="md-nav__link">
+  <a href="#stages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Validation entry point
+        Stages
       
     </span>
   </a>
@@ -932,10 +904,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#typical-output" class="md-nav__link">
+  <a href="#cli" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Typical output
+        CLI
       
     </span>
   </a>
@@ -943,10 +915,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#parity-visualisation" class="md-nav__link">
+  <a href="#config-example" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Parity visualisation
+        Config example
       
     </span>
   </a>
@@ -954,10 +926,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#programmatic-use" class="md-nav__link">
+  <a href="#charge-overrides" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Programmatic use
+        Charge overrides
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#charge-export-helper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Charge export helper
       
     </span>
   </a>
@@ -968,6 +951,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dipole-cross-validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dipole Cross-Validation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1213,10 +1224,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#validation-entry-point" class="md-nav__link">
+  <a href="#stages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Validation entry point
+        Stages
       
     </span>
   </a>
@@ -1224,10 +1235,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#typical-output" class="md-nav__link">
+  <a href="#cli" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Typical output
+        CLI
       
     </span>
   </a>
@@ -1235,10 +1246,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#parity-visualisation" class="md-nav__link">
+  <a href="#config-example" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Parity visualisation
+        Config example
       
     </span>
   </a>
@@ -1246,10 +1257,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#programmatic-use" class="md-nav__link">
+  <a href="#charge-overrides" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Programmatic use
+        Charge overrides
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#charge-export-helper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Charge export helper
       
     </span>
   </a>
@@ -1273,57 +1295,102 @@
 
 
 
-<h1 id="dipole-cross-validation">Dipole Cross-Validation</h1>
-<p>The helper implemented in <code>scripts/print_dipoles.py</code> (and mirrored inside <code>tests/test_dipole.py</code>) compares three sets of dipole moments for a selected frame of a RESP run:</p>
-<ol>
-<li><strong>QM dipole</strong> reported directly by TeraChem.</li>
-<li><strong>TeraChem dipole</strong> reconstructed from the ESP-unrestrained charges written in <code>resp.out</code>.</li>
-<li><strong>Lagrange dipole</strong> generated from the fitted charges returned by the linear ESP solver.</li>
-</ol>
-<p>The helper parses the frame in <code>resp.out</code>, converts the logged center of mass to bohr, and computes dipoles in Debye via:</p>
-<div class="arithmatex">\[
-\mu = \sum_A q_A (R_A - R_{\text{COM}})
-\]</div>
-<p>with coordinates expressed in bohr. It also reports a mass-weighted center of mass derived from the supplied geometry <code>.xyz</code> file; you can override the coordinates (Å or bohr) when calling <code>center_of_mass_bohr_from_xyz</code> if you need to reuse RESP geometries directly. The return dictionary contains each dipole vector/magnitude, their deltas relative to the QM reference, and both COM estimates.</p>
-<h2 id="validation-entry-point">Validation entry point</h2>
-<p>Use the validation module:</p>
-<pre><code class="language-bash">biliresp --validate dipole.print --yaml configs/HID/dipole.yaml
-</code></pre>
-<p>Example <code>configs/HID/dipole.yaml</code>:</p>
-<pre><code class="language-yaml">resp_out: data/raw/resp.out
-esp_xyz: data/raw/esp.xyz
-geom_xyz: data/raw/1.pose.xyz
-n_atoms: 78
-frame: -1
-</code></pre>
+<h1 id="validation-refep">Validation: REFEP</h1>
+<p>This validation layer uses Hamiltonian replica exchange and REFEP energy grids to compare two endpoint charge sets (e.g., HID vs HIE). The workflow is YAML-driven and split into stages.</p>
+<h2 id="stages">Stages</h2>
 <ul>
-<li>The validation module builds the linear system, fits charges with the explicit Lagrange projection, and prints the QM, TeraChem, and Lagrange dipoles plus their deltas.</li>
-<li><code>frame</code> chooses which RESP frame to analyze (<code>-1</code> = last). The geometry <code>.xyz</code> supplies element ordering for mass lookup when computing the mass-weighted COM.</li>
+<li><code>refep.prep</code>: build endpoint topologies (tleap) and interpolate charges (parmed)</li>
+<li><code>refep.run</code>: run H-REMD production</li>
+<li><code>refep.grid</code>: demux + compute REFEP energy grid (sander)</li>
+<li><code>refep.analyze</code>: analyze grid (BAR/TI, plots)</li>
 </ul>
-<h2 id="typical-output">Typical output</h2>
-<pre><code>QM (from resp.out log)
-  vector (Debye): [-0.123 ...]
-  |μ| (Debye):   2.345678
-
-Terachem charges (RESP log)
-  vector (Debye): [-0.121 ...]
-  |μ| (Debye):   2.346100
-  Δ vector vs QM (Debye): [0.002 ...]
-  Δ|μ| vs QM (Debye):     0.000422
-
-Lagrange multiplier fit (explicit)
-  vector (Debye): [-0.120 ...]
-  |μ| (Debye):   2.345900
-  Δ vector vs QM (Debye): [0.003 ...]
-  Δ|μ| vs QM (Debye):     0.000222
+<h2 id="cli">CLI</h2>
+<pre><code class="language-bash">biliresp --validate refep.prep --yaml configs/HID/refep.yaml
+biliresp --validate refep.run --yaml configs/HID/refep.yaml --slurm
+biliresp --validate refep.grid --yaml configs/HID/refep.yaml --slurm
+biliresp --validate refep.analyze --yaml configs/HID/refep.yaml
 </code></pre>
-<p>Use this readout to sanity-check that your fitted charges reproduce the QM dipole within an acceptable tolerance before exporting them to downstream workflows.</p>
-<h2 id="parity-visualisation">Parity visualisation</h2>
-<p>The example notebook in <code>notebooks/</code> produces a parity plot comparing the QM dipole magnitude against the TeraChem ESP reconstruction across every frame. The figure below highlights the excellent agreement and annotates the RMSE.</p>
-<p><img alt="Parity plot of QM vs TeraChem dipole magnitudes" src="../../img/parity_test.png" /></p>
-<p>Colours denote the absolute deviation |Δ| in Debye.</p>
-<h2 id="programmatic-use">Programmatic use</h2>
-<p>See <code>tests/test_dipole.py</code> for a complete, importable example. The test implements <code>_three_dipoles_for_frame</code> inline so you can copy it into your own workflow if the CLI output is not sufficient.</p>
+<h2 id="config-example">Config example</h2>
+<pre><code class="language-yaml">microstate: HID
+refep:
+  prep:
+    workdir: results/HID/refep/prep
+    charge_exports:
+      - charges:
+          path: results/HID/twostepRESP_basic/charges.npz
+          key: step2
+          frame: -1
+        mol2: configs/HID/hid.mol2
+        resid_prefix: pept
+        output: configs/HID/hid_charges.yaml
+    tleap_inputs:
+      - template: configs/HID/tleap_hid.in
+        output: tleap_hid.in
+        charges: configs/HID/hid_charges.yaml
+      - template: configs/HID/tleap_hie.in
+        output: tleap_hie.in
+        charges: configs/HID/hie_charges.yaml
+    files:
+      - src: configs/HID/parmed.interpolate.in
+        dst: parmed.interpolate.in
+    commands:
+      - [&quot;tleap&quot;, &quot;-f&quot;, &quot;tleap_hid.in&quot;]
+      - [&quot;tleap&quot;, &quot;-f&quot;, &quot;tleap_hie.in&quot;]
+      - [&quot;parmed&quot;, &quot;-i&quot;, &quot;parmed.interpolate.in&quot;]
+
+  run:
+    workdir: results/HID/refep/run
+    files:
+      - src: configs/HID/remd_hist.in
+        dst: remd_hist.in
+      - src: configs/HID/remd_hist.group
+        dst: remd_hist.group
+    commands:
+      - [&quot;pmemd.MPI&quot;, &quot;-ng&quot;, &quot;16&quot;, &quot;-groupfile&quot;, &quot;remd_hist.group&quot;]
+    slurm:
+      partition: batch
+      nodes: 4
+      cpus_per_task: 64
+      time: &quot;24:00:00&quot;
+
+  grid:
+    workdir: results/HID/refep/grid
+    files:
+      - src: configs/HID/demux_.in
+        dst: demux_.in
+      - src: configs/HID/refep_.in
+        dst: refep_.in
+    commands:
+      - [&quot;cpptraj&quot;, &quot;-i&quot;, &quot;demux_.in&quot;]
+      - [&quot;bash&quot;, &quot;run_refep_grid.sh&quot;]
+    slurm:
+      partition: batch
+      nodes: 4
+      cpus_per_task: 64
+      time: &quot;04:00:00&quot;
+
+  analyze:
+    workdir: results/HID/refep/analyze
+    files:
+      - src: configs/HID/plot_refep_du_grid.py
+        dst: plot_refep_du_grid.py
+    commands:
+      - [&quot;python&quot;, &quot;plot_refep_du_grid.py&quot;]
+</code></pre>
+<h2 id="charge-overrides">Charge overrides</h2>
+<p>If <code>charges</code> is provided for a <code>tleap_inputs</code> entry, <code>biliresp</code> injects <code>set &lt;res&gt;.&lt;atom&gt; charge &lt;q&gt;</code> lines into the TLEaP template. By default it inserts after the marker line:</p>
+<pre><code># BILIRESP_CHARGES
+</code></pre>
+<p>If the marker is missing, the block is appended at the end of the file.</p>
+<h2 id="charge-export-helper">Charge export helper</h2>
+<p><code>refep.prep</code> can export charge overrides directly from RESP outputs using <code>charge_exports</code>.</p>
+<p>Supported charge files:</p>
+<ul>
+<li><code>.npz</code> (choose <code>key</code>, default tries <code>step2</code>, <code>charges</code>, <code>q</code>)</li>
+<li><code>.npy</code></li>
+</ul>
+<p>If the charge array is 2D, use <code>frame</code> (default <code>-1</code>) or <code>aggregate: mean</code>.</p>
+<p>Mol2 parsing uses the <code>@&lt;TRIPOS&gt;ATOM</code> block. Residue labels are built from <code>subst_id</code> (default) or <code>subst_name</code> via <code>resid_source</code>. Use <code>resid_prefix</code> to generate <code>pept.&lt;id&gt;</code> style labels.</p>
 
 
 

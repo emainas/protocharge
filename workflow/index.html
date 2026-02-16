@@ -13,28 +13,26 @@
       
       
       
-        <link rel="prev" href="../refep-validation/">
+        <link rel="prev" href="../workflows/terachem-processing/">
       
-      
-        <link rel="next" href="../esp-charge-distributions/">
       
       
         
       
       
-      <link rel="icon" href="../../None">
+      <link rel="icon" href="../None">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
-        <title>Dipole Cross-Validation - BiliResp</title>
+        <title>Workflow - BiliResp</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -53,7 +51,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -77,11 +75,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#dipole-cross-validation" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -94,7 +87,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="BiliResp" class="md-header__button md-logo" aria-label="BiliResp" data-md-component="logo">
+    <a href=".." title="BiliResp" class="md-header__button md-logo" aria-label="BiliResp" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -114,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Dipole Cross-Validation
+              Workflow
             
           </span>
         </div>
@@ -204,7 +197,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="BiliResp" class="md-nav__button md-logo" aria-label="BiliResp" data-md-component="logo">
+    <a href=".." title="BiliResp" class="md-nav__button md-logo" aria-label="BiliResp" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -222,7 +215,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -249,7 +242,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../getting-started/" class="md-nav__link">
+      <a href="../getting-started/" class="md-nav__link">
         
   
   
@@ -276,7 +269,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../slurm-quickstart/" class="md-nav__link">
+      <a href="../slurm-quickstart/" class="md-nav__link">
         
   
   
@@ -303,7 +296,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../modules/" class="md-nav__link">
+      <a href="../modules/" class="md-nav__link">
         
   
   
@@ -327,8 +320,6 @@
       
   
   
-    
-  
   
   
     
@@ -341,11 +332,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
@@ -366,7 +359,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -384,7 +377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../generator/" class="md-nav__link">
+      <a href="../workflows/generator/" class="md-nav__link">
         
   
   
@@ -463,7 +456,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../training-md-qmmm/" class="md-nav__link">
+      <a href="../workflows/training-md-qmmm/" class="md-nav__link">
         
   
   
@@ -499,7 +492,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../training/" class="md-nav__link">
+      <a href="../workflows/training/" class="md-nav__link">
         
   
   
@@ -578,7 +571,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../twostep-resp/" class="md-nav__link">
+      <a href="../workflows/twostep-resp/" class="md-nav__link">
         
   
   
@@ -606,7 +599,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../multiconf-resp/" class="md-nav__link">
+      <a href="../workflows/multiconf-resp/" class="md-nav__link">
         
   
   
@@ -634,7 +627,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reduced-resp/" class="md-nav__link">
+      <a href="../workflows/reduced-resp/" class="md-nav__link">
         
   
   
@@ -662,7 +655,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../multimolecule-resp/" class="md-nav__link">
+      <a href="../workflows/multimolecule-resp/" class="md-nav__link">
         
   
   
@@ -690,7 +683,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../linear-esp-solver/" class="md-nav__link">
+      <a href="../workflows/linear-esp-solver/" class="md-nav__link">
         
   
   
@@ -718,7 +711,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../resp-hyperbolic-solver/" class="md-nav__link">
+      <a href="../workflows/resp-hyperbolic-solver/" class="md-nav__link">
         
   
   
@@ -754,7 +747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../validation/" class="md-nav__link">
+      <a href="../workflows/validation/" class="md-nav__link">
         
   
   
@@ -779,8 +772,6 @@
                 
   
   
-    
-  
   
   
     
@@ -790,11 +781,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_6" >
         
           
           <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
@@ -815,7 +808,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5_6">
             <span class="md-nav__icon md-icon"></span>
             
@@ -833,7 +826,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../refep-validation/" class="md-nav__link">
+      <a href="../workflows/refep-validation/" class="md-nav__link">
         
   
   
@@ -858,37 +851,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Dipole Cross-Validation
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../workflows/dipole-cross-validation/" class="md-nav__link">
         
   
   
@@ -904,70 +870,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#validation-entry-point" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Validation entry point
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#typical-output" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Typical output
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parity-visualisation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Parity visualisation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#programmatic-use" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Programmatic use
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -980,7 +882,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../esp-charge-distributions/" class="md-nav__link">
+      <a href="../workflows/esp-charge-distributions/" class="md-nav__link">
         
   
   
@@ -1067,7 +969,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../symmetry/" class="md-nav__link">
+      <a href="../symmetry/" class="md-nav__link">
         
   
   
@@ -1095,7 +997,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../terachem-run/" class="md-nav__link">
+      <a href="../workflows/terachem-run/" class="md-nav__link">
         
   
   
@@ -1123,7 +1025,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../terachem-processing/" class="md-nav__link">
+      <a href="../workflows/terachem-processing/" class="md-nav__link">
         
   
   
@@ -1163,10 +1065,17 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../workflow/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1182,6 +1091,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -1203,60 +1113,6 @@
   
   
   
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#validation-entry-point" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Validation entry point
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#typical-output" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Typical output
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parity-visualisation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Parity visualisation
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#programmatic-use" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Programmatic use
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -1273,57 +1129,9 @@
 
 
 
-<h1 id="dipole-cross-validation">Dipole Cross-Validation</h1>
-<p>The helper implemented in <code>scripts/print_dipoles.py</code> (and mirrored inside <code>tests/test_dipole.py</code>) compares three sets of dipole moments for a selected frame of a RESP run:</p>
-<ol>
-<li><strong>QM dipole</strong> reported directly by TeraChem.</li>
-<li><strong>TeraChem dipole</strong> reconstructed from the ESP-unrestrained charges written in <code>resp.out</code>.</li>
-<li><strong>Lagrange dipole</strong> generated from the fitted charges returned by the linear ESP solver.</li>
-</ol>
-<p>The helper parses the frame in <code>resp.out</code>, converts the logged center of mass to bohr, and computes dipoles in Debye via:</p>
-<div class="arithmatex">\[
-\mu = \sum_A q_A (R_A - R_{\text{COM}})
-\]</div>
-<p>with coordinates expressed in bohr. It also reports a mass-weighted center of mass derived from the supplied geometry <code>.xyz</code> file; you can override the coordinates (Å or bohr) when calling <code>center_of_mass_bohr_from_xyz</code> if you need to reuse RESP geometries directly. The return dictionary contains each dipole vector/magnitude, their deltas relative to the QM reference, and both COM estimates.</p>
-<h2 id="validation-entry-point">Validation entry point</h2>
-<p>Use the validation module:</p>
-<pre><code class="language-bash">biliresp --validate dipole.print --yaml configs/HID/dipole.yaml
-</code></pre>
-<p>Example <code>configs/HID/dipole.yaml</code>:</p>
-<pre><code class="language-yaml">resp_out: data/raw/resp.out
-esp_xyz: data/raw/esp.xyz
-geom_xyz: data/raw/1.pose.xyz
-n_atoms: 78
-frame: -1
-</code></pre>
-<ul>
-<li>The validation module builds the linear system, fits charges with the explicit Lagrange projection, and prints the QM, TeraChem, and Lagrange dipoles plus their deltas.</li>
-<li><code>frame</code> chooses which RESP frame to analyze (<code>-1</code> = last). The geometry <code>.xyz</code> supplies element ordering for mass lookup when computing the mass-weighted COM.</li>
-</ul>
-<h2 id="typical-output">Typical output</h2>
-<pre><code>QM (from resp.out log)
-  vector (Debye): [-0.123 ...]
-  |μ| (Debye):   2.345678
+  <h1>Workflow</h1>
 
-Terachem charges (RESP log)
-  vector (Debye): [-0.121 ...]
-  |μ| (Debye):   2.346100
-  Δ vector vs QM (Debye): [0.002 ...]
-  Δ|μ| vs QM (Debye):     0.000422
-
-Lagrange multiplier fit (explicit)
-  vector (Debye): [-0.120 ...]
-  |μ| (Debye):   2.345900
-  Δ vector vs QM (Debye): [0.003 ...]
-  Δ|μ| vs QM (Debye):     0.000222
-</code></pre>
-<p>Use this readout to sanity-check that your fitted charges reproduce the QM dipole within an acceptable tolerance before exporting them to downstream workflows.</p>
-<h2 id="parity-visualisation">Parity visualisation</h2>
-<p>The example notebook in <code>notebooks/</code> produces a parity plot comparing the QM dipole magnitude against the TeraChem ESP reconstruction across every frame. The figure below highlights the excellent agreement and annotates the RMSE.</p>
-<p><img alt="Parity plot of QM vs TeraChem dipole magnitudes" src="../../img/parity_test.png" /></p>
-<p>Colours denote the absolute deviation |Δ| in Debye.</p>
-<h2 id="programmatic-use">Programmatic use</h2>
-<p>See <code>tests/test_dipole.py</code> for a complete, importable example. The test implements <code>_three_dipoles_for_frame</code> inline so you can copy it into your own workflow if the CLI output is not sufficient.</p>
+<p><img alt="Workflow" src="../img/workflow.png" /></p>
 
 
 
@@ -1379,12 +1187,12 @@ Lagrange multiplier fit (explicit)
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy", "search.highlight", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../javascripts/mathjax.js"></script>
+        <script src="../javascripts/mathjax.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
