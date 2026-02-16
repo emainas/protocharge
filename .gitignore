@@ -5,6 +5,9 @@ __pycache__/
 *.dylib
 *.pyd
 
+# random text file
+text.txt
+
 # Slurm log files
 slurm_logs/
 # Legacy code
