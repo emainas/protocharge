@@ -1173,40 +1173,122 @@
 <h1 id="generator-md-qmmm-training-set">Generator: MD + QMMM Training Set</h1>
 <p>This workflow generates the RESP training set from classical MD followed by QMMM and RESP/ESP evaluation. MD and QMMM are separate stages.</p>
 <h2 id="cli">CLI</h2>
-<pre><code class="language-bash">pc --generator md.prep --yaml configs/HID/training.yaml
-pc --generator md.run --yaml configs/HID/training.yaml --slurm
+<pre><code class="language-bash">pc --generator md.prep --yaml configs/HID/generator.yaml
+pc --generator md.run --yaml configs/HID/generator.yaml --slurm
 
-pc --generator qmmm.prep --yaml configs/HID/training.yaml
-pc --generator qmmm.run --yaml configs/HID/training.yaml --slurm
-pc --generator qmmm.esp --yaml configs/HID/training.yaml --slurm
+pc --generator qmmm.prep --yaml configs/HID/generator.yaml
+pc --generator qmmm.run --yaml configs/HID/generator.yaml --slurm
+pc --generator qmmm.esp --yaml configs/HID/generator.yaml --slurm
 </code></pre>
 <h2 id="config-example">Config example</h2>
 <pre><code class="language-yaml">microstate: HID
 
 md:
   prep:
-    workdir: results/HID/md/prep
-    tleap_inputs:
-      - template: configs/HID/tleap.in
-        output: tleap.in
-        charges: configs/HID/hid_charges.yaml
-    commands:
-      - [\&quot;tleap\&quot;, \&quot;-f\&quot;, \&quot;tleap.in\&quot;]
+    workdir: output/HID/md/prep
+    tleap:
+      module: &quot;amber/25-CUDA_12.6-GCC12.2.0&quot;
+      binary: &quot;tleap&quot;
+      mol2: input/microstates/HID/initial-files/ligand.mol2
+      frcmod: input/microstates/HID/initial-files/ligand.frcmod
+      frcmod_ion: frcmod.ionsjc_tip3p
+      leaprc_mol: leaprc.gaff2
+      leaprc_sol: leaprc.water.tip3p
+      water_model: TIP3PBOX
+      buffer: 15.0
+      counterion: Na+
+      counterion_num: 0
+      prefix: HID
   run:
-    workdir: results/HID/md/run
-    commands:
-      - [\&quot;bash\&quot;, \&quot;run.sh\&quot;]
+    workdir: output/HID/md/run
+    inputs:
+      parm7: output/HID/md/prep/HID.parm7
+      rst7: output/HID/md/prep/HID.rst7
+    runtime:
+      module: &quot;amber/25-CUDA_12.6-GCC12.2.0&quot;
+      executable: &quot;pmemd.cuda&quot;
+      env: {}
+      strict_mode: true
+    stages:
+      - name: min
+        description: Minimization
+        cntrl:
+          imin: 1
+          maxcyc: 2000
+          ncyc: 1000
+          cut: 10.0
+        traj: false
+      - name: heat
+        description: Heating
+        cntrl:
+          imin: 0
+          nstlim: 50000
+          dt: 0.002
+          tempi: 0.0
+          temp0: 300.0
+          ntb: 1
+          ntt: 3
+          gamma_ln: 2.0
+          cut: 10.0
+        wt:
+          - type: TEMP0
+            istep1: 0
+            istep2: 50000
+            value1: 0.0
+            value2: 300.0
+          - type: END
+        traj: true
+      - name: equil-nvt
+        description: Equilibration NVT
+        cntrl:
+          imin: 0
+          nstlim: 50000
+          dt: 0.002
+          temp0: 300.0
+          ntb: 1
+          ntt: 3
+          gamma_ln: 2.0
+          cut: 10.0
+        traj: true
+      - name: equil-npt
+        description: Equilibration NPT
+        cntrl:
+          imin: 0
+          nstlim: 50000
+          dt: 0.002
+          temp0: 300.0
+          ntb: 2
+          ntp: 1
+          pres0: 1.0
+          taup: 2.0
+          ntt: 3
+          gamma_ln: 2.0
+          cut: 10.0
+        traj: true
     slurm:
-      partition: batch
-      nodes: 1
-      cpus_per_task: 16
-      time: \&quot;24:00:00\&quot;
+      profile: longleaf_gpu
+      profiles:
+        longleaf_gpu:
+          partition: l40-gpu
+          qos: gpu_access
+          gres: gpu:1
+          time: &quot;24:00:00&quot;
+          nodes: 1
+          cpus_per_task: 16
+        sycamore_cpu:
+          partition: batch
+          time: &quot;24:00:00&quot;
+          nodes: 1
+          cpus_per_task: 16
+      job_name: HID-md
+      output: &quot;slurm-%j.out&quot;
+      error: &quot;slurm-%j.err&quot;
 
 qmmm:
   prep:
-    workdir: results/HID/qmmm
-    parm7: results/HID/md/run/hid.parm7
-    traj: results/HID/md/run/prod.nc
+    workdir: output/HID/qmmm
+    parm7: output/HID/md/run/hid.parm7
+    traj: output/HID/md/run/prod.nc
     frames:
       start: 1000
       end: 20000
@@ -1228,10 +1310,10 @@ qmmm:
       wmodel: tip3p
 
   run:
-    workdir: results/HID/qmmm
+    workdir: output/HID/qmmm
 
   esp:
-    workdir: results/HID/qmmm
+    workdir: output/HID/qmmm
     frames:
       start: 1000
       end: 20000
@@ -1247,11 +1329,11 @@ qmmm:
 </code></pre>
 <h2 id="outputs">Outputs</h2>
 <ul>
-<li>MD outputs under <code>results/&lt;microstate&gt;/md/</code></li>
-<li>QMMM frame prep and jobs under <code>results/&lt;microstate&gt;/qmmm/</code></li>
+<li>MD outputs under <code>output/&lt;microstate&gt;/md/</code></li>
+<li>QMMM frame prep and jobs under <code>output/&lt;microstate&gt;/qmmm/</code></li>
 <li>QMMM RESP outputs can be collected with:</li>
 </ul>
-<pre><code class="language-bash">pc --process data/microstates/&lt;MICROSTATE&gt;
+<pre><code class="language-bash">pc --process input/microstates/&lt;MICROSTATE&gt;
 </code></pre>
 
 

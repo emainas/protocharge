@@ -1226,7 +1226,7 @@
 <h2 id="command-line-entry-point">Command-Line Entry Point</h2>
 <p><code>scripts/generate_twostep_resp.py</code> batches the workflow across all TeraChem configurations in a microstate directory:</p>
 <pre><code class="language-bash">python scripts/generate_twostep_resp.py \
-  --microstate-root data/microstates/PPP \
+  --microstate-root input/microstates/PPP \
   --maxiter 400
 </code></pre>
 <p>The script automatically:</p>
@@ -1234,13 +1234,13 @@
 <li>Loads <code>symmetry-buckets/r8.dat</code> to build the expansion matrix.</li>
 <li>Reads total and bucket charge constraints from <code>charge-contraints/</code>.</li>
 <li>Applies step-one and step-two masks from YAML templates co-located in the microstate root.</li>
-<li>Persists <code>labels</code> (configuration stems), <code>step1</code>, and <code>step2</code> matrices to <code>results/&lt;microstate&gt;/twostepRESP_basic/charges.npz</code>.</li>
+<li>Persists <code>labels</code> (configuration stems), <code>step1</code>, and <code>step2</code> matrices to <code>output/&lt;microstate&gt;/twostepRESP_basic/charges.npz</code>.</li>
 </ul>
 <p>Use <code>--dry-run</code> to list the configuration stems without running RESP, or <code>--max-configs</code> to limit the number of fits during debugging.</p>
 <h2 id="retrying-a-single-configuration">Retrying a Single Configuration</h2>
 <p><code>scripts/retry_twostep_resp.py</code> mirrors the batch workflow for a single stem:</p>
 <pre><code class="language-bash">python scripts/retry_twostep_resp.py \
-  --microstate-root data/microstates/PPP \
+  --microstate-root input/microstates/PPP \
   --config conf2371 \
   --step1-maxiter 120 \
   --step2-maxiter 240 \
@@ -1250,9 +1250,9 @@
 <h2 id="variants">Variants</h2>
 <p>The project ships specialized two-step RESP variants for different constraint setups:</p>
 <ul>
-<li><strong>Masked total constraint</strong> – <code>scripts/generate_twostep_resp_masked_total.py</code> writes to <code>results/&lt;microstate&gt;/twostepRESP_masked_total/</code>.</li>
-<li><strong>Group constraints</strong> – <code>scripts/generate_twostep_resp_group_constraints.py</code> writes to <code>results/&lt;microstate&gt;/twostepRESP_group_constraints/</code>.</li>
-<li><strong>Frozen buckets</strong> – <code>scripts/generate_twostep_resp_frozen_buckets.py</code> writes to <code>results/&lt;microstate&gt;/twostepRESP_frozen_buckets/</code>.</li>
+<li><strong>Masked total constraint</strong> – <code>scripts/generate_twostep_resp_masked_total.py</code> writes to <code>output/&lt;microstate&gt;/twostepRESP_masked_total/</code>.</li>
+<li><strong>Group constraints</strong> – <code>scripts/generate_twostep_resp_group_constraints.py</code> writes to <code>output/&lt;microstate&gt;/twostepRESP_group_constraints/</code>.</li>
+<li><strong>Frozen buckets</strong> – <code>scripts/generate_twostep_resp_frozen_buckets.py</code> writes to <code>output/&lt;microstate&gt;/twostepRESP_frozen_buckets/</code>.</li>
 </ul>
 <h2 id="consuming-the-results">Consuming the Results</h2>
 <p>The resulting NPZ files provide configuration-major charge matrices. Pair them with the atom labels from the raw ESP workflow to slice by atom type, compare against single-step RESP, or feed into downstream notebooks such as <code>notebooks/twostepRESP_basic.ipynb</code>. Because <code>step2</code> aligns with the AMBER two-stage procedure, it should be used as the primary source for production charge analyses unless diagnostics show step-two convergence issues.</p>

@@ -1298,9 +1298,9 @@ F(x) =
 <pre><code class="language-python">from pathlib import Path
 from protocharge.resp.resp import HyperbolicRestraint, fit_resp_charges
 
-resp_out = Path(&quot;data/raw/resp.out&quot;)
-esp_xyz = Path(&quot;data/raw/esp.xyz&quot;)
-geometry_xyz = Path(&quot;data/raw/1.pose.xyz&quot;)
+resp_out = Path(&quot;input/raw/resp.out&quot;)
+esp_xyz = Path(&quot;input/raw/esp.xyz&quot;)
+geometry_xyz = Path(&quot;input/raw/1.pose.xyz&quot;)
 
 restraint = HyperbolicRestraint(a=5e-4, b=1e-3, q0=0.0)
 result = fit_resp_charges(

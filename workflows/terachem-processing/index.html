@@ -1170,12 +1170,12 @@
 
 <h1 id="raw-terachem-processing">Raw TeraChem Processing</h1>
 <p>Most users should run TeraChem RESP jobs with <code>pc --run-tc-resp</code>, then collect outputs with:</p>
-<pre><code class="language-bash">pc --process-tc-resp data/microstates/&lt;MICROSTATE&gt;
+<pre><code class="language-bash">pc --process-tc-resp input/microstates/&lt;MICROSTATE&gt;
 </code></pre>
-<p>This gathers <code>resp.out</code> plus the scratch <code>esp.xyz</code> files and writes the standardized inputs under <code>data/microstates/&lt;MICROSTATE&gt;/terachem/</code>.</p>
+<p>This gathers <code>resp.out</code> plus the scratch <code>esp.xyz</code> files and writes the standardized inputs under <code>input/microstates/&lt;MICROSTATE&gt;/terachem/</code>.</p>
 <h2 id="required-raw-layout">Required raw layout</h2>
 <p>Place raw outputs under:</p>
-<pre><code>data/microstates/&lt;MICROSTATE&gt;/raw_terachem_outputs/
+<pre><code>input/microstates/&lt;MICROSTATE&gt;/raw_terachem_outputs/
 </code></pre>
 <p>Expected structure:</p>
 <pre><code>raw_terachem_outputs/
@@ -1189,8 +1189,8 @@
 </code></pre>
 <h2 id="outputs">Outputs</h2>
 <p>The command writes:</p>
-<pre><code>data/microstates/&lt;MICROSTATE&gt;/terachem/respout/conf####.resp.out
-data/microstates/&lt;MICROSTATE&gt;/terachem/espxyz/conf####.esp.xyz
+<pre><code>input/microstates/&lt;MICROSTATE&gt;/terachem/respout/conf####.resp.out
+input/microstates/&lt;MICROSTATE&gt;/terachem/espxyz/conf####.esp.xyz
 </code></pre>
 <h2 id="next-step">Next step</h2>
 <p>Once processed, proceed to the RESP workflows (two-step, multiconf, reduced, etc.) using the standard configs under <code>configs/</code>.</p>

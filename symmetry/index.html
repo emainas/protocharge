@@ -1069,7 +1069,7 @@ constrained charges.</p>
 
 from protocharge.symmetry import buckets_from_pdb
 
-buckets = buckets_from_pdb(Path(&quot;data/raw/1.pose.pdb&quot;), radius=10)
+buckets = buckets_from_pdb(Path(&quot;input/raw/1.pose.pdb&quot;), radius=10)
 print(f&quot;Identified {len(buckets)} equivalence classes&quot;)
 </code></pre>
 <p>Each bucket contains the indices of atoms that are indistinguishable after <code>r</code>

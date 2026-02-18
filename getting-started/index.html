@@ -1213,7 +1213,7 @@ python -m pip install -e .
 <p>Create a config under <code>configs/&lt;microstate&gt;/&lt;function&gt;/config.yaml</code> and run:</p>
 <pre><code class="language-bash">pc --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
 </code></pre>
-<p><code>--yaml</code> accepts a full path or a <code>configs/</code> subpath. With <code>--slurm</code>, the CLI writes a Slurm script under <code>results/slurm/</code> and submits it via <code>sbatch</code>.</p>
+<p><code>--yaml</code> accepts a full path or a <code>configs/</code> subpath. With <code>--slurm</code>, the CLI writes a Slurm script under <code>output/slurm/</code> and submits it via <code>sbatch</code>.</p>
 <p>Use <code>--dry-run</code> to verify the resolved command without executing it:</p>
 <pre><code class="language-bash">pc --function twostepRESP_basic --yaml HID/twostepRESP_basic --dry-run
 </code></pre>

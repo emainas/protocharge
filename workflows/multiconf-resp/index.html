@@ -1159,13 +1159,13 @@
 </code></pre>
 <p>Under the hood this:</p>
 <ul>
-<li>Reads <code>data/microstates/&lt;microstate&gt;/terachem/respout/*.resp.out</code> and <code>espxyz/*.esp.xyz</code>.</li>
+<li>Reads <code>input/microstates/&lt;microstate&gt;/terachem/respout/*.resp.out</code> and <code>espxyz/*.esp.xyz</code>.</li>
 <li>Stacks the Coulomb matrices and ESP vectors across all configurations.</li>
 <li>Runs the two-step RESP solver (basic variant) over the stacked system.</li>
 </ul>
 <h2 id="output">Output</h2>
 <p>For ensemble runs the default outputs are written under:</p>
-<pre><code>results/&lt;microstate&gt;/multiconfRESP/
+<pre><code>output/&lt;microstate&gt;/multiconfRESP/
 </code></pre>
 <p>If you are using a reduced-space variant, see <strong>Reduced RESP</strong> for the alternative output directories.</p>
 

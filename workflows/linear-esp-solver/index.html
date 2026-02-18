@@ -1203,7 +1203,7 @@
 </ol>
 <h2 id="script-entry-point">Script entry point</h2>
 <p>The <code>scripts/compare_charges.py</code> wrapper prepares the system and prints per-atom differences between RESP unrestrained charges and the fitted charges:</p>
-<pre><code class="language-bash">python scripts/compare_charges.py data/raw/resp.out data/raw/esp.xyz 78 --frame -1
+<pre><code class="language-bash">python scripts/compare_charges.py input/raw/resp.out input/raw/esp.xyz 78 --frame -1
 </code></pre>
 <ul>
 <li><code>resp.out</code>: RESP log file containing the ESP unrestrained block.</li>
@@ -1251,7 +1251,7 @@ Q
 <p>You can access the components directly:</p>
 <pre><code class="language-python">from protocharge.linearESPcharges.linear import prepare_linear_system, explicit_solution
 
-A, V, Q, resp_charges = prepare_linear_system(&quot;data/raw/resp.out&quot;, &quot;data/raw/esp.xyz&quot;, 78, frame_index=-1)
+A, V, Q, resp_charges = prepare_linear_system(&quot;input/raw/resp.out&quot;, &quot;input/raw/esp.xyz&quot;, 78, frame_index=-1)
 solver = explicit_solution(ridge=0.0)
 result = solver.fit(A, V, Q)
 print(result[&quot;rmse&quot;], result[&quot;sum_q&quot;])

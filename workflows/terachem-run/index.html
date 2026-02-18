@@ -1173,8 +1173,8 @@
 <h1 id="terachem-resp-job-submission">TeraChem RESP Job Submission</h1>
 <p>This workflow writes TeraChem input files (<code>resp.in</code>), generates Slurm submission scripts, and submits jobs for each configuration under a microstate.</p>
 <h2 id="expected-inputs">Expected inputs</h2>
-<pre><code>data/microstates/&lt;MICROSTATE&gt;/input_tc_structures/confs/&lt;conf&gt;/parm7
-data/microstates/&lt;MICROSTATE&gt;/input_tc_structures/confs/&lt;conf&gt;/rst7
+<pre><code>input/microstates/&lt;MICROSTATE&gt;/input_tc_structures/confs/&lt;conf&gt;/parm7
+input/microstates/&lt;MICROSTATE&gt;/input_tc_structures/confs/&lt;conf&gt;/rst7
 configs/&lt;MICROSTATE&gt;/input_tc_structures/&lt;conf&gt;/config.yaml
 </code></pre>
 <p>Each <code>config.yaml</code> provides the TeraChem settings, including the charge:</p>
@@ -1188,7 +1188,7 @@ resp: yes
 esp_grid_dens: 4.0
 </code></pre>
 <h2 id="run">Run</h2>
-<pre><code class="language-bash">pc --run-tc-resp data/microstates/&lt;MICROSTATE&gt;
+<pre><code class="language-bash">pc --run-tc-resp input/microstates/&lt;MICROSTATE&gt;
 </code></pre>
 <p>For each conf, the module writes:</p>
 <ul>
@@ -1199,11 +1199,11 @@ esp_grid_dens: 4.0
 <p>Then it submits <code>sbatch run_tc_resp.slurm</code> immediately.</p>
 <h2 id="collect-outputs-for-resp-workflows">Collect outputs for RESP workflows</h2>
 <p>TeraChem writes <code>resp.out</code> in the conf directory and <code>esp.xyz</code> under a scratch folder named <code>scr.&lt;rst7&gt;</code>. Once the jobs finish, collect outputs into the standard layout:</p>
-<pre><code class="language-bash">pc --process-tc-resp data/microstates/&lt;MICROSTATE&gt;
+<pre><code class="language-bash">pc --process-tc-resp input/microstates/&lt;MICROSTATE&gt;
 </code></pre>
 <p>This writes:</p>
-<pre><code>data/microstates/&lt;MICROSTATE&gt;/terachem/respout/conf####.resp.out
-data/microstates/&lt;MICROSTATE&gt;/terachem/espxyz/conf####.esp.xyz
+<pre><code>input/microstates/&lt;MICROSTATE&gt;/terachem/respout/conf####.resp.out
+input/microstates/&lt;MICROSTATE&gt;/terachem/espxyz/conf####.esp.xyz
 </code></pre>
 
 
