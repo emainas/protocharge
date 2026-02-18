@@ -1067,7 +1067,7 @@ because the buckets returned by the WL procedure highlight atoms that can share
 constrained charges.</p>
 <pre><code class="language-python">from pathlib import Path
 
-from protocharge.symmetry import buckets_from_pdb
+from protocharge.training.symmetry import buckets_from_pdb
 
 buckets = buckets_from_pdb(Path(&quot;input/raw/1.pose.pdb&quot;), radius=10)
 print(f&quot;Identified {len(buckets)} equivalence classes&quot;)

@@ -1149,9 +1149,9 @@
 
 
 <h1 id="multi-molecule-resp">Multi-Molecule RESP</h1>
-<p>The multi-molecule workflow (<code>protocharge.multimoleculeresp.mmresp</code>) fits charges across multiple microstates at once. It supports global symmetry buckets that tie atoms across molecules, optional frozen buckets, and per-molecule total or group constraints.</p>
+<p>The multi-molecule workflow (<code>protocharge.training.multimoleculeresp.mmresp</code>) fits charges across multiple microstates at once. It supports global symmetry buckets that tie atoms across molecules, optional frozen buckets, and per-molecule total or group constraints.</p>
 <h2 id="run-from-a-manifest">Run from a Manifest</h2>
-<pre><code class="language-bash">python -m protocharge.multimoleculeresp.mmresp \
+<pre><code class="language-bash">python -m protocharge.training.multimoleculeresp.mmresp \
   --manifest configs/manifest_hist.yaml \
   --output output/mmresp_hist/charges.npz \
   --ridge 1e-6

@@ -1218,7 +1218,7 @@
 <p>The two-step RESP pipeline reproduces the AMBER-style restrained electrostatic potential fit used by the TeraChem <code>DYES</code> protocol.[^amber-dyes] It applies the Weisfeiler–Lehman symmetry buckets computed for each microstate, enforces total and bucket-specific charge constraints, and reruns a second RESP optimisation that selectively relaxes atoms flagged in project-specific masks.</p>
 <h2 id="stages-at-a-glance">Stages at a Glance</h2>
 <ol>
-<li><strong>Linear warm start</strong> – <code>solve_least_squares_with_constraints</code> (in <code>protocharge.twostepresp_basic.tsresp</code>) fits bucket charges that satisfy the aggregate constraints and provides an initial KKT solution.</li>
+<li><strong>Linear warm start</strong> – <code>solve_least_squares_with_constraints</code> (in <code>protocharge.training.twostepresp_basic.tsresp</code>) fits bucket charges that satisfy the aggregate constraints and provides an initial KKT solution.</li>
 <li><strong>Step-one RESP</strong> – <code>resp_step</code> runs a Newton–Krylov solve with the hyperbolic restraint active on the mask defined in <code>mask_step_1.yaml</code>, producing <code>step1</code> charges for every configuration.</li>
 <li><strong>Step-two RESP</strong> – The solver reuses converged bucket charges but frees the subset flagged in <code>mask_step_2.yaml</code>, recomputing the fit while holding the remaining buckets fixed. The result is stored as <code>step2</code>, our recommended production charge set.</li>
 </ol>

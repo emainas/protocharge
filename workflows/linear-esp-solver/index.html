@@ -1193,10 +1193,10 @@
 
 
 <h1 id="linear-esp-charge-solver">Linear ESP Charge Solver</h1>
-<p>The linear solver fits electrostatic potential (ESP) charges that reproduce grid values exported by RESP/TeraChem. Everything lives in <code>protocharge.linearESPcharges.linear</code> and is backed by numpy.</p>
+<p>The linear solver fits electrostatic potential (ESP) charges that reproduce grid values exported by RESP/TeraChem. Everything lives in <code>protocharge.training.linearESPcharges.linear</code> and is backed by numpy.</p>
 <h2 id="pipeline">Pipeline</h2>
 <ol>
-<li><strong>Parse Terachem RESP output</strong> with <code>ParseRespDotOut</code> (from <code>protocharge.resp_parser</code>) to obtain atomic positions and RESP ESP charges for each frame.</li>
+<li><strong>Parse Terachem RESP output</strong> with <code>ParseRespDotOut</code> (from <code>protocharge.training.resp_parser</code>) to obtain atomic positions and RESP ESP charges for each frame.</li>
 <li><strong>Read ESP grid</strong> points from <code>esp.xyz</code>.</li>
 <li><strong>Build the design matrix</strong> <code>A</code> where <code>A[i, j] = 1 / r_ij</code> for grid point <code>i</code> and atom <code>j</code>.</li>
 <li><strong>Solve</strong> the constrained optimization problem <code>A q ≈ V</code> subject to <code>Σ q = Q</code> with <code>explicit_solution</code>, a closed-form projection that first finds the unconstrained least squares solution and then enforces the total charge (Lagrange multiplier method). It accepts an optional <code>ridge</code> hyper-parameter if you want to add a small diagonal Tikhonov term for numerical stability.</li>
@@ -1249,7 +1249,7 @@ Q
 <p>If numerical damping is requested, <span class="arithmatex">\(H\)</span> is replaced with <span class="arithmatex">\(H + \eta I\)</span> (with a small <span class="arithmatex">\(\eta &gt; 0\)</span>) in the two linear solves above. The procedure yields the same result as the full KKT solve but avoids explicitly forming the block matrix.</p>
 <h2 id="programmatic-use">Programmatic use</h2>
 <p>You can access the components directly:</p>
-<pre><code class="language-python">from protocharge.linearESPcharges.linear import prepare_linear_system, explicit_solution
+<pre><code class="language-python">from protocharge.training.linearESPcharges.linear import prepare_linear_system, explicit_solution
 
 A, V, Q, resp_charges = prepare_linear_system(&quot;input/raw/resp.out&quot;, &quot;input/raw/esp.xyz&quot;, 78, frame_index=-1)
 solver = explicit_solution(ridge=0.0)

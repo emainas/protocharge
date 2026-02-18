@@ -1057,74 +1057,99 @@
 </thead>
 <tbody>
 <tr>
-<td><code>protocharge.resp_parser</code></td>
+<td><code>protocharge.generator.md_qmmm</code></td>
+<td>Generator pipeline for MD + QMMM dataset prep.</td>
+<td><code>run_md_stage</code>, <code>run_qmmm_stage</code></td>
+</tr>
+<tr>
+<td><code>protocharge.generator.run_tc_resp</code></td>
+<td>Build and submit TeraChem RESP runs from configs.</td>
+<td><code>run_tc_resp</code></td>
+</tr>
+<tr>
+<td><code>protocharge.generator.terachem_processing</code></td>
+<td>Process raw TeraChem outputs into standardized RESP inputs.</td>
+<td><code>process_terachem_outputs</code></td>
+</tr>
+<tr>
+<td><code>protocharge.training.resp_parser</code></td>
 <td>Parse TeraChem <code>resp.out</code>, <code>esp.xyz</code>, and <code>.xyz</code> geometry frames.</td>
 <td><code>ParseRespDotOut</code>, <code>ParseESPXYZ</code>, <code>ParseDotXYZ</code></td>
 </tr>
 <tr>
-<td><code>protocharge.linearESPcharges</code></td>
+<td><code>protocharge.training.linearESPcharges</code></td>
 <td>Build Coulomb matrices and solve the linear (unrestrained) ESP fit.</td>
 <td><code>prepare_linear_system</code>, <code>explicit_solution</code></td>
 </tr>
 <tr>
-<td><code>protocharge.resp</code></td>
+<td><code>protocharge.training.resp</code></td>
 <td>Single-frame RESP solver with hyperbolic restraint.</td>
 <td><code>fit_resp_charges</code>, <code>kkt_residual_at</code></td>
 </tr>
 <tr>
-<td><code>protocharge.dipole</code></td>
+<td><code>protocharge.utils.dipole</code></td>
 <td>Dipole and center-of-mass helpers.</td>
 <td><code>center_of_mass_bohr_from_xyz</code></td>
 </tr>
 <tr>
-<td><code>protocharge.symmetry</code></td>
+<td><code>protocharge.training.symmetry</code></td>
 <td>WL refinement and symmetry buckets for charge tying.</td>
 <td><code>buckets_from_pdb</code></td>
 </tr>
 <tr>
-<td><code>protocharge.twostepresp_basic</code></td>
+<td><code>protocharge.training.twostepresp_basic</code></td>
 <td>Two-step RESP with total + bucket constraints.</td>
 <td><code>resp_step</code>, <code>solve_least_squares_with_constraints</code></td>
 </tr>
 <tr>
-<td><code>protocharge.twostepresp_masked_total</code></td>
+<td><code>protocharge.training.twostepresp_masked_total</code></td>
 <td>Two-step RESP with a masked total-charge constraint.</td>
 <td><code>load_total_constraint</code>, <code>build_total_constraint_mask</code></td>
 </tr>
 <tr>
-<td><code>protocharge.twostepresp_group_constraints</code></td>
+<td><code>protocharge.training.twostepresp_group_constraints</code></td>
 <td>Two-step RESP with group constraints (no implicit total).</td>
 <td><code>load_group_constraints</code></td>
 </tr>
 <tr>
-<td><code>protocharge.twostepresp_frozen_buckets</code></td>
+<td><code>protocharge.training.twostepresp_frozen_buckets</code></td>
 <td>Two-step RESP with frozen bucket values.</td>
 <td><code>load_frozen_buckets</code></td>
 </tr>
 <tr>
-<td><code>protocharge.multiconfresp</code></td>
+<td><code>protocharge.training.multiconfresp</code></td>
 <td>Multi-configuration assembly for a microstate.</td>
 <td><code>mcresp.py</code> CLI</td>
 </tr>
 <tr>
-<td><code>protocharge.reduced_basic</code></td>
+<td><code>protocharge.training.reduced_basic</code></td>
 <td>Reduced-space RESP solver (total + bucket constraints).</td>
 <td><code>reduced.py</code> CLI</td>
 </tr>
 <tr>
-<td><code>protocharge.reduced_masked_total</code></td>
+<td><code>protocharge.training.reduced_masked_total</code></td>
 <td>Reduced-space solver with masked total constraint.</td>
 <td><code>reduced.py</code> CLI</td>
 </tr>
 <tr>
-<td><code>protocharge.reduced_group_constraints</code></td>
+<td><code>protocharge.training.reduced_group_constraints</code></td>
 <td>Reduced-space solver with group constraints.</td>
 <td><code>reduced.py</code> CLI</td>
 </tr>
 <tr>
-<td><code>protocharge.multimoleculeresp</code></td>
+<td><code>protocharge.training.multimoleculeresp</code></td>
 <td>Multi-molecule, multi-config RESP (global buckets + optional freezing).</td>
 <td><code>mmresp.py</code> CLI</td>
+</tr>
+<tr>
+<td><code>protocharge.validation.refep</code></td>
+<td>REFEP validation workflow (prep/run/grid/analyze).</td>
+<td><code>run_refep_stage</code></td>
+</tr>
+<tr>
+<td><code>protocharge.validation.dipole</code></td>
+<td>Dipole validation against RESP/TeraChem outputs.</td>
+<td><code>run_dipole_validation</code></td>
 </tr>
 </tbody>
 </table>

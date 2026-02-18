@@ -1237,7 +1237,7 @@
 
 
 <h1 id="resp-hyperbolic-solver">RESP Hyperbolic Solver</h1>
-<p>The RESP workflow augments the linear ESP fit with a nonlinear, hyperbolic restraint that mirrors the setup used by TeraChem. All routines live in <code>protocharge.resp.resp</code>, with <code>fit_resp_charges</code> acting as the main entry point.</p>
+<p>The RESP workflow augments the linear ESP fit with a nonlinear, hyperbolic restraint that mirrors the setup used by TeraChem. All routines live in <code>protocharge.training.resp.resp</code>, with <code>fit_resp_charges</code> acting as the main entry point.</p>
 <h2 id="objective-and-restraint">Objective and Restraint</h2>
 <p>Given a design matrix <span class="arithmatex">\(A \in \mathbb{R}^{M \times N}\)</span>, ESP grid values <span class="arithmatex">\(V \in \mathbb{R}^{M}\)</span>, and a target total charge <span class="arithmatex">\(Q\)</span>, we minimise the penalised loss</p>
 <div class="arithmatex">\[
@@ -1296,7 +1296,7 @@ F(x) =
 <p>By default every atom is restrained. Passing <code>restrain_all_atoms=False</code> selects only heavy atoms, reproducing the legacy RESP convention. The solver stores the mask used in the <code>mask</code> entry of the result bundle.</p>
 <h2 id="usage-example">Usage Example</h2>
 <pre><code class="language-python">from pathlib import Path
-from protocharge.resp.resp import HyperbolicRestraint, fit_resp_charges
+from protocharge.training.resp.resp import HyperbolicRestraint, fit_resp_charges
 
 resp_out = Path(&quot;input/raw/resp.out&quot;)
 esp_xyz = Path(&quot;input/raw/esp.xyz&quot;)

@@ -1152,12 +1152,12 @@
 <p>Reduced-space solvers enforce the linear constraints exactly by projecting into the nullspace of the constraint matrix. These are useful for large ensemble fits where a direct KKT solve is unstable.</p>
 <h2 id="variants">Variants</h2>
 <ul>
-<li><strong>Basic</strong> – total + bucket constraints: <code>protocharge.reduced_basic</code></li>
-<li><strong>Masked total</strong> – total charge applied to a subset: <code>protocharge.reduced_masked_total</code></li>
-<li><strong>Group constraints</strong> – arbitrary group targets: <code>protocharge.reduced_group_constraints</code></li>
+<li><strong>Basic</strong> – total + bucket constraints: <code>protocharge.training.reduced_basic</code></li>
+<li><strong>Masked total</strong> – total charge applied to a subset: <code>protocharge.training.reduced_masked_total</code></li>
+<li><strong>Group constraints</strong> – arbitrary group targets: <code>protocharge.training.reduced_group_constraints</code></li>
 </ul>
 <h2 id="example">Example</h2>
-<pre><code class="language-bash">python -m protocharge.reduced_group_constraints.reduced \
+<pre><code class="language-bash">python -m protocharge.training.reduced_group_constraints.reduced \
   --microstate HID \
   --load-and-resp \
   --input-dir-name multiconfRESP \

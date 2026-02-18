@@ -1151,8 +1151,8 @@
 <h1 id="multiconfiguration-resp-ensemble">Multiconfiguration RESP (Ensemble)</h1>
 <p>The multiconfiguration workflow stacks multiple conformations of a single microstate into one large ESP fitting problem. It is useful when you want charges that best represent an ensemble rather than a single conformer.</p>
 <h2 id="assemble-and-run">Assemble and Run</h2>
-<p>The CLI lives in <code>protocharge.multiconfresp.mcresp</code>.</p>
-<pre><code class="language-bash">python -m protocharge.multiconfresp.mcresp \
+<p>The CLI lives in <code>protocharge.training.multiconfresp.mcresp</code>.</p>
+<pre><code class="language-bash">python -m protocharge.training.multiconfresp.mcresp \
   --microstate PPP \
   --load-and-resp \
   --maxiter 400
