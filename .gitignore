@@ -16,6 +16,9 @@ legacy_code/
 # Heavy bootstrap outputs
 scripts/bootstrap_hist_random/
 
+# overleaf template
+overleaf_template/
+
 # notebook junk
 notebooks/.DS_Store
 notebooks/.ipynb_checkpoints/
