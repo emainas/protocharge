@@ -10,6 +10,6 @@ Use the navigation to find quick-start installation instructions and focused wal
 
 Project layout:
 
-- `data/` holds inputs and parameters tied to a microstate (PDB, esp.xyz, resp.out, symmetry buckets).
+- `input/` holds inputs and parameters tied to a microstate (PDB, esp.xyz, resp.out, symmetry buckets).
 - `configs/` holds YAML run configurations and charge-constraint files.
-- `results/` holds outputs organized by microstate and function.
+- `output/` holds outputs organized by microstate and function.

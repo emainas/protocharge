@@ -8,7 +8,7 @@ import numpy as np
 import yaml
 
 from protocharge.linearESPcharges.linear import prepare_linear_system
-from protocharge.paths import data_root, ensure_results_dir, microstate_constraints_root
+from protocharge.paths import input_root, ensure_results_dir, microstate_constraints_root
 from scipy.optimize import newton_krylov
 try:  # SciPy >=1.14
     from scipy.optimize import NoConvergence  # type: ignore[attr-defined]
@@ -326,13 +326,13 @@ def solve_least_squares_with_constraints(
 
 def main() -> None:
     project_root = _project_root()
-    symmetry_bucket_path = data_root() / "microstates" / "PPP" / "symmetry-buckets" / "r8.dat"
+    symmetry_bucket_path = input_root() / "microstates" / "PPP" / "symmetry-buckets" / "r8.dat"
 
 
-    # STEP 1. Load the symmetry buckets from data/microstates/<microstate>/symmetry-buckets/...
+    # STEP 1. Load the symmetry buckets from input/microstates/<microstate>/symmetry-buckets/...
     # Start with PPP as a first test case.
     # In total we have s=1,...,S symmetry buckets. S is going to be equal to the number of elements in
-    # the loaded list of lists. S = len(np.loadtxt('data/microstates/PPP/symmetry-buckets/r8.dat', dtype=int))
+    # the loaded list of lists. S = len(np.loadtxt('input/microstates/PPP/symmetry-buckets/r8.dat', dtype=int))
     # print S to verify.
     symmetry_buckets = load_symmetry_buckets(symmetry_bucket_path)
     S = len(symmetry_buckets)
@@ -359,8 +359,8 @@ def main() -> None:
     # STEP 5. Calculate linear raw ESP charges by solving the linear system but with vector
     # p as defined above instead of a full charge vector q as we did in previous work.
     atom_count = P.shape[0]
-    resp_out = data_root() / "raw" / "resp.out"
-    esp_xyz = data_root() / "raw" / "esp.xyz"
+    resp_out = input_root() / "raw" / "resp.out"
+    esp_xyz = input_root() / "raw" / "esp.xyz"
     design_matrix, esp_values, _, _ = prepare_linear_system(
         resp_out,
         esp_xyz,
@@ -390,7 +390,7 @@ def main() -> None:
         f"(target {total_charge_target:.6f})"
     )
     atom_labels = load_atom_labels_from_pdb(
-        data_root() / "microstates" / "PPP" / "ppp.pdb"
+        input_root() / "microstates" / "PPP" / "ppp.pdb"
     )
     if len(atom_labels) != p_linear.size:
         raise ValueError(

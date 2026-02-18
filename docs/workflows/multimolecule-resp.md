@@ -7,7 +7,7 @@ The multi-molecule workflow (`protocharge.multimoleculeresp.mmresp`) fits charge
 ```bash
 python -m protocharge.multimoleculeresp.mmresp \
   --manifest configs/manifest_hist.yaml \
-  --output results/mmresp_hist/charges.npz \
+  --output output/mmresp_hist/charges.npz \
   --ridge 1e-6
 ```
 

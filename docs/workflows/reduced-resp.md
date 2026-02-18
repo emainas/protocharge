@@ -18,4 +18,4 @@ python -m protocharge.reduced_group_constraints.reduced \
   --output-dir-name multiconfRESP_reduced_group_constraints
 ```
 
-The outputs are written under `results/<microstate>/` in the selected output directory.
+The outputs are written under `output/<microstate>/` in the selected output directory.

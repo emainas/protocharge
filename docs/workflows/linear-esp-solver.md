@@ -14,7 +14,7 @@ The linear solver fits electrostatic potential (ESP) charges that reproduce grid
 The `scripts/compare_charges.py` wrapper prepares the system and prints per-atom differences between RESP unrestrained charges and the fitted charges:
 
 ```bash
-python scripts/compare_charges.py data/raw/resp.out data/raw/esp.xyz 78 --frame -1
+python scripts/compare_charges.py input/raw/resp.out input/raw/esp.xyz 78 --frame -1
 ```
 
 - `resp.out`: RESP log file containing the ESP unrestrained block.
@@ -73,7 +73,7 @@ You can access the components directly:
 ```python
 from protocharge.linearESPcharges.linear import prepare_linear_system, explicit_solution
 
-A, V, Q, resp_charges = prepare_linear_system("data/raw/resp.out", "data/raw/esp.xyz", 78, frame_index=-1)
+A, V, Q, resp_charges = prepare_linear_system("input/raw/resp.out", "input/raw/esp.xyz", 78, frame_index=-1)
 solver = explicit_solution(ridge=0.0)
 result = solver.fit(A, V, Q)
 print(result["rmse"], result["sum_q"])

@@ -60,7 +60,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output",
         type=Path,
-        help="Output NPZ path (default: results/<microstate>/onestepRESP/charges.npz).",
+        help="Output NPZ path (default: output/<microstate>/onestepRESP/charges.npz).",
     )
     parser.add_argument(
         "--a",

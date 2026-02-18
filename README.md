@@ -26,20 +26,45 @@ python -m pip install -e .
 pytest -q
 ```
 
-## CLI (recommended)
+## Demo (MEA)
 
-Create a YAML config under `configs/<microstate>/<function>/config.yaml` and run:
+Step 1 — **MD prep** (build topology/coordinates with tleap):
 
 ```bash
-pc --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
+pc --generator md.prep --yaml configs/MEA/generator.yaml
 ```
 
-`--yaml` can be a full path or a `configs/` subpath. With `--slurm`, the CLI generates a Slurm script and submits it.
+Uses:
+- `input/microstates/MEA/initial-files/mea.mol2`
+- `input/microstates/MEA/initial-files/mea.frcmod`
+
+Writes:
+- `output/MEA/md/prep/tleap.in`
+- `output/MEA/md/prep/MEA.parm7`
+- `output/MEA/md/prep/MEA.rst7`
+
+Step 2 — **MD run** (generate MD inputs + submit with Slurm):
+
+```bash
+pc --generator md.run --yaml configs/MEA/generator.yaml --slurm
+```
+
+Uses:
+- `output/MEA/md/prep/MEA.parm7`
+- `output/MEA/md/prep/MEA.rst7`
+
+Writes:
+- `output/MEA/md/run/min.in`
+- `output/MEA/md/run/heat.in`
+- `output/MEA/md/run/equil-nvt.in`
+- `output/MEA/md/run/equil-npt.in`
+- `output/MEA/md/run/run.sh`
+- `output/MEA/md/run/slurm.sh`
 
 ## Project layout
 
-- `data/` holds inputs and parameters tied to a microstate (PDB, esp.xyz, resp.out, symmetry buckets).
+- `input/` holds inputs and parameters tied to a microstate (PDB, esp.xyz, resp.out, symmetry buckets).
 - `configs/` holds YAML run configurations and charge-constraint files.
-- `results/` holds outputs organized by microstate and function.
+- `output/` holds outputs organized by microstate and function.
 
 See `docs/` and `docs/workflows/` for the full set of workflows and variants.

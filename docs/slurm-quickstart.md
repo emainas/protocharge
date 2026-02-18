@@ -1,10 +1,10 @@
 # Slurm Quickstart
 
-This project provides a CLI that can submit RESP workflows to Slurm. The CLI reads a YAML config, builds the right command, writes a Slurm script under `results/slurm/`, and submits it via `sbatch`.
+This project provides a CLI that can submit RESP workflows to Slurm. The CLI reads a YAML config, builds the right command, writes a Slurm script under `output/slurm/`, and submits it via `sbatch`.
 
 ## 1) Prepare inputs
 
-Place your inputs under `data/microstates/<MICROSTATE>/`:
+Place your inputs under `input/microstates/<MICROSTATE>/`:
 
 - `<MICROSTATE>.pdb`
 - `symmetry-buckets/r8.dat`
@@ -16,13 +16,13 @@ See the minimal example layout in `docs/examples/microstates/`.
 If you only have raw TeraChem outputs under a `raw_terachem_outputs/` directory, use:
 
 ```bash
-pc --process data/microstates/<MICROSTATE>
+pc --process input/microstates/<MICROSTATE>
 ```
 
 To override the raw subdirectory name:
 
 ```bash
-pc --process data/microstates/<MICROSTATE> --tc-raw-subdir raw_tc
+pc --process input/microstates/<MICROSTATE> --tc-raw-subdir raw_tc
 ```
 
 ## 2) Create a config
@@ -56,7 +56,7 @@ pc --function twostepRESP_basic --yaml HID/twostepRESP_basic --dry-run
 pc --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
 ```
 
-This writes a script under `results/slurm/` and submits it with `sbatch`.
+This writes a script under `output/slurm/` and submits it with `sbatch`.
 
 ## Slurm settings
 

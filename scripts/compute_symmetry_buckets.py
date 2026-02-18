@@ -15,7 +15,7 @@ from src.symmetry.symmetry import buckets_from_pdb
 def find_microstate_dir(root: Path, microstate: str) -> Path:
     """Return the directory for the requested microstate."""
 
-    microstate_dir = root / "data" / "microstates" / microstate.upper()
+    microstate_dir = root / "input" / "microstates" / microstate.upper()
     if not microstate_dir.is_dir():
         raise FileNotFoundError(f"Unknown microstate '{microstate}'. Expected directory at {microstate_dir}")
     return microstate_dir
@@ -77,7 +77,7 @@ def main() -> None:
         "--output",
         type=Path,
         default=None,
-        help="Optional path to write the bucket list. Defaults to data/microstates/<microstate>/symmetry-buckets/r<R>.dat",
+        help="Optional path to write the bucket list. Defaults to input/microstates/<microstate>/symmetry-buckets/r<R>.dat",
     )
     parser.add_argument(
         "--remove-hs",

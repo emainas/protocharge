@@ -87,7 +87,7 @@ def write_manifest(template: Path, out_path: Path, rep_root: Path, base_dir: Pat
 def main() -> None:
     parser = argparse.ArgumentParser(description="Bootstrap HIP/HIE/HID configs into stacked matrices.")
     parser.add_argument("--replicate", type=int, required=True, help="Replicate id (0-based) into precomputed subsets.")
-    parser.add_argument("--base-dir", type=Path, default=Path("data/microstates"), help="Base microstate dir.")
+    parser.add_argument("--base-dir", type=Path, default=Path("input/microstates"), help="Base microstate dir.")
     parser.add_argument("--output-dir", type=Path, default=Path("scripts/bootstrap_hist"), help="Output base.")
     parser.add_argument("--manifest-template", type=Path, default=Path("configs/manifest_hist.yaml"))
     args = parser.parse_args()

@@ -6,9 +6,9 @@
 # We can do this by loading multiple conformations of the same molecule as well as their respective
 # ESP grid calculations. 
 # The conformations lie in:
-# root/data/microstates/<microstate>/terachem/respout/conf<ID>.resp.out
+# root/input/microstates/<microstate>/terachem/respout/conf<ID>.resp.out
 # and the ESP grids lie in:
-# root/data/microstates/<microstate>/terachem/espxyz/conf<ID>.esp.xyz
+# root/input/microstates/<microstate>/terachem/espxyz/conf<ID>.esp.xyz
 #
 # 
 # STEP 1: From all these confs and ESP grid measurements we will first load them for a specific microstate,
@@ -112,7 +112,7 @@ from protocharge.paths import (
     ensure_results_dir,
     microstate_constraints_root,
     microstate_input_root,
-    microstate_results_root,
+    microstate_output_root,
     project_root,
 )
 
@@ -166,7 +166,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--microstate",
         required=True,
-        help="Name of the microstate (expects data/microstates/<microstate> to exist).",
+        help="Name of the microstate (expects input/microstates/<microstate> to exist).",
     )
     parser.add_argument(
         "--pdb",
@@ -203,7 +203,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--save",
         action="store_true",
-        help="Persist the stacked Coulomb matrix and ESP vector under results/<microstate>/multiconfRESP/.",
+        help="Persist the stacked Coulomb matrix and ESP vector under output/<microstate>/multiconfRESP/.",
     )
     parser.add_argument(
         "--load-and-resp",
@@ -368,7 +368,7 @@ def _save_stacked_matrices(
 
 
 def _load_saved_matrices(microstate_root: Path) -> Tuple[np.ndarray, np.ndarray]:
-    target_dir = microstate_results_root(microstate_root.name) / "multiconfRESP"
+    target_dir = microstate_output_root(microstate_root.name) / "multiconfRESP"
     if not target_dir.is_dir():
         raise FileNotFoundError(
             f"Directory {target_dir} not found; run with --save first to generate matrices."

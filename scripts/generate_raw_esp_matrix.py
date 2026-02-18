@@ -46,7 +46,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output",
         type=Path,
-        help="Output NPZ path (default: results/<microstate>/rawESP/charges.npz).",
+        help="Output NPZ path (default: output/<microstate>/rawESP/charges.npz).",
     )
     parser.add_argument(
         "--dry-run",

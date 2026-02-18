@@ -7,7 +7,7 @@ from typing import Dict, Iterable, List, Mapping, Sequence
 import yaml
 import numpy as np
 
-from protocharge.paths import results_root
+from protocharge.paths import output_root
 
 
 def _load_yaml(path: Path) -> Dict[str, object]:
@@ -254,7 +254,7 @@ def run_refep_stage(
     if not isinstance(stage_cfg, dict):
         raise ValueError(f"Config missing refep.{stage} mapping.")
 
-    base_dir = Path(stage_cfg.get("workdir") or (results_root() / microstate / "refep" / stage))
+    base_dir = Path(stage_cfg.get("workdir") or (output_root() / microstate / "refep" / stage))
     _ensure_dir(base_dir)
 
     # Charge exports (prep stage)

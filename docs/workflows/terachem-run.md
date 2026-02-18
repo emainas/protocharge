@@ -5,8 +5,8 @@ This workflow writes TeraChem input files (`resp.in`), generates Slurm submissio
 ## Expected inputs
 
 ```
-data/microstates/<MICROSTATE>/input_tc_structures/confs/<conf>/parm7
-data/microstates/<MICROSTATE>/input_tc_structures/confs/<conf>/rst7
+input/microstates/<MICROSTATE>/input_tc_structures/confs/<conf>/parm7
+input/microstates/<MICROSTATE>/input_tc_structures/confs/<conf>/rst7
 configs/<MICROSTATE>/input_tc_structures/<conf>/config.yaml
 ```
 
@@ -26,7 +26,7 @@ esp_grid_dens: 4.0
 ## Run
 
 ```bash
-pc --run-tc-resp data/microstates/<MICROSTATE>
+pc --run-tc-resp input/microstates/<MICROSTATE>
 ```
 
 For each conf, the module writes:
@@ -42,12 +42,12 @@ Then it submits `sbatch run_tc_resp.slurm` immediately.
 TeraChem writes `resp.out` in the conf directory and `esp.xyz` under a scratch folder named `scr.<rst7>`. Once the jobs finish, collect outputs into the standard layout:
 
 ```bash
-pc --process-tc-resp data/microstates/<MICROSTATE>
+pc --process-tc-resp input/microstates/<MICROSTATE>
 ```
 
 This writes:
 
 ```
-data/microstates/<MICROSTATE>/terachem/respout/conf####.resp.out
-data/microstates/<MICROSTATE>/terachem/espxyz/conf####.esp.xyz
+input/microstates/<MICROSTATE>/terachem/respout/conf####.resp.out
+input/microstates/<MICROSTATE>/terachem/espxyz/conf####.esp.xyz
 ```

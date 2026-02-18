@@ -26,7 +26,7 @@ from protocharge.multiconfresp.mcresp import (
 from protocharge.paths import (
     ensure_results_dir,
     microstate_constraints_root,
-    microstate_results_root,
+    microstate_output_root,
 )
 from protocharge.twostepresp_masked_total.tsresp import (
     build_atom_constraint_system,
@@ -48,12 +48,12 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--microstate",
         required=True,
-        help="Name of the microstate (expects data/microstates/<microstate> to exist).",
+        help="Name of the microstate (expects input/microstates/<microstate> to exist).",
     )
     parser.add_argument(
         "--bucket-file",
         type=Path,
-        help="Override symmetry bucket file (default: data/microstates/<microstate>/symmetry-buckets/r8.dat)",
+        help="Override symmetry bucket file (default: input/microstates/<microstate>/symmetry-buckets/r8.dat)",
     )
     parser.add_argument(
         "--pdb",
@@ -90,12 +90,12 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--input-dir-name",
         default="multiconfRESP",
-        help="Subdirectory (under results/<microstate>) that stores Coulomb/ESP stacks.",
+        help="Subdirectory (under output/<microstate>) that stores Coulomb/ESP stacks.",
     )
     parser.add_argument(
         "--output-dir-name",
         default="multiconfRESP_reduced_basic",
-        help="Subdirectory (under results/<microstate>) where reduced_basic-space RESP outputs will be written.",
+        help="Subdirectory (under output/<microstate>) where reduced_basic-space RESP outputs will be written.",
     )
     parser.add_argument(
         "--total-constraint",
@@ -162,7 +162,7 @@ def _save_stacked_matrices(
 
 
 def _load_saved_matrices(microstate_root: Path, source_name: str) -> Tuple[np.ndarray, np.ndarray]:
-    target_dir = microstate_results_root(microstate_root.name) / source_name
+    target_dir = microstate_output_root(microstate_root.name) / source_name
     if not target_dir.is_dir():
         raise FileNotFoundError(
             f"Directory {target_dir} not found; run with --save first to generate matrices."

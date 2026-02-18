@@ -38,7 +38,7 @@ import numpy as np
 import yaml
 
 from protocharge.multiconfresp.mcresp import _project_root
-from protocharge.paths import microstate_config_root, microstate_results_root, results_root
+from protocharge.paths import microstate_config_root, microstate_output_root, output_root
 from protocharge.twostepresp_masked_total.tsresp import (
     build_total_constraint_mask,
     load_total_constraint,
@@ -116,9 +116,9 @@ def build_molecule_specs(manifest: Dict, base_dir: Path) -> List[MoleculeSpec]:
             root_path = Path(root_val)
             root = root_path if root_path.is_absolute() else (base_dir / root_path)
         else:
-            root = _project_root() / "data" / "microstates" / name
+            root = _project_root() / "input" / "microstates" / name
         root = root.resolve()
-        results_root = microstate_results_root(name).resolve()
+        output_root = microstate_output_root(name).resolve()
         config_root = microstate_config_root(name).resolve()
         if name is None or not root:
             raise ValueError("Each molecule entry must have a name (and optionally root).")
@@ -131,10 +131,10 @@ def build_molecule_specs(manifest: Dict, base_dir: Path) -> List[MoleculeSpec]:
             return (base or root) / default_rel
 
         coulomb_path = _default(
-            "coulomb", Path("multiconfRESP/coulomb_matrix.npz"), base=results_root
+            "coulomb", Path("multiconfRESP/coulomb_matrix.npz"), base=output_root
         )
         esp_path = _default(
-            "esp", Path("multiconfRESP/esp_vector.npz"), base=results_root
+            "esp", Path("multiconfRESP/esp_vector.npz"), base=output_root
         )
         pdb_path = _default("pdb", Path(f"{name}.pdb"))
         mask1_path = _default(
@@ -540,7 +540,7 @@ def main(argv: Sequence[str] | None = None) -> None:
         cursor += n
 
     output_path = args.output or (
-        results_root() / args.manifest.stem / "mmresp" / "charges.npz"
+        output_root() / args.manifest.stem / "mmresp" / "charges.npz"
     )
     output_path.parent.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(

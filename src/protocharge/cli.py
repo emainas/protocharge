@@ -9,7 +9,7 @@ from typing import Dict, Iterable, List, Tuple
 
 import yaml
 
-from protocharge.paths import data_root, project_root, results_root
+from protocharge.paths import input_root, output_root, project_root
 from protocharge.run_tc_resp import run_tc_resp
 from protocharge.terachem_processing import process_tc_resp_runs, process_terachem_outputs
 from protocharge.validation.refep import run_refep_stage
@@ -18,7 +18,7 @@ from protocharge.training.md_qmmm import run_md_stage, run_qmmm_stage
 
 
 def _default_microstate_root(microstate: str) -> Path:
-    return data_root() / "microstates" / microstate
+    return input_root() / "microstates" / microstate
 
 
 def _slurm_header(slurm: Dict[str, str]) -> List[str]:
@@ -379,7 +379,7 @@ def main(argv: Iterable[str] | None = None) -> None:
                 slurm_cfg.setdefault("job_name", f"{function}_{cfg.get('microstate', 'job')}")
                 script_body = _render_slurm_script(command, slurm_cfg)
                 stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                slurm_dir = results_root() / "slurm"
+                slurm_dir = output_root() / "slurm"
                 slurm_dir.mkdir(parents=True, exist_ok=True)
                 script_path = slurm_dir / f"{function}_{cfg.get('microstate', 'job')}_{stamp}.slurm"
                 script_path.write_text(script_body, encoding="utf-8")
@@ -409,7 +409,7 @@ def main(argv: Iterable[str] | None = None) -> None:
         slurm_cfg.setdefault("job_name", f"{function}_{cfg.get('microstate', 'job')}")
         script_body = _render_slurm_script(command, slurm_cfg)
         stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        slurm_dir = results_root() / "slurm"
+        slurm_dir = output_root() / "slurm"
         slurm_dir.mkdir(parents=True, exist_ok=True)
         script_path = slurm_dir / f"{function}_{cfg.get('microstate', 'job')}_{stamp}.slurm"
         script_path.write_text(script_body, encoding="utf-8")

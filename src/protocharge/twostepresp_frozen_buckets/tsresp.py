@@ -382,26 +382,26 @@ def solve_least_squares_with_constraints(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Two-step RESP (group constraints with frozen buckets, by index)")
-    parser.add_argument("--microstate", required=True, help="Microstate name under data/microstates/<microstate>")
+    parser.add_argument("--microstate", required=True, help="Microstate name under input/microstates/<microstate>")
     parser.add_argument(
         "--bucket-file",
         type=Path,
-        help="Override symmetry bucket file (default: data/microstates/<microstate>/symmetry-buckets/r8.dat)",
+        help="Override symmetry bucket file (default: input/microstates/<microstate>/symmetry-buckets/r8.dat)",
     )
     parser.add_argument(
         "--pdb",
         type=Path,
-        help="Override PDB path (default: data/microstates/<microstate>/<microstate>.pdb)",
+        help="Override PDB path (default: input/microstates/<microstate>/<microstate>.pdb)",
     )
     parser.add_argument(
         "--resp-out",
         type=Path,
-        help="Override resp.out path (default: data/raw/resp.out)",
+        help="Override resp.out path (default: input/raw/resp.out)",
     )
     parser.add_argument(
         "--esp-xyz",
         type=Path,
-        help="Override esp.xyz path (default: data/raw/esp.xyz)",
+        help="Override esp.xyz path (default: input/raw/esp.xyz)",
     )
     parser.add_argument(
         "--group-constraint",
@@ -422,12 +422,12 @@ def main() -> None:
     args = parser.parse_args()
 
     project_root = _project_root()
-    micro_root = project_root / "data" / "microstates" / args.microstate
+    micro_root = project_root / "input" / "microstates" / args.microstate
 
     symmetry_bucket_path = args.bucket_file or (micro_root / "symmetry-buckets" / "r8.dat")
     pdb_path = args.pdb or (micro_root / f"{args.microstate}.pdb")
-    resp_out = args.resp_out or (project_root / "data" / "raw" / "resp.out")
-    esp_xyz = args.esp_xyz or (project_root / "data" / "raw" / "esp.xyz")
+    resp_out = args.resp_out or (project_root / "input" / "raw" / "resp.out")
+    esp_xyz = args.esp_xyz or (project_root / "input" / "raw" / "esp.xyz")
     constraint_root = microstate_constraints_root(args.microstate)
     group_constraint_path = args.group_constraint or (constraint_root / "group_constraint.yaml")
     frozen_path = args.frozen_buckets or (constraint_root / "frozen.yaml")
@@ -445,7 +445,7 @@ def main() -> None:
     if not frozen_path.is_file():
         raise FileNotFoundError(f"Frozen constraint file not found: {frozen_path}")
 
-    # STEP 1. Load the symmetry buckets from data/microstates/<microstate>/symmetry-buckets/...
+    # STEP 1. Load the symmetry buckets from input/microstates/<microstate>/symmetry-buckets/...
     symmetry_buckets = load_symmetry_buckets(symmetry_bucket_path)
     S = len(symmetry_buckets)
     print(f"Loaded {S} symmetry buckets from {symmetry_bucket_path}")

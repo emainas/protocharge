@@ -20,12 +20,12 @@ microstate: HID
 
 md:
   prep:
-    workdir: results/HID/md/prep
+    workdir: output/HID/md/prep
     tleap:
       module: "amber/25-CUDA_12.6-GCC12.2.0"
       binary: "tleap"
-      mol2: data/microstates/HID/initial-files/ligand.mol2
-      frcmod: data/microstates/HID/initial-files/ligand.frcmod
+      mol2: input/microstates/HID/initial-files/ligand.mol2
+      frcmod: input/microstates/HID/initial-files/ligand.frcmod
       frcmod_ion: frcmod.ionsjc_tip3p
       leaprc_mol: leaprc.gaff2
       leaprc_sol: leaprc.water.tip3p
@@ -35,10 +35,10 @@ md:
       counterion_num: 0
       prefix: HID
   run:
-    workdir: results/HID/md/run
+    workdir: output/HID/md/run
     inputs:
-      parm7: results/HID/md/prep/HID.parm7
-      rst7: results/HID/md/prep/HID.rst7
+      parm7: output/HID/md/prep/HID.parm7
+      rst7: output/HID/md/prep/HID.rst7
     runtime:
       module: "amber/25-CUDA_12.6-GCC12.2.0"
       executable: "pmemd.cuda"
@@ -121,9 +121,9 @@ md:
 
 qmmm:
   prep:
-    workdir: results/HID/qmmm
-    parm7: results/HID/md/run/hid.parm7
-    traj: results/HID/md/run/prod.nc
+    workdir: output/HID/qmmm
+    parm7: output/HID/md/run/hid.parm7
+    traj: output/HID/md/run/prod.nc
     frames:
       start: 1000
       end: 20000
@@ -145,10 +145,10 @@ qmmm:
       wmodel: tip3p
 
   run:
-    workdir: results/HID/qmmm
+    workdir: output/HID/qmmm
 
   esp:
-    workdir: results/HID/qmmm
+    workdir: output/HID/qmmm
     frames:
       start: 1000
       end: 20000
@@ -165,10 +165,10 @@ qmmm:
 
 ## Outputs
 
-- MD outputs under `results/<microstate>/md/`
-- QMMM frame prep and jobs under `results/<microstate>/qmmm/`
+- MD outputs under `output/<microstate>/md/`
+- QMMM frame prep and jobs under `output/<microstate>/qmmm/`
 - QMMM RESP outputs can be collected with:
 
 ```bash
-pc --process data/microstates/<MICROSTATE>
+pc --process input/microstates/<MICROSTATE>
 ```

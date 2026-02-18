@@ -34,7 +34,7 @@ Create a config under `configs/<microstate>/<function>/config.yaml` and run:
 pc --function twostepRESP_basic --yaml HID/twostepRESP_basic --slurm
 ```
 
-`--yaml` accepts a full path or a `configs/` subpath. With `--slurm`, the CLI writes a Slurm script under `results/slurm/` and submits it via `sbatch`.
+`--yaml` accepts a full path or a `configs/` subpath. With `--slurm`, the CLI writes a Slurm script under `output/slurm/` and submits it via `sbatch`.
 
 Use `--dry-run` to verify the resolved command without executing it:
 

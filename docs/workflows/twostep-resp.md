@@ -16,7 +16,7 @@ Both RESP steps log the KKT residual, gradient norm, and the charge vector, matc
 
 ```bash
 python scripts/generate_twostep_resp.py \
-  --microstate-root data/microstates/PPP \
+  --microstate-root input/microstates/PPP \
   --maxiter 400
 ```
 
@@ -25,7 +25,7 @@ The script automatically:
 - Loads `symmetry-buckets/r8.dat` to build the expansion matrix.
 - Reads total and bucket charge constraints from `charge-contraints/`.
 - Applies step-one and step-two masks from YAML templates co-located in the microstate root.
-- Persists `labels` (configuration stems), `step1`, and `step2` matrices to `results/<microstate>/twostepRESP_basic/charges.npz`.
+- Persists `labels` (configuration stems), `step1`, and `step2` matrices to `output/<microstate>/twostepRESP_basic/charges.npz`.
 
 Use `--dry-run` to list the configuration stems without running RESP, or `--max-configs` to limit the number of fits during debugging.
 
@@ -35,7 +35,7 @@ Use `--dry-run` to list the configuration stems without running RESP, or `--max-
 
 ```bash
 python scripts/retry_twostep_resp.py \
-  --microstate-root data/microstates/PPP \
+  --microstate-root input/microstates/PPP \
   --config conf2371 \
   --step1-maxiter 120 \
   --step2-maxiter 240 \
@@ -48,9 +48,9 @@ The retrier reuses the masks, symmetry buckets, and constraints from the batch s
 
 The project ships specialized two-step RESP variants for different constraint setups:
 
-- **Masked total constraint** – `scripts/generate_twostep_resp_masked_total.py` writes to `results/<microstate>/twostepRESP_masked_total/`.
-- **Group constraints** – `scripts/generate_twostep_resp_group_constraints.py` writes to `results/<microstate>/twostepRESP_group_constraints/`.
-- **Frozen buckets** – `scripts/generate_twostep_resp_frozen_buckets.py` writes to `results/<microstate>/twostepRESP_frozen_buckets/`.
+- **Masked total constraint** – `scripts/generate_twostep_resp_masked_total.py` writes to `output/<microstate>/twostepRESP_masked_total/`.
+- **Group constraints** – `scripts/generate_twostep_resp_group_constraints.py` writes to `output/<microstate>/twostepRESP_group_constraints/`.
+- **Frozen buckets** – `scripts/generate_twostep_resp_frozen_buckets.py` writes to `output/<microstate>/twostepRESP_frozen_buckets/`.
 
 ## Consuming the Results
 

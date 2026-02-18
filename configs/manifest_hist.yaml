@@ -1,6 +1,6 @@
 molecules:
   - name: HIP
-    root: ../data/microstates/HIP
+    root: ../input/microstates/HIP
     coulomb: multiconfRESP/coulomb_matrix.npz
     esp: multiconfRESP/esp_vector.npz
     pdb: hip.pdb
@@ -8,7 +8,7 @@ molecules:
     mask_step1: charge-contraints/mask_step_1.yaml
     mask_step2: charge-contraints/mask_step_2.yaml
   - name: HIE
-    root: ../data/microstates/HIE
+    root: ../input/microstates/HIE
     coulomb: multiconfRESP/coulomb_matrix.npz
     esp: multiconfRESP/esp_vector.npz
     pdb: hie.pdb
@@ -16,7 +16,7 @@ molecules:
     mask_step1: charge-contraints/mask_step_1.yaml
     mask_step2: charge-contraints/mask_step_2.yaml
   - name: HID
-    root: ../data/microstates/HID
+    root: ../input/microstates/HID
     coulomb: multiconfRESP/coulomb_matrix.npz
     esp: multiconfRESP/esp_vector.npz
     pdb: hid.pdb

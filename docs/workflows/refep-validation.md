@@ -24,10 +24,10 @@ pc --validate refep.analyze --yaml configs/HID/refep.yaml
 microstate: HID
 refep:
   prep:
-    workdir: results/HID/refep/prep
+    workdir: output/HID/refep/prep
     charge_exports:
       - charges:
-          path: results/HID/twostepRESP_basic/charges.npz
+          path: output/HID/twostepRESP_basic/charges.npz
           key: step2
           frame: -1
         mol2: configs/HID/hid.mol2
@@ -49,7 +49,7 @@ refep:
       - ["parmed", "-i", "parmed.interpolate.in"]
 
   run:
-    workdir: results/HID/refep/run
+    workdir: output/HID/refep/run
     files:
       - src: configs/HID/remd_hist.in
         dst: remd_hist.in
@@ -64,7 +64,7 @@ refep:
       time: "24:00:00"
 
   grid:
-    workdir: results/HID/refep/grid
+    workdir: output/HID/refep/grid
     files:
       - src: configs/HID/demux_.in
         dst: demux_.in
@@ -80,7 +80,7 @@ refep:
       time: "04:00:00"
 
   analyze:
-    workdir: results/HID/refep/analyze
+    workdir: output/HID/refep/analyze
     files:
       - src: configs/HID/plot_refep_du_grid.py
         dst: plot_refep_du_grid.py

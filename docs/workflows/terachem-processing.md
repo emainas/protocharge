@@ -3,17 +3,17 @@
 Most users should run TeraChem RESP jobs with `pc --run-tc-resp`, then collect outputs with:
 
 ```bash
-pc --process-tc-resp data/microstates/<MICROSTATE>
+pc --process-tc-resp input/microstates/<MICROSTATE>
 ```
 
-This gathers `resp.out` plus the scratch `esp.xyz` files and writes the standardized inputs under `data/microstates/<MICROSTATE>/terachem/`.
+This gathers `resp.out` plus the scratch `esp.xyz` files and writes the standardized inputs under `input/microstates/<MICROSTATE>/terachem/`.
 
 ## Required raw layout
 
 Place raw outputs under:
 
 ```
-data/microstates/<MICROSTATE>/raw_terachem_outputs/
+input/microstates/<MICROSTATE>/raw_terachem_outputs/
 ```
 
 Expected structure:
@@ -34,8 +34,8 @@ raw_terachem_outputs/
 The command writes:
 
 ```
-data/microstates/<MICROSTATE>/terachem/respout/conf####.resp.out
-data/microstates/<MICROSTATE>/terachem/espxyz/conf####.esp.xyz
+input/microstates/<MICROSTATE>/terachem/respout/conf####.resp.out
+input/microstates/<MICROSTATE>/terachem/espxyz/conf####.esp.xyz
 ```
 
 ## Next step

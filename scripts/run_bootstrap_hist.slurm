@@ -26,7 +26,7 @@ BOOT_DIR="$PROJECT_ROOT/scripts/bootstrap_hist/rep_$(printf '%03d' "$REP_ID")"
 # Build bootstrap matrices and manifest
 python scripts/bootstrap_hist.py \
   --replicate "$REP_ID" \
-  --base-dir "$PROJECT_ROOT/data/microstates" \
+  --base-dir "$PROJECT_ROOT/input/microstates" \
   --output-dir "$PROJECT_ROOT/scripts/bootstrap_hist" \
   --manifest-template "$PROJECT_ROOT/configs/manifest_hist.yaml"
 

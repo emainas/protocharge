@@ -25,9 +25,9 @@ pc --validate dipole.print --yaml configs/HID/dipole.yaml
 Example `configs/HID/dipole.yaml`:
 
 ```yaml
-resp_out: data/raw/resp.out
-esp_xyz: data/raw/esp.xyz
-geom_xyz: data/raw/1.pose.xyz
+resp_out: input/raw/resp.out
+esp_xyz: input/raw/esp.xyz
+geom_xyz: input/raw/1.pose.xyz
 n_atoms: 78
 frame: -1
 ```

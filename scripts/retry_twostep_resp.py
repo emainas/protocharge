@@ -31,7 +31,7 @@ def parse_args() -> argparse.Namespace:
         "--microstate-root",
         type=Path,
         required=True,
-        help="Path to the microstate directory (e.g., data/microstates/PPP).",
+        help="Path to the microstate directory (e.g., input/microstates/PPP).",
     )
     parser.add_argument(
         "--config",

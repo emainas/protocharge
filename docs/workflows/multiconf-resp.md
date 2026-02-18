@@ -15,7 +15,7 @@ python -m protocharge.multiconfresp.mcresp \
 
 Under the hood this:
 
-- Reads `data/microstates/<microstate>/terachem/respout/*.resp.out` and `espxyz/*.esp.xyz`.
+- Reads `input/microstates/<microstate>/terachem/respout/*.resp.out` and `espxyz/*.esp.xyz`.
 - Stacks the Coulomb matrices and ESP vectors across all configurations.
 - Runs the two-step RESP solver (basic variant) over the stacked system.
 
@@ -24,7 +24,7 @@ Under the hood this:
 For ensemble runs the default outputs are written under:
 
 ```
-results/<microstate>/multiconfRESP/
+output/<microstate>/multiconfRESP/
 ```
 
 If you are using a reduced-space variant, see **Reduced RESP** for the alternative output directories.

@@ -2,12 +2,12 @@ microstate: MEA
 
 md:
   prep:
-    workdir: results/MEA/md/prep
+    workdir: output/MEA/md/prep
     tleap:
       module: "amber/25-CUDA_12.6-GCC12.2.0"
       binary: "tleap"
-      mol2: data/microstates/MEA/initial-files/mea.mol2
-      frcmod: data/microstates/MEA/initial-files/mea.frcmod
+      mol2: input/microstates/MEA/initial-files/mea.mol2
+      frcmod: input/microstates/MEA/initial-files/mea.frcmod
       frcmod_ion: frcmod.ionsjc_tip3p
       leaprc_mol: leaprc.gaff2
       leaprc_sol: leaprc.water.tip3p
@@ -18,10 +18,10 @@ md:
       prefix: MEA
 
   run:
-    workdir: results/MEA/md/run
+    workdir: output/MEA/md/run
     inputs:
-      parm7: results/MEA/md/prep/MEA.parm7
-      rst7: results/MEA/md/prep/MEA.rst7
+      parm7: output/MEA/md/prep/MEA.parm7
+      rst7: output/MEA/md/prep/MEA.rst7
     runtime:
       module: "amber/25-CUDA_12.6-GCC12.2.0"
       executable: "pmemd.cuda"
@@ -104,9 +104,9 @@ md:
 
 qmmm:
   prep:
-    workdir: results/MEA/qmmm
-    parm7: results/MEA/md/run/MEA.parm7
-    traj: results/MEA/md/run/prod.nc
+    workdir: output/MEA/qmmm
+    parm7: output/MEA/md/run/MEA.parm7
+    traj: output/MEA/md/run/prod.nc
     frames:
       start: 1000
       end: 20000
@@ -128,10 +128,10 @@ qmmm:
       wmodel: tip3p
 
   run:
-    workdir: results/MEA/qmmm
+    workdir: output/MEA/qmmm
 
   esp:
-    workdir: results/MEA/qmmm
+    workdir: output/MEA/qmmm
     frames:
       start: 1000
       end: 20000

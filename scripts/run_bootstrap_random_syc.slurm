@@ -26,7 +26,7 @@ REP_DIR="$PROJECT_ROOT/scripts/bootstrap_hist_random/rep_${RID3}"
 # Build bootstrap matrices and manifest (with replacement, all 10 blocks)
 python scripts/bootstrap_hist_random.py \
   --replicate "$RID" \
-  --base-dir "$PROJECT_ROOT/data/microstates" \
+  --base-dir "$PROJECT_ROOT/input/microstates" \
   --output-dir "$PROJECT_ROOT/scripts/bootstrap_hist_random" \
   --manifest-template "$PROJECT_ROOT/configs/manifest_hist.yaml"
 

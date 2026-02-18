@@ -84,9 +84,9 @@ By default every atom is restrained. Passing `restrain_all_atoms=False` selects 
 from pathlib import Path
 from protocharge.resp.resp import HyperbolicRestraint, fit_resp_charges
 
-resp_out = Path("data/raw/resp.out")
-esp_xyz = Path("data/raw/esp.xyz")
-geometry_xyz = Path("data/raw/1.pose.xyz")
+resp_out = Path("input/raw/resp.out")
+esp_xyz = Path("input/raw/esp.xyz")
+geometry_xyz = Path("input/raw/1.pose.xyz")
 
 restraint = HyperbolicRestraint(a=5e-4, b=1e-3, q0=0.0)
 result = fit_resp_charges(

@@ -55,11 +55,15 @@ site/
 docs/site/
 
 # Generated results / large outputs
-results/
+output/
 reports/
 
-# data
-data/
+# input
+input/
+!input/raw/
+!input/raw/**
+!input/experimental-titration-curves/
+!input/experimental-titration-curves/**
 
 # macOS
 .DS_Store
@@ -68,7 +72,7 @@ data/
 *.log
 
 # raw microstate data
-data/microstates/
+input/microstates/
 
 # bibliography
 bibliography/

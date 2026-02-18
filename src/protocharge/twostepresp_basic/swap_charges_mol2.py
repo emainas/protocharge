@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from protocharge.paths import microstate_results_root
+from protocharge.paths import microstate_output_root
 from typing import List
 
 import numpy as np
@@ -25,7 +25,7 @@ def _load_p_linear() -> np.ndarray:
     project_root = _project_root()
     symmetry_buckets = load_symmetry_buckets(
         project_root
-        / "data"
+        / "input"
         / "microstates"
         / "PPP"
         / "symmetry-buckets"
@@ -34,14 +34,14 @@ def _load_p_linear() -> np.ndarray:
     P = build_expansion_matrix(symmetry_buckets)
     atom_count = P.shape[0]
     design_matrix, esp_values, _, _ = prepare_linear_system(
-        project_root / "data" / "raw" / "resp.out",
-        project_root / "data" / "raw" / "esp.xyz",
+        project_root / "input" / "raw" / "resp.out",
+        project_root / "input" / "raw" / "esp.xyz",
         atom_count,
     )
 
     total_charge_target = load_total_charge(
         project_root
-        / "data"
+        / "input"
         / "microstates"
         / "PPP"
         / "charge-contraints"
@@ -49,7 +49,7 @@ def _load_p_linear() -> np.ndarray:
     )
     bucket_constraints = load_bucket_constraints(
         project_root
-        / "data"
+        / "input"
         / "microstates"
         / "PPP"
         / "charge-contraints"
@@ -105,13 +105,13 @@ def main() -> None:
     parser.add_argument(
         "--input",
         type=Path,
-        default=Path("data/microstates/PPP/dou.mol2"),
+        default=Path("input/microstates/PPP/dou.mol2"),
         help="Input MOL2 file.",
     )
     parser.add_argument(
         "--output",
         type=Path,
-        default=microstate_results_root("PPP") / "dou_new.mol2",
+        default=microstate_output_root("PPP") / "dou_new.mol2",
         help="Output MOL2 file with swapped charges.",
     )
     args = parser.parse_args()

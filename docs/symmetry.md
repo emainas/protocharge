@@ -11,7 +11,7 @@ from pathlib import Path
 
 from protocharge.symmetry import buckets_from_pdb
 
-buckets = buckets_from_pdb(Path("data/raw/1.pose.pdb"), radius=10)
+buckets = buckets_from_pdb(Path("input/raw/1.pose.pdb"), radius=10)
 print(f"Identified {len(buckets)} equivalence classes")
 ```
 

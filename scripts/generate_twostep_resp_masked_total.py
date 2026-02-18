@@ -31,12 +31,12 @@ def parse_args() -> argparse.Namespace:
         "--microstate-root",
         type=Path,
         required=True,
-        help="Path to the microstate directory (e.g., data/microstates/PPP).",
+        help="Path to the microstate directory (e.g., input/microstates/PPP).",
     )
     parser.add_argument(
         "--output",
         type=Path,
-        help="Output NPZ path (default: results/<microstate>/twostepRESP_masked_total/charges_constraint.npz).",
+        help="Output NPZ path (default: output/<microstate>/twostepRESP_masked_total/charges_constraint.npz).",
     )
     parser.add_argument(
         "--bucket-file",
