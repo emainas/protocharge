@@ -11,7 +11,7 @@ from protocharge.dipole.dipole import BOHR_PER_ANG, _dipole_from_charges, _norma
 from protocharge.resp_parser import ParseDotXYZ, ParseRespDotOut
 from protocharge.linearESPcharges.linear import explicit_solution, prepare_linear_system
 
-DATA_DIR = Path(__file__).resolve().parents[1] / "data" / "raw"
+DATA_DIR = Path(__file__).resolve().parents[1] / "input" / "raw"
 RESP_OUT = DATA_DIR / "resp.out"
 ESP_XYZ = DATA_DIR / "esp.xyz"
 GEOM_XYZ = DATA_DIR / "1.pose.xyz"

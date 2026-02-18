@@ -7,7 +7,7 @@ import pytest
 from protocharge.resp_parser import ParseRespDotOut, ParseESPXYZ, ParseDotXYZ
 
 
-DATA_DIR = Path(__file__).resolve().parents[1] / "data" / "raw"
+DATA_DIR = Path(__file__).resolve().parents[1] / "input" / "raw"
 
 
 def test_extract_frames():

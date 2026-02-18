@@ -11,9 +11,9 @@ def _write(path: Path, text: str) -> None:
 
 
 def test_run_tc_resp_writes_inputs(tmp_path: Path) -> None:
-    microstate = tmp_path / "data" / "microstates" / "HID"
+    microstate = tmp_path / "input" / "microstates" / "HID"
     conf_root = microstate / "input_tc_structures" / "confs"
-    config_root = tmp_path / "data" / "configs" / "HID" / "input_tc_structures"
+    config_root = tmp_path / "input" / "configs" / "HID" / "input_tc_structures"
 
     _write(conf_root / "conf1" / "parm7", "PARM7\n")
     _write(conf_root / "conf1" / "rst7", "RST7\n")

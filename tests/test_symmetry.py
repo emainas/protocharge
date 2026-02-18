@@ -30,7 +30,7 @@ def test_mol_to_nx_builds_expected_graph():
 
 def test_buckets_from_pdb_partitions_atoms():
     repo_root = Path(__file__).resolve().parents[1]
-    pdb_path = repo_root / "data" / "raw" / "1.pose.pdb"
+    pdb_path = repo_root / "input" / "raw" / "1.pose.pdb"
 
     buckets = buckets_from_pdb(pdb_path, radius=2)
     mol = Chem.MolFromPDBFile(str(pdb_path), removeHs=True)

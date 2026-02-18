@@ -11,7 +11,7 @@ def _write(path: Path, text: str) -> None:
 
 
 def test_process_tc_resp_runs(tmp_path: Path) -> None:
-    microstate = tmp_path / "data" / "microstates" / "HID"
+    microstate = tmp_path / "input" / "microstates" / "HID"
     conf_root = microstate / "input_tc_structures" / "confs"
 
     _write(conf_root / "conf1" / "nowater.rst7", "RST7\n")

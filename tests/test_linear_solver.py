@@ -13,7 +13,7 @@ from protocharge.linearESPcharges.linear import (
 from protocharge.resp_parser import ParseRespDotOut
 
 
-DATA_DIR = Path(__file__).resolve().parents[1] / "data" / "raw"
+DATA_DIR = Path(__file__).resolve().parents[1] / "input" / "raw"
 RESP_OUT = DATA_DIR / "resp.out"
 ESP_XYZ = DATA_DIR / "esp.xyz"
 NUMBER_OF_ATOMS = 78
