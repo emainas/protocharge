@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Dict, Iterable, List, Mapping, Sequence
 
 from protocharge.validation import refep as refep_utils
+from protocharge.paths import project_root
 
 
 def _load_yaml(path: Path) -> Dict[str, object]:
@@ -13,6 +14,18 @@ def _load_yaml(path: Path) -> Dict[str, object]:
 
 def _resolve_path(value: object, base_dir: Path) -> Path:
     return refep_utils._resolve_path(value, base_dir)
+
+
+def _resolve_path_with_base(value: object, config_dir: Path) -> Path:
+    if not isinstance(value, str):
+        raise ValueError(f"Expected a path string, got {type(value).__name__}")
+    path = Path(value)
+    if path.is_absolute():
+        return path
+    cand = config_dir / path
+    if cand.exists():
+        return cand
+    return project_root() / path
 
 
 def _normalize_commands(commands: Sequence[object]) -> List[List[str]]:
@@ -117,7 +130,136 @@ def _render_tc_slurm(jobname: str) -> str:
     )
 
 
-def _run_generic_stage(stage_cfg: Mapping[str, object], base_dir: Path, slurm: bool, dry_run: bool) -> None:
+def _render_mdin(stage: Mapping[str, object]) -> str:
+    description = str(stage.get("description", "MD stage"))
+    cntrl = stage.get("cntrl")
+    if not isinstance(cntrl, dict):
+        raise ValueError("md.run.stages[*].cntrl must be a mapping.")
+    lines = [description, "&cntrl"]
+    for key, value in cntrl.items():
+        lines.append(f"  {key}={value},")
+    lines.append("/")
+
+    wt = stage.get("wt")
+    if isinstance(wt, list):
+        for card in wt:
+            if not isinstance(card, dict):
+                continue
+            card_type = str(card.get("type", "END"))
+            if card_type.upper() == "END":
+                lines.append("&wt type='END' /")
+                continue
+            parts = [f"type='{card_type}'"]
+            for key in ("istep1", "istep2", "value1", "value2"):
+                if key in card:
+                    parts.append(f"{key}={card[key]}")
+            lines.append("&wt " + ", ".join(parts) + " /")
+
+    return "\n".join(lines) + "\n"
+
+
+def _write_md_run_scripts(
+    base_dir: Path,
+    parm7_name: str,
+    rst7_name: str,
+    runtime: Mapping[str, object],
+    stages: List[Mapping[str, object]],
+) -> Path:
+    strict = runtime.get("strict_mode", True)
+    module_name = runtime.get("module")
+    executable = runtime.get("executable", "pmemd.cuda")
+    env = runtime.get("env", {})
+
+    strict_line = "set -euo pipefail" if strict else ""
+    module_block = f"module load {module_name}" if module_name else ""
+    env_block = "\n".join([f"export {k}={v}" for k, v in env.items()])
+
+    lines = [
+        "#!/usr/bin/env bash",
+        strict_line,
+        "",
+        "module purge",
+        module_block,
+        "",
+        env_block,
+        "",
+        f'echo "==> Running MD stages with {executable}"',
+        "",
+    ]
+
+    current_rst7 = rst7_name
+    for stage in stages:
+        name = stage["name"]
+        out_rst7 = f"{name}.rst7"
+        out_nc = f"{name}.nc"
+        out_info = f"{name}.info"
+        out_out = f"{name}.out"
+        traj = stage.get("traj")
+        if traj is None:
+            traj = not str(name).startswith("min")
+
+        lines.append(f'if [[ ! -f {out_out} ]]; then')
+        lines.append(f'  echo "  {name}..."')
+        lines.append(f"  {executable} -O \\")
+        lines.append(f"    -i {name}.in \\")
+        lines.append(f"    -p {parm7_name} \\")
+        lines.append(f"    -c {current_rst7} \\")
+        lines.append(f"    -r {out_rst7} \\")
+        lines.append(f"    -o {out_out} \\")
+        lines.append(f"    -inf {out_info} \\")
+        if traj:
+            lines.append(f"    -x {out_nc}")
+        else:
+            lines[-1] = lines[-1].rstrip(" \\")
+        lines.append("else")
+        lines.append(f'  echo "  Skipping {name} ({out_out} exists)"')
+        lines.append("fi")
+        lines.append("")
+        current_rst7 = out_rst7
+
+    script_path = base_dir / "run.sh"
+    script_path.write_text("\n".join([l for l in lines if l is not None]) + "\n", encoding="utf-8")
+    script_path.chmod(0o755)
+    return script_path
+
+
+def _write_md_slurm(base_dir: Path, slurm_cfg: Mapping[str, object]) -> Path:
+    cfg = refep_utils._resolve_slurm_config(slurm_cfg)
+    lines = [
+        "#!/usr/bin/env bash",
+        f"#SBATCH -J {cfg.get('job_name', 'md-run')}",
+        f"#SBATCH -p {cfg.get('partition', 'batch')}",
+        f"#SBATCH -N {cfg.get('nodes', 1)}",
+        f"#SBATCH -t {cfg.get('time', '24:00:00')}",
+        f"#SBATCH --cpus-per-task={cfg.get('cpus_per_task', 16)}",
+    ]
+    if "output" in cfg:
+        lines.append(f"#SBATCH -o {cfg['output']}")
+    if "error" in cfg:
+        lines.append(f"#SBATCH -e {cfg['error']}")
+    if "qos" in cfg:
+        lines.append(f"#SBATCH --qos={cfg['qos']}")
+    if "gres" in cfg:
+        lines.append(f"#SBATCH --gres={cfg['gres']}")
+    if "account" in cfg:
+        lines.append(f"#SBATCH --account={cfg['account']}")
+    if "mem" in cfg:
+        lines.append(f"#SBATCH --mem={cfg['mem']}")
+    extra = cfg.get("extra")
+    if isinstance(extra, list):
+        for line in extra:
+            lines.append(str(line))
+    lines += [
+        "",
+        "bash run.sh",
+        "",
+    ]
+    script_path = base_dir / "slurm.sh"
+    script_path.write_text("\n".join(lines), encoding="utf-8")
+    script_path.chmod(0o755)
+    return script_path
+
+def _run_generic_stage(stage_cfg: Mapping[str, object], base_dir: Path, config_dir: Path, slurm: bool, dry_run: bool) -> None:
     base_dir.mkdir(parents=True, exist_ok=True)
 
     exports = stage_cfg.get("charge_exports", [])
@@ -128,14 +270,14 @@ def _run_generic_stage(stage_cfg: Mapping[str, object], base_dir: Path, slurm: b
             charges_cfg = entry.get("charges", {})
             if not isinstance(charges_cfg, dict):
                 raise ValueError("charge_exports.charges must be a mapping")
-            charges_path = _resolve_path(charges_cfg.get("path"), base_dir)
+            charges_path = _resolve_path_with_base(charges_cfg.get("path"), config_dir)
             key = charges_cfg.get("key")
             frame = charges_cfg.get("frame")
             aggregate = charges_cfg.get("aggregate")
             frames_axis = int(charges_cfg.get("frames_axis", 1))
 
-            mol2_path = _resolve_path(entry.get("mol2"), base_dir)
-            output_path = _resolve_path(entry.get("output"), base_dir)
+            mol2_path = _resolve_path_with_base(entry.get("mol2"), config_dir)
+            output_path = _resolve_path_with_base(entry.get("output"), config_dir)
             resid_prefix = entry.get("resid_prefix")
             resid_map = entry.get("resid_map") if isinstance(entry.get("resid_map"), dict) else None
             resid_source = entry.get("resid_source", "subst_id")
@@ -155,23 +297,74 @@ def _run_generic_stage(stage_cfg: Mapping[str, object], base_dir: Path, slurm: b
         for item in files:
             if not isinstance(item, dict):
                 continue
-            src = _resolve_path(item.get("src"), base_dir)
+            src = _resolve_path_with_base(item.get("src"), config_dir)
             dst = base_dir / str(item.get("dst") or src.name)
             refep_utils._copy_file(src, dst)
+
+    tleap_cfg = stage_cfg.get("tleap")
+    if isinstance(tleap_cfg, dict):
+        tleap_in = base_dir / "tleap.in"
+        mol2 = _resolve_path_with_base(tleap_cfg.get("mol2"), config_dir)
+        frcmod = _resolve_path_with_base(tleap_cfg.get("frcmod"), config_dir)
+        frcmod_ion = tleap_cfg.get("frcmod_ion")
+        leaprc_mol = tleap_cfg.get("leaprc_mol", "leaprc.gaff2")
+        leaprc_sol = tleap_cfg.get("leaprc_sol", "leaprc.water.tip3p")
+        water_model = tleap_cfg.get("water_model", "TIP3PBOX")
+        buffer = float(tleap_cfg.get("buffer", 15.0))
+        counterion = tleap_cfg.get("counterion")
+        counterion_num = int(tleap_cfg.get("counterion_num", 0))
+        prefix = tleap_cfg.get("prefix", "solv")
+
+        base_dir.mkdir(parents=True, exist_ok=True)
+        if mol2.exists():
+            refep_utils._copy_file(mol2, base_dir / mol2.name)
+        if frcmod.exists():
+            refep_utils._copy_file(frcmod, base_dir / frcmod.name)
+
+        addions_block = ""
+        if counterion and counterion_num > 0:
+            addions_block = f"addions sys {counterion} {counterion_num}\n"
+
+        ion_block = ""
+        if frcmod_ion:
+            ion_block = f"loadamberparams {frcmod_ion}\n"
+
+        tleap_text = (
+            "# Auto-generated by protocharge\n"
+            f"source {leaprc_mol}\n"
+            f"source {leaprc_sol}\n"
+            f"{ion_block}"
+            f"loadamberparams {frcmod.name}\n"
+            f"sys = loadmol2 {mol2.name}\n"
+            f"solvatebox sys {water_model} {buffer}\n"
+            f"{addions_block}"
+            f"saveamberparm sys {prefix}.parm7 {prefix}.rst7\n"
+            "quit\n"
+        )
+        tleap_in.write_text(tleap_text, encoding="utf-8")
+
+        module_name = tleap_cfg.get("module")
+        tleap_bin = tleap_cfg.get("binary", "tleap")
+        if module_name and not dry_run:
+            subprocess.run(
+                ["bash", "-lc", f"ml {module_name} && {tleap_bin} -f {tleap_in.name}"],
+                check=True,
+                cwd=base_dir,
+            )
 
     tleap_inputs = stage_cfg.get("tleap_inputs", [])
     if isinstance(tleap_inputs, list):
         for entry in tleap_inputs:
             if not isinstance(entry, dict):
                 continue
-            template = _resolve_path(entry.get("template"), base_dir)
+            template = _resolve_path_with_base(entry.get("template"), config_dir)
             out_name = entry.get("output", template.name)
             out_path = base_dir / str(out_name)
             text = template.read_text(encoding="utf-8")
             charges_path = entry.get("charges")
             marker = entry.get("marker", "# BILIRESP_CHARGES")
             if charges_path:
-                overrides = refep_utils._load_charge_overrides(_resolve_path(charges_path, base_dir))
+                overrides = refep_utils._load_charge_overrides(_resolve_path_with_base(charges_path, config_dir))
                 block = refep_utils._render_charge_block(overrides)
                 text = refep_utils._insert_charge_block(text, block, marker)
             out_path.write_text(text, encoding="utf-8")
@@ -200,7 +393,55 @@ def run_md_stage(stage: str, config_path: Path, *, slurm: bool, dry_run: bool) -
     if not isinstance(stage_cfg, dict):
         raise ValueError(f"Config missing md.{stage} mapping.")
     base_dir = Path(stage_cfg.get("workdir"))
-    _run_generic_stage(stage_cfg, base_dir, slurm, dry_run)
+
+    if stage == "run":
+        base_dir.mkdir(parents=True, exist_ok=True)
+        inputs = stage_cfg.get("inputs", {})
+        if not isinstance(inputs, dict):
+            raise ValueError("md.run.inputs must be a mapping.")
+        parm7_path = _resolve_path_with_base(inputs.get("parm7"), config_path.parent)
+        rst7_path = _resolve_path_with_base(inputs.get("rst7"), config_path.parent)
+        if not parm7_path.exists() or not rst7_path.exists():
+            raise FileNotFoundError("md.run.inputs parm7/rst7 not found.")
+
+        parm7_name = parm7_path.name
+        rst7_name = rst7_path.name
+        refep_utils._copy_file(parm7_path, base_dir / parm7_name)
+        refep_utils._copy_file(rst7_path, base_dir / rst7_name)
+
+        stages = stage_cfg.get("stages", [])
+        if not isinstance(stages, list) or not stages:
+            raise ValueError("md.run.stages must be a non-empty list.")
+        stage_defs: List[Mapping[str, object]] = []
+        for entry in stages:
+            if not isinstance(entry, dict):
+                continue
+            name = entry.get("name")
+            if not name:
+                raise ValueError("md.run.stages entries require a 'name'.")
+            stage_defs.append(entry)
+            mdin = base_dir / f"{name}.in"
+            mdin.write_text(_render_mdin(entry), encoding="utf-8")
+
+        runtime = stage_cfg.get("runtime", {})
+        if not isinstance(runtime, dict):
+            raise ValueError("md.run.runtime must be a mapping.")
+        run_sh = _write_md_run_scripts(base_dir, parm7_name, rst7_name, runtime, stage_defs)
+
+        slurm_sh = None
+        slurm_cfg = stage_cfg.get("slurm", {})
+        if slurm and isinstance(slurm_cfg, dict):
+            slurm_sh = _write_md_slurm(base_dir, slurm_cfg)
+
+        (base_dir / "spec.yaml").write_text(config_path.read_text(encoding="utf-8"), encoding="utf-8")
+
+        if slurm and slurm_sh and not dry_run:
+            subprocess.run(["sbatch", slurm_sh.name], check=True, cwd=base_dir)
+        elif not slurm and not dry_run:
+            subprocess.run(["bash", run_sh.name], check=True, cwd=base_dir)
+        return base_dir
+
+    _run_generic_stage(stage_cfg, base_dir, config_path.parent, slurm, dry_run)
     return base_dir
 
 

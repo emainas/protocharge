@@ -1,44 +1,27 @@
-# Generator: MD + QMMM Training Set
-
-This workflow generates the RESP training set from classical MD followed by QMMM and RESP/ESP evaluation. MD and QMMM are separate stages.
-
-## CLI
-
-```bash
-pc --generator md.prep --yaml configs/HID/generator.yaml
-pc --generator md.run --yaml configs/HID/generator.yaml --slurm
-
-pc --generator qmmm.prep --yaml configs/HID/generator.yaml
-pc --generator qmmm.run --yaml configs/HID/generator.yaml --slurm
-pc --generator qmmm.esp --yaml configs/HID/generator.yaml --slurm
-```
-
-## Config example
-
-```yaml
-microstate: HID
+microstate: MEA
 
 md:
   prep:
-    workdir: results/HID/md/prep
+    workdir: results/MEA/md/prep
     tleap:
       module: "amber/25-CUDA_12.6-GCC12.2.0"
       binary: "tleap"
-      mol2: data/microstates/HID/initial-files/ligand.mol2
-      frcmod: data/microstates/HID/initial-files/ligand.frcmod
+      mol2: data/microstates/MEA/initial-files/mea.mol2
+      frcmod: data/microstates/MEA/initial-files/mea.frcmod
       frcmod_ion: frcmod.ionsjc_tip3p
       leaprc_mol: leaprc.gaff2
       leaprc_sol: leaprc.water.tip3p
       water_model: TIP3PBOX
       buffer: 15.0
-      counterion: Na+
-      counterion_num: 0
-      prefix: HID
+      counterion: Cl-
+      counterion_num: 1
+      prefix: MEA
+
   run:
-    workdir: results/HID/md/run
+    workdir: results/MEA/md/run
     inputs:
-      parm7: results/HID/md/prep/HID.parm7
-      rst7: results/HID/md/prep/HID.rst7
+      parm7: results/MEA/md/prep/MEA.parm7
+      rst7: results/MEA/md/prep/MEA.rst7
     runtime:
       module: "amber/25-CUDA_12.6-GCC12.2.0"
       executable: "pmemd.cuda"
@@ -109,28 +92,28 @@ md:
           gres: gpu:1
           time: "24:00:00"
           nodes: 1
-          cpus_per_task: 16
+          cpus_per_task: 1
         sycamore_cpu:
           partition: batch
           time: "24:00:00"
           nodes: 1
           cpus_per_task: 16
-      job_name: HID-md
+      job_name: MEA-md
       output: "slurm-%j.out"
       error: "slurm-%j.err"
 
 qmmm:
   prep:
-    workdir: results/HID/qmmm
-    parm7: results/HID/md/run/hid.parm7
-    traj: results/HID/md/run/prod.nc
+    workdir: results/MEA/qmmm
+    parm7: results/MEA/md/run/MEA.parm7
+    traj: results/MEA/md/run/prod.nc
     frames:
       start: 1000
       end: 20000
       step: 100
-    ambermask: \"339\"
+    ambermask: "339"
     closest_n: 200
-    region_range: \"0-50\"
+    region_range: "0-50"
     charge: 0
     tc:
       basis: def2-svp
@@ -145,10 +128,10 @@ qmmm:
       wmodel: tip3p
 
   run:
-    workdir: results/HID/qmmm
+    workdir: results/MEA/qmmm
 
   esp:
-    workdir: results/HID/qmmm
+    workdir: results/MEA/qmmm
     frames:
       start: 1000
       end: 20000
@@ -161,14 +144,3 @@ qmmm:
       spinmult: 1
       maxit: 1000
       esp_grid_dens: 4.0
-```
-
-## Outputs
-
-- MD outputs under `results/<microstate>/md/`
-- QMMM frame prep and jobs under `results/<microstate>/qmmm/`
-- QMMM RESP outputs can be collected with:
-
-```bash
-pc --process data/microstates/<MICROSTATE>
-```

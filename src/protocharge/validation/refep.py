@@ -180,23 +180,47 @@ def _export_charge_yaml(
     return output_path
 
 
+def _resolve_slurm_config(slurm: Mapping[str, object]) -> Mapping[str, object]:
+    profiles = slurm.get("profiles")
+    profile_name = slurm.get("profile")
+    if profile_name and isinstance(profiles, dict):
+        profile = profiles.get(profile_name)
+        if isinstance(profile, dict):
+            merged = dict(profile)
+            for key, value in slurm.items():
+                if key in {"profiles", "profile"}:
+                    continue
+                merged[key] = value
+            return merged
+    return slurm
+
+
 def _render_slurm(job_name: str, commands: List[List[str]], slurm: Mapping[str, object]) -> str:
+    slurm_cfg = _resolve_slurm_config(slurm)
     header = [
         "#!/bin/bash",
-        f"#SBATCH --job-name={slurm.get('job_name', job_name)}",
-        f"#SBATCH --output={slurm.get('output', 'slurm_logs/%x.%j.out')}",
-        f"#SBATCH --error={slurm.get('error', 'slurm_logs/%x.%j.err')}",
-        f"#SBATCH --time={slurm.get('time', '24:00:00')}",
-        f"#SBATCH --nodes={slurm.get('nodes', 1)}",
-        f"#SBATCH --cpus-per-task={slurm.get('cpus_per_task', 12)}",
-        f"#SBATCH --mem={slurm.get('mem', '64G')}",
+        f"#SBATCH --job-name={slurm_cfg.get('job_name', job_name)}",
+        f"#SBATCH --output={slurm_cfg.get('output', 'slurm_logs/%x.%j.out')}",
+        f"#SBATCH --error={slurm_cfg.get('error', 'slurm_logs/%x.%j.err')}",
+        f"#SBATCH --time={slurm_cfg.get('time', '24:00:00')}",
+        f"#SBATCH --nodes={slurm_cfg.get('nodes', 1)}",
+        f"#SBATCH --cpus-per-task={slurm_cfg.get('cpus_per_task', 12)}",
+        f"#SBATCH --mem={slurm_cfg.get('mem', '64G')}",
     ]
-    if "partition" in slurm:
-        header.append(f"#SBATCH --partition={slurm['partition']}")
-    if "account" in slurm:
-        header.append(f"#SBATCH --account={slurm['account']}")
-    if "qos" in slurm:
-        header.append(f"#SBATCH --qos={slurm['qos']}")
+    if "partition" in slurm_cfg:
+        header.append(f"#SBATCH --partition={slurm_cfg['partition']}")
+    if "account" in slurm_cfg:
+        header.append(f"#SBATCH --account={slurm_cfg['account']}")
+    if "qos" in slurm_cfg:
+        header.append(f"#SBATCH --qos={slurm_cfg['qos']}")
+    if "gres" in slurm_cfg:
+        header.append(f"#SBATCH --gres={slurm_cfg['gres']}")
+    if "constraint" in slurm_cfg:
+        header.append(f"#SBATCH --constraint={slurm_cfg['constraint']}")
+    extra = slurm_cfg.get("extra")
+    if isinstance(extra, list):
+        for line in extra:
+            header.append(str(line))
     lines = header + [
         "",
         "set -euo pipefail",
