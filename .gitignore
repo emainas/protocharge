@@ -55,24 +55,25 @@ site/
 docs/site/
 
 # Generated results / large outputs
-output/
 reports/
 
 # input
 input/
-!input/raw/
-!input/raw/**
-!input/experimental-titration-curves/
-!input/experimental-titration-curves/**
+output/
+
+# allow MEA demo data
+!input/microstates/
+!input/microstates/MEA/
+!input/microstates/MEA/**
+!output/MEA/
+!output/MEA/**
+
 
 # macOS
 .DS_Store
 
 # Logs
 *.log
-
-# raw microstate data
-input/microstates/
 
 # bibliography
 bibliography/

@@ -1,0 +1,146 @@
+microstate: MEA
+
+md:
+  prep:
+    workdir: output/MEA/md/prep
+    tleap:
+      module: "amber/25-CUDA_12.6-GCC12.2.0"
+      binary: "tleap"
+      mol2: input/microstates/MEA/initial-files/mea.mol2
+      frcmod: input/microstates/MEA/initial-files/mea.frcmod
+      frcmod_ion: frcmod.ionsjc_tip3p
+      leaprc_mol: leaprc.gaff2
+      leaprc_sol: leaprc.water.tip3p
+      water_model: TIP3PBOX
+      buffer: 15.0
+      counterion: Cl-
+      counterion_num: 1
+      prefix: MEA
+
+  run:
+    workdir: output/MEA/md/run
+    inputs:
+      parm7: output/MEA/md/prep/MEA.parm7
+      rst7: output/MEA/md/prep/MEA.rst7
+    runtime:
+      module: "amber/25-CUDA_12.6-GCC12.2.0"
+      executable: "pmemd.cuda"
+      env: {}
+      strict_mode: true
+    stages:
+      - name: min
+        description: Minimization
+        cntrl:
+          imin: 1
+          maxcyc: 2000
+          ncyc: 1000
+          cut: 10.0
+        traj: false
+      - name: heat
+        description: Heating
+        cntrl:
+          imin: 0
+          nstlim: 50000
+          dt: 0.002
+          tempi: 0.0
+          temp0: 300.0
+          ntb: 1
+          ntt: 3
+          gamma_ln: 2.0
+          cut: 10.0
+        wt:
+          - type: TEMP0
+            istep1: 0
+            istep2: 50000
+            value1: 0.0
+            value2: 300.0
+          - type: END
+        traj: true
+      - name: equil-nvt
+        description: Equilibration NVT
+        cntrl:
+          imin: 0
+          nstlim: 50000
+          dt: 0.002
+          temp0: 300.0
+          ntb: 1
+          ntt: 3
+          gamma_ln: 2.0
+          cut: 10.0
+        traj: true
+      - name: equil-npt
+        description: Equilibration NPT
+        cntrl:
+          imin: 0
+          nstlim: 50000
+          dt: 0.002
+          temp0: 300.0
+          ntb: 2
+          ntp: 1
+          pres0: 1.0
+          taup: 2.0
+          ntt: 3
+          gamma_ln: 2.0
+          cut: 10.0
+        traj: true
+    slurm:
+      profile: longleaf_gpu
+      profiles:
+        longleaf_gpu:
+          partition: l40-gpu
+          qos: gpu_access
+          gres: gpu:1
+          time: "24:00:00"
+          nodes: 1
+          cpus_per_task: 1
+        sycamore_cpu:
+          partition: batch
+          time: "24:00:00"
+          nodes: 1
+          cpus_per_task: 16
+      job_name: MEA-md
+      output: "slurm-%j.out"
+      error: "slurm-%j.err"
+
+qmmm:
+  prep:
+    workdir: output/MEA/qmmm
+    parm7: output/MEA/md/run/MEA.parm7
+    traj: output/MEA/md/run/prod.nc
+    frames:
+      start: 1000
+      end: 20000
+      step: 100
+    ambermask: "339"
+    closest_n: 200
+    region_range: "0-50"
+    charge: 0
+    tc:
+      basis: def2-svp
+      method: wb97xd3
+      dftd: d3
+      spinmult: 1
+      maxit: 1000
+      run: md
+      nstep: 20000
+      timestep: 0.5
+      mdbc: spherical
+      wmodel: tip3p
+
+  run:
+    workdir: output/MEA/qmmm
+
+  esp:
+    workdir: output/MEA/qmmm
+    frames:
+      start: 1000
+      end: 20000
+      step: 100
+    charge: 0
+    tc:
+      basis: def2-svp
+      method: wb97xd3
+      dftd: d3
+      spinmult: 1
+      maxit: 1000
+      esp_grid_dens: 4.0

@@ -1,0 +1,7 @@
+Minimization
+&cntrl
+  imin=1,
+  maxcyc=2000,
+  ncyc=1000,
+  cut=10.0,
+/

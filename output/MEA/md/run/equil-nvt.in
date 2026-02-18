@@ -1,0 +1,11 @@
+Equilibration NVT
+&cntrl
+  imin=0,
+  nstlim=50000,
+  dt=0.002,
+  temp0=300.0,
+  ntb=1,
+  ntt=3,
+  gamma_ln=2.0,
+  cut=10.0,
+/
