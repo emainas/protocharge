@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from rdkit import Chem
 
-from protocharge.symmetry import buckets_from_graph, buckets_from_pdb, mol_to_nx
+from protocharge.training.symmetry import buckets_from_graph, buckets_from_pdb, mol_to_nx
 
 
 def test_mol_to_nx_builds_expected_graph():

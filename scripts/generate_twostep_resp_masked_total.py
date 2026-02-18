@@ -8,8 +8,8 @@ import numpy as np
 
 from protocharge.paths import ensure_results_dir, microstate_constraints_root
 
-from protocharge.linearESPcharges.linear import prepare_linear_system
-from protocharge.twostepresp_masked_total.tsresp import (
+from protocharge.training.linearESPcharges.linear import prepare_linear_system
+from protocharge.training.twostepresp_masked_total.tsresp import (
     build_atom_constraint_system,
     build_expansion_matrix,
     build_total_constraint_mask,

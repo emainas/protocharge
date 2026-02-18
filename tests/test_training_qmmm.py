@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from protocharge.training.md_qmmm import run_qmmm_stage
+from protocharge.generator.md_qmmm import run_qmmm_stage
 
 
 def test_qmmm_prep_writes_region_and_inputs(tmp_path: Path) -> None:
@@ -58,7 +58,7 @@ def test_md_prep_generates_tleap(tmp_path: Path) -> None:
     cfg_path = tmp_path / "cfg.yaml"
     cfg_path.write_text(__import__("yaml").safe_dump(cfg), encoding="utf-8")
 
-    from protocharge.training.md_qmmm import run_md_stage
+    from protocharge.generator.md_qmmm import run_md_stage
 
     run_md_stage("prep", cfg_path, slurm=False, dry_run=True)
     assert (tmp_path / "md" / "prep" / "tleap.in").exists()
@@ -88,7 +88,7 @@ def test_md_run_writes_inputs_and_scripts(tmp_path: Path) -> None:
     cfg_path = tmp_path / "cfg.yaml"
     cfg_path.write_text(__import__("yaml").safe_dump(cfg), encoding="utf-8")
 
-    from protocharge.training.md_qmmm import run_md_stage
+    from protocharge.generator.md_qmmm import run_md_stage
 
     run_md_stage("run", cfg_path, slurm=True, dry_run=True)
     workdir = tmp_path / "md" / "run"

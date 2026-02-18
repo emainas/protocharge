@@ -1,9 +1,9 @@
 import numpy as np
 import pytest
 
-from protocharge.reduced_basic import reduced as reduced_basic
-from protocharge.reduced_masked_total import reduced as reduced_masked_total
-from protocharge.reduced_group_constraints import reduced as reduced_group_constraints
+from protocharge.training.reduced_basic import reduced as reduced_basic
+from protocharge.training.reduced_masked_total import reduced as reduced_masked_total
+from protocharge.training.reduced_group_constraints import reduced as reduced_group_constraints
 
 
 def _check_nullspace(mod):

@@ -1,11 +1,11 @@
 # Multi-Molecule RESP
 
-The multi-molecule workflow (`protocharge.multimoleculeresp.mmresp`) fits charges across multiple microstates at once. It supports global symmetry buckets that tie atoms across molecules, optional frozen buckets, and per-molecule total or group constraints.
+The multi-molecule workflow (`protocharge.training.multimoleculeresp.mmresp`) fits charges across multiple microstates at once. It supports global symmetry buckets that tie atoms across molecules, optional frozen buckets, and per-molecule total or group constraints.
 
 ## Run from a Manifest
 
 ```bash
-python -m protocharge.multimoleculeresp.mmresp \
+python -m protocharge.training.multimoleculeresp.mmresp \
   --manifest configs/manifest_hist.yaml \
   --output output/mmresp_hist/charges.npz \
   --ridge 1e-6

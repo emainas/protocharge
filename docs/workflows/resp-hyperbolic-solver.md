@@ -1,6 +1,6 @@
 # RESP Hyperbolic Solver
 
-The RESP workflow augments the linear ESP fit with a nonlinear, hyperbolic restraint that mirrors the setup used by TeraChem. All routines live in `protocharge.resp.resp`, with `fit_resp_charges` acting as the main entry point.
+The RESP workflow augments the linear ESP fit with a nonlinear, hyperbolic restraint that mirrors the setup used by TeraChem. All routines live in `protocharge.training.resp.resp`, with `fit_resp_charges` acting as the main entry point.
 
 ## Objective and Restraint
 
@@ -82,7 +82,7 @@ By default every atom is restrained. Passing `restrain_all_atoms=False` selects 
 
 ```python
 from pathlib import Path
-from protocharge.resp.resp import HyperbolicRestraint, fit_resp_charges
+from protocharge.training.resp.resp import HyperbolicRestraint, fit_resp_charges
 
 resp_out = Path("input/raw/resp.out")
 esp_xyz = Path("input/raw/esp.xyz")

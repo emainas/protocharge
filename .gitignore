@@ -68,6 +68,10 @@ output/
 !output/MEA/
 !output/MEA/**
 
+# allow shared raw fixtures
+!input/raw/
+!input/raw/**
+
 
 # macOS
 .DS_Store

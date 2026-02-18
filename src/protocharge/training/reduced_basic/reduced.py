@@ -13,7 +13,7 @@ try:  # SciPy >=1.14
 except ImportError:  # pragma: no cover
     from scipy.optimize.nonlin import NoConvergence  # type: ignore[attr-defined]
 
-from protocharge.multiconfresp.mcresp import (
+from protocharge.training.multiconfresp.mcresp import (
     ConfigurationSystem,
     _load_configuration_system,
     _microstate_root,
@@ -28,14 +28,14 @@ from protocharge.paths import (
     microstate_constraints_root,
     microstate_output_root,
 )
-from protocharge.twostepresp_group_constraints.tsresp import (
+from protocharge.training.twostepresp_basic.tsresp import (
     build_atom_constraint_system,
     build_expansion_matrix,
     load_atom_labels_from_pdb,
     load_bucket_constraints,
-    load_group_constraints,
     load_mask_from_yaml,
     load_symmetry_buckets,
+    load_total_charge,
     solve_least_squares_with_constraints,
 )
 
@@ -48,11 +48,6 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         "--microstate",
         required=True,
         help="Name of the microstate (expects input/microstates/<microstate> to exist).",
-    )
-    parser.add_argument(
-        "--bucket-file",
-        type=Path,
-        help="Override symmetry bucket file (default: input/microstates/<microstate>/symmetry-buckets/r8.dat)",
     )
     parser.add_argument(
         "--pdb",
@@ -93,18 +88,8 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--output-dir-name",
-        default="multiconfRESP_reduced_group_constraints",
+        default="multiconfRESP_reduced_basic",
         help="Subdirectory (under output/<microstate>) where reduced_basic-space RESP outputs will be written.",
-    )
-    parser.add_argument(
-        "--group-constraint",
-        type=Path,
-        help="Override group_constraint.yaml (default: configs/<microstate>/charge-contraints/group_constraint.yaml)",
-    )
-    parser.add_argument(
-        "--bucket-constraints",
-        type=Path,
-        help="Override bucket_constraints.yaml (default: configs/<microstate>/charge-contraints/bucket_constraints.yaml)",
     )
     parser.add_argument(
         "--save",
@@ -377,6 +362,12 @@ def _run_reduced_basic_step(
             "kkt_norm": kkt_norm,
             "description": description,
         }
+        if eval_counter["value"] % 10 == 0:
+            print(
+                f"[{description}] eval {eval_counter['value']}: "
+                f"loss={total_loss:.6e}, grad_norm={grad_norm:.3e}, "
+                f"constraint_norm={constraint_norm:.3e}"
+            )
         return entry
 
     def residual(y_vec: np.ndarray) -> np.ndarray:
@@ -433,11 +424,6 @@ def _run_resp_from_saved(
     ridge: float,
     maxiter: int,
     f_tol: float,
-    bucket_file: Path | None,
-    group_constraint: Path | None,
-    bucket_constraints_path: Path | None,
-    mask_step1_path: Path | None,
-    mask_step2_path: Path | None,
 ) -> None:
     design_matrix, esp_values = _load_saved_matrices(microstate_root, input_dir)
 
@@ -455,7 +441,7 @@ def _run_resp_from_saved(
             f"Atom label count ({len(atom_labels)}) does not match Coulomb matrix column count ({atom_count})."
         )
 
-    bucket_file = bucket_file or (microstate_root / "symmetry-buckets" / "r8.dat")
+    bucket_file = microstate_root / "symmetry-buckets" / "r8.dat"
     if not bucket_file.is_file():
         raise FileNotFoundError(f"Symmetry bucket file {bucket_file} not found.")
     symmetry_buckets = load_symmetry_buckets(bucket_file)
@@ -467,22 +453,22 @@ def _run_resp_from_saved(
         )
 
     constraint_root = microstate_constraints_root(microstate_root.name)
-    group_constraint_path = group_constraint or (constraint_root / "group_constraint.yaml")
-    bucket_constraint_path = bucket_constraints_path or (constraint_root / "bucket_constraints.yaml")
-    if not group_constraint_path.is_file():
-        raise FileNotFoundError(f"Group constraint file {group_constraint_path} not found.")
+    total_constraint_path = constraint_root / "total_constraint.yaml"
+    bucket_constraint_path = constraint_root / "bucket_constraints.yaml"
+    if not total_constraint_path.is_file():
+        raise FileNotFoundError(f"Total charge constraint file {total_constraint_path} not found.")
     if not bucket_constraint_path.is_file():
         raise FileNotFoundError(f"Bucket constraint file {bucket_constraint_path} not found.")
 
-    group_masks, group_targets = load_group_constraints(group_constraint_path, len(atom_labels))
+    total_charge_target = load_total_charge(total_constraint_path)
     bucket_constraints = load_bucket_constraints(bucket_constraint_path)
     constraint_matrix, constraint_targets = build_atom_constraint_system(
-        expansion_matrix, group_masks, group_targets, bucket_constraints
+        expansion_matrix, total_charge_target, bucket_constraints
     )
     constraint_targets_vector = constraint_targets.flatten()
 
-    mask_step1_path = mask_step1_path or (constraint_root / "mask_step_1.yaml")
-    mask_step2_path = mask_step2_path or (constraint_root / "mask_step_2.yaml")
+    mask_step1_path = constraint_root / "mask_step_1.yaml"
+    mask_step2_path = constraint_root / "mask_step_2.yaml"
     mask_step1 = load_mask_from_yaml(mask_step1_path, atom_labels, symmetry_buckets)
     mask_step2 = load_mask_from_yaml(mask_step2_path, atom_labels, symmetry_buckets)
 
@@ -612,11 +598,6 @@ def main(argv: Sequence[str] | None = None) -> None:
             ridge=args.ridge,
             maxiter=args.maxiter,
             f_tol=args.f_tol,
-            bucket_file=args.bucket_file,
-            group_constraint=args.group_constraint,
-            bucket_constraints_path=args.bucket_constraints,
-            mask_step1_path=args.mask_step1 if hasattr(args, "mask_step1") else None,
-            mask_step2_path=args.mask_step2 if hasattr(args, "mask_step2") else None,
         )
         return
 

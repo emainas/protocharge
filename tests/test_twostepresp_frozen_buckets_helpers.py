@@ -1,7 +1,7 @@
 from pathlib import Path
 import yaml
 
-from protocharge.twostepresp_frozen_buckets.tsresp import load_frozen_buckets
+from protocharge.training.twostepresp_frozen_buckets.tsresp import load_frozen_buckets
 
 
 def test_load_frozen_buckets(tmp_path: Path):

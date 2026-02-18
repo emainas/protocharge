@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Any, Tuple
 
-from protocharge.resp_parser import ParseRespDotOut, ParseESPXYZ
+from protocharge.training.resp_parser import ParseRespDotOut, ParseESPXYZ
 
 ANGSTROM_TO_BOHR = 1.8897261254578281
 

@@ -4,14 +4,14 @@ Reduced-space solvers enforce the linear constraints exactly by projecting into 
 
 ## Variants
 
-- **Basic** – total + bucket constraints: `protocharge.reduced_basic`
-- **Masked total** – total charge applied to a subset: `protocharge.reduced_masked_total`
-- **Group constraints** – arbitrary group targets: `protocharge.reduced_group_constraints`
+- **Basic** – total + bucket constraints: `protocharge.training.reduced_basic`
+- **Masked total** – total charge applied to a subset: `protocharge.training.reduced_masked_total`
+- **Group constraints** – arbitrary group targets: `protocharge.training.reduced_group_constraints`
 
 ## Example
 
 ```bash
-python -m protocharge.reduced_group_constraints.reduced \
+python -m protocharge.training.reduced_group_constraints.reduced \
   --microstate HID \
   --load-and-resp \
   --input-dir-name multiconfRESP \

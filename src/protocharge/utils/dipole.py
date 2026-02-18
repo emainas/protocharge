@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Dict, Tuple
 
 from protocharge.constants.atomic_masses import atomic_masses
-from protocharge.resp_parser import ParseDotXYZ, ParseRespDotOut
+from protocharge.training.resp_parser import ParseDotXYZ, ParseRespDotOut
 
 BOHR_PER_ANG = 1.8897261254578281
 DEBYE_PER_E_BOHR = 2.541746

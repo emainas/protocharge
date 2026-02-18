@@ -1,15 +1,14 @@
 from __future__ import annotations
 
 import ast
-import argparse
 from pathlib import Path
 from typing import Dict, Iterable, List, Sequence, Tuple
 
 import numpy as np
 import yaml
 
-from protocharge.linearESPcharges.linear import prepare_linear_system
-from protocharge.paths import ensure_results_dir, microstate_constraints_root
+from protocharge.training.linearESPcharges.linear import prepare_linear_system
+from protocharge.paths import input_root, ensure_results_dir, microstate_constraints_root
 from scipy.optimize import newton_krylov
 try:  # SciPy >=1.14
     from scipy.optimize import NoConvergence  # type: ignore[attr-defined]
@@ -67,33 +66,15 @@ def build_expansion_matrix(symmetry_buckets: List[List[int]]) -> np.ndarray:
     return expansion_matrix
 
 
-def load_total_constraint(constraint_path: Path) -> Tuple[float, List[str]]:
-    """Read the total charge and optional constraint labels from YAML.
-
-    Supports the legacy format where the file is just lines containing
-    ``total_charge: <value>`` and an extended format that is valid YAML
-    with keys ``total_charge`` and optional ``constraint_labels``.
-    """
-    if not constraint_path.exists():
-        raise FileNotFoundError(f"Constraint file {constraint_path} not found.")
-
-    data = yaml.safe_load(constraint_path.read_text(encoding="utf-8"))
-    if isinstance(data, dict) and "total_charge" in data:
-        total_charge = float(data["total_charge"])
-        labels = data.get("constraint_labels") or []
-        if not isinstance(labels, list):
-            raise ValueError("constraint_labels must be a YAML list if provided")
-        labels = [str(label).strip() for label in labels if str(label).strip()]
-        return total_charge, labels
-
-    # Fallback to line-based parsing for legacy files
+def load_total_charge(constraint_path: Path) -> float:
+    """Read the total charge value from the total_constraint YAML."""
     with constraint_path.open("r", encoding="utf-8") as handle:
         for raw_line in handle:
             line = raw_line.strip()
             if not line or line.startswith("#"):
                 continue
             if line.startswith("total_charge:"):
-                return float(line.split(":", 1)[1].strip()), []
+                return float(line.split(":", 1)[1].strip())
     raise ValueError(f"No total_charge entry found in {constraint_path}")
 
 
@@ -131,19 +112,13 @@ def build_atom_constraint_system(
     expansion_matrix: np.ndarray,
     total_charge: float,
     bucket_constraints: Iterable[Dict[str, float]],
-    total_charge_mask: np.ndarray | None = None,
 ) -> Tuple[np.ndarray, np.ndarray]:
     """Return (C, d) representing linear constraints in atom space."""
     atom_count, bucket_count = expansion_matrix.shape
     rows: List[np.ndarray] = []
     targets: List[float] = []
 
-    total_row = total_charge_mask.flatten() if total_charge_mask is not None else np.ones(atom_count, dtype=float)
-    if total_row.size != atom_count:
-        raise ValueError(
-            f"Total constraint mask length ({total_row.size}) does not match atom count ({atom_count})."
-        )
-    rows.append(total_row)
+    rows.append(np.ones(atom_count, dtype=float))
     targets.append(total_charge)
 
     for constraint in bucket_constraints:
@@ -219,24 +194,6 @@ def load_mask_from_yaml(
                 f"Mask entry {entry!r} must be a string label or integer index."
             )
 
-    return mask.reshape(-1, 1)
-
-
-def build_total_constraint_mask(atom_labels: Sequence[str], selected_labels: Iterable[str]) -> np.ndarray | None:
-    """Build a mask vector (Nx1) selecting atoms by label; return None if no selection."""
-    selected = [label for label in selected_labels if str(label).strip()]
-    if not selected:
-        return None
-    selected_set = set(selected)
-    mask = np.array([1.0 if label in selected_set else 0.0 for label in atom_labels], dtype=float)
-    if mask.sum() == 0:
-        raise ValueError(
-            "Total charge constraint labels did not match any atoms. "
-            f"Requested: {', '.join(selected)}; available: {', '.join(atom_labels)}"
-        )
-    missing = [name for name in selected if name not in atom_labels]
-    if missing:
-        raise ValueError(f"Missing total constraint labels: {', '.join(missing)}")
     return mask.reshape(-1, 1)
 
 
@@ -341,15 +298,12 @@ def solve_least_squares_with_constraints(
     expansion_matrix: np.ndarray,
     constraint_matrix: np.ndarray,
     constraint_targets: np.ndarray,
-    ridge: float = 0.0,
 ) -> np.ndarray:
     """Solve the reduced_basic least-squares problem with constraints projected into bucket space."""
     reduced_basic_design_matrix = design_matrix @ expansion_matrix
     projected_constraints = constraint_matrix @ expansion_matrix
 
     H = reduced_basic_design_matrix.T @ reduced_basic_design_matrix
-    if ridge:
-        H = H + ridge * np.eye(H.shape[0])
     g = reduced_basic_design_matrix.T @ esp_values
     if g.ndim == 1:
         g = g.reshape(-1, 1)
@@ -361,11 +315,8 @@ def solve_least_squares_with_constraints(
     lhs = np.block([[H, projected_constraints.T], [projected_constraints, zero_block]])
     rhs = np.vstack([g, constraint_targets])
 
-    # Solve the KKT system; fall back to least-squares if singular.
-    try:
-        solution = np.linalg.solve(lhs, rhs)
-    except np.linalg.LinAlgError:
-        solution, *_ = np.linalg.lstsq(lhs, rhs, rcond=1e-10)
+    # Solve the KKT system with numpy's LAPACK implementation. 
+    solution = np.linalg.solve(lhs, rhs)
 
     # The solution vector contains both the independent charges and the Lagrange multipliers.
     theta = solution[: expansion_matrix.shape[1]].reshape(-1, 1)
@@ -374,71 +325,15 @@ def solve_least_squares_with_constraints(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Two-step RESP (mask-aware total constraint)")
-    parser.add_argument("--microstate", required=True, help="Microstate name under input/microstates/<microstate>")
-    parser.add_argument(
-        "--bucket-file",
-        type=Path,
-        help="Override symmetry bucket file (default: input/microstates/<microstate>/symmetry-buckets/r8.dat)",
-    )
-    parser.add_argument(
-        "--pdb",
-        type=Path,
-        help="Override PDB path (default: input/microstates/<microstate>/<microstate>.pdb)",
-    )
-    parser.add_argument(
-        "--resp-out",
-        type=Path,
-        help="Override resp.out path (default: input/raw/resp.out)",
-    )
-    parser.add_argument(
-        "--esp-xyz",
-        type=Path,
-        help="Override esp.xyz path (default: input/raw/esp.xyz)",
-    )
-    parser.add_argument(
-        "--total-constraint",
-        type=Path,
-        help="Override total_constraint.yaml (default: configs/<microstate>/charge-contraints/total_constraint.yaml)",
-    )
-    parser.add_argument(
-        "--bucket-constraints",
-        type=Path,
-        help="Override bucket_constraints.yaml (default: configs/<microstate>/charge-contraints/bucket_constraints.yaml)",
-    )
-    parser.add_argument(
-        "--ridge",
-        type=float,
-        default=0.0,
-        help="Optional ridge term added to normal equations (default: 0.0).",
-    )
-    args = parser.parse_args()
-
     project_root = _project_root()
-    micro_root = project_root / "input" / "microstates" / args.microstate
+    symmetry_bucket_path = input_root() / "microstates" / "PPP" / "symmetry-buckets" / "r8.dat"
 
-    symmetry_bucket_path = args.bucket_file or (micro_root / "symmetry-buckets" / "r8.dat")
-    pdb_path = args.pdb or (micro_root / f"{args.microstate}.pdb")
-    resp_out = args.resp_out or (project_root / "input" / "raw" / "resp.out")
-    esp_xyz = args.esp_xyz or (project_root / "input" / "raw" / "esp.xyz")
-    constraint_root = microstate_constraints_root(args.microstate)
-    total_constraint_path = args.total_constraint or (constraint_root / "total_constraint.yaml")
-    bucket_constraints_path = args.bucket_constraints or (constraint_root / "bucket_constraints.yaml")
-
-    if not symmetry_bucket_path.is_file():
-        raise FileNotFoundError(f"Symmetry bucket file not found: {symmetry_bucket_path}")
-    if not pdb_path.is_file():
-        raise FileNotFoundError(f"PDB file not found: {pdb_path}")
-    if not resp_out.is_file():
-        raise FileNotFoundError(f"RESP output not found: {resp_out}")
-    if not esp_xyz.is_file():
-        raise FileNotFoundError(f"ESP XYZ not found: {esp_xyz}")
-    if not total_constraint_path.is_file():
-        raise FileNotFoundError(f"Total charge constraint not found: {total_constraint_path}")
-    if not bucket_constraints_path.is_file():
-        raise FileNotFoundError(f"Bucket constraints not found: {bucket_constraints_path}")
 
     # STEP 1. Load the symmetry buckets from input/microstates/<microstate>/symmetry-buckets/...
+    # Start with PPP as a first test case.
+    # In total we have s=1,...,S symmetry buckets. S is going to be equal to the number of elements in
+    # the loaded list of lists. S = len(np.loadtxt('input/microstates/PPP/symmetry-buckets/r8.dat', dtype=int))
+    # print S to verify.
     symmetry_buckets = load_symmetry_buckets(symmetry_bucket_path)
     S = len(symmetry_buckets)
     print(f"Loaded {S} symmetry buckets from {symmetry_bucket_path}")
@@ -464,20 +359,26 @@ def main() -> None:
     # STEP 5. Calculate linear raw ESP charges by solving the linear system but with vector
     # p as defined above instead of a full charge vector q as we did in previous work.
     atom_count = P.shape[0]
-    atom_labels = load_atom_labels_from_pdb(pdb_path)
+    resp_out = input_root() / "raw" / "resp.out"
+    esp_xyz = input_root() / "raw" / "esp.xyz"
     design_matrix, esp_values, _, _ = prepare_linear_system(
         resp_out,
         esp_xyz,
         atom_count,
     )
     reduced_basic_design_matrix = design_matrix @ P
-    total_charge_target, total_constraint_labels = load_total_constraint(total_constraint_path)
-    total_constraint_mask = build_total_constraint_mask(atom_labels, total_constraint_labels)
+    total_constraint_path = (
+        microstate_constraints_root("PPP") / "total_constraint.yaml"
+    )
+    total_charge_target = load_total_charge(total_constraint_path)
+    bucket_constraints_path = (
+        microstate_constraints_root("PPP") / "bucket_constraints.yaml"
+    )
     bucket_constraints = load_bucket_constraints(bucket_constraints_path)
-    C, d = build_atom_constraint_system(P, total_charge_target, bucket_constraints, total_constraint_mask)
+    C, d = build_atom_constraint_system(P, total_charge_target, bucket_constraints)
     d_vector = d.flatten()
     theta_linear, lagrange_multipliers = solve_least_squares_with_constraints(
-        design_matrix, esp_values, P, C, d, ridge=args.ridge
+        design_matrix, esp_values, P, C, d
     )
     p_linear = P @ theta_linear
     total_charge_linear = float(p_linear.sum())
@@ -487,6 +388,9 @@ def main() -> None:
     print(
         f"Total charge from p_linear: {total_charge_linear:.6f} "
         f"(target {total_charge_target:.6f})"
+    )
+    atom_labels = load_atom_labels_from_pdb(
+        input_root() / "microstates" / "PPP" / "ppp.pdb"
     )
     if len(atom_labels) != p_linear.size:
         raise ValueError(
@@ -504,7 +408,7 @@ def main() -> None:
     # the parameter a and the parameter b as usual. This time, we will mask over the heavy atoms
     # and leave the hydrogens unmasked.
     mask_step1_path = (
-        microstate_constraints_root(args.microstate) / "mask_step_1.yaml"
+        microstate_constraints_root("PPP") / "mask_step_1.yaml"
     )
     restraint_mask_step1 = load_mask_from_yaml(
         mask_step1_path, atom_labels, symmetry_buckets
@@ -535,10 +439,7 @@ def main() -> None:
     if logger_step1 and plt is not None:
         kkt_values = [entry["kkt_norm"] for entry in logger_step1]
         iterations = range(1, len(kkt_values) + 1)
-        plot_path = (
-            ensure_results_dir(args.microstate, "twostepRESP_masked_total")
-            / "resp_step1_loss.png"
-        )
+        plot_path = ensure_results_dir("PPP", "twostepRESP_basic") / "resp_step1_loss.png"
         plt.figure(figsize=(6, 4))
         plt.plot(iterations, kkt_values, marker="o", linewidth=1.5)
         plt.xlabel("Iteration")
@@ -556,7 +457,7 @@ def main() -> None:
     lambda_final = lambda_resp_step1.copy()
 
     mask_step2_path = (
-        microstate_constraints_root(args.microstate) / "mask_step_2.yaml"
+        microstate_constraints_root("PPP") / "mask_step_2.yaml"
     )
     mask_step2_atom = load_mask_from_yaml(
         mask_step2_path, atom_labels, symmetry_buckets
@@ -615,10 +516,7 @@ def main() -> None:
         if plt is not None and logger_step2:
             kkt_values_2 = [entry["kkt_norm"] for entry in logger_step2]
             iterations_2 = range(1, len(kkt_values_2) + 1)
-            plot2_path = (
-                ensure_results_dir(args.microstate, "twostepRESP_masked_total")
-                / "resp_step2_loss.png"
-            )
+            plot2_path = ensure_results_dir("PPP", "twostepRESP_basic") / "resp_step2_loss.png"
             plt.figure(figsize=(6, 4))
             plt.plot(iterations_2, kkt_values_2, marker="o", linewidth=1.5)
             plt.xlabel("Iteration")

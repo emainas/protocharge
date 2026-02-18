@@ -10,8 +10,8 @@ import numpy as np
 
 from protocharge.paths import ensure_results_dir
 
-from protocharge.linearESPcharges import explicit_solution, prepare_linear_system
-from protocharge.resp.resp import HyperbolicRestraint, fit_resp_charges
+from protocharge.training.linearESPcharges import explicit_solution, prepare_linear_system
+from protocharge.training.resp.resp import HyperbolicRestraint, fit_resp_charges
 
 
 def parse_args() -> argparse.Namespace:

@@ -7,11 +7,11 @@ from typing import Mapping, Sequence, Dict
 
 import numpy as np
 
-from protocharge.linearESPcharges.linear import (
+from protocharge.training.linearESPcharges.linear import (
     explicit_solution,
     prepare_linear_system,
 )
-from protocharge.resp_parser import ParseDotXYZ
+from protocharge.training.resp_parser import ParseDotXYZ
 
 try:  # SciPy ships the Newton-Krylov solver we target here
     from scipy.optimize import newton_krylov  # type: ignore[attr-defined]

@@ -8,7 +8,7 @@ from typing import Dict, Iterable, List, Sequence, Tuple
 import numpy as np
 import yaml
 
-from protocharge.linearESPcharges.linear import prepare_linear_system
+from protocharge.training.linearESPcharges.linear import prepare_linear_system
 from protocharge.paths import ensure_results_dir, microstate_constraints_root
 from scipy.optimize import newton_krylov
 try:  # SciPy >=1.14

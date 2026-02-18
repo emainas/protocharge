@@ -6,10 +6,14 @@ from typing import Dict
 import numpy as np
 import pytest
 
-from protocharge.dipole import center_of_mass_bohr_from_xyz
-from protocharge.dipole.dipole import BOHR_PER_ANG, _dipole_from_charges, _normalize_frame_index
-from protocharge.resp_parser import ParseDotXYZ, ParseRespDotOut
-from protocharge.linearESPcharges.linear import explicit_solution, prepare_linear_system
+from protocharge.utils.dipole import (
+    BOHR_PER_ANG,
+    _dipole_from_charges,
+    _normalize_frame_index,
+    center_of_mass_bohr_from_xyz,
+)
+from protocharge.training.resp_parser import ParseDotXYZ, ParseRespDotOut
+from protocharge.training.linearESPcharges.linear import explicit_solution, prepare_linear_system
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "input" / "raw"
 RESP_OUT = DATA_DIR / "resp.out"

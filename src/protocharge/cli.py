@@ -10,11 +10,11 @@ from typing import Dict, Iterable, List, Tuple
 import yaml
 
 from protocharge.paths import input_root, output_root, project_root
-from protocharge.run_tc_resp import run_tc_resp
-from protocharge.terachem_processing import process_tc_resp_runs, process_terachem_outputs
+from protocharge.generator.run_tc_resp import run_tc_resp
+from protocharge.generator.terachem_processing import process_tc_resp_runs, process_terachem_outputs
 from protocharge.validation.refep import run_refep_stage
 from protocharge.validation.dipole import run_dipole_validation
-from protocharge.training.md_qmmm import run_md_stage, run_qmmm_stage
+from protocharge.generator.md_qmmm import run_md_stage, run_qmmm_stage
 
 
 def _default_microstate_root(microstate: str) -> Path:
@@ -153,27 +153,27 @@ def _command_for_function(function: str, cfg: Dict[str, object]) -> Tuple[List[s
             args.setdefault("microstate_root", _default_microstate_root(microstate))
         return [sys.executable, str(script), *_args_to_cli(args)], None
     if function == "multiconf":
-        module = ["-m", "protocharge.multiconfresp.mcresp"]
+        module = ["-m", "protocharge.training.multiconfresp.mcresp"]
         if microstate:
             args.setdefault("microstate", microstate)
         return [sys.executable, *module, *_args_to_cli(args)], None
     if function == "reduced-basic":
-        module = ["-m", "protocharge.reduced_basic.reduced"]
+        module = ["-m", "protocharge.training.reduced_basic.reduced"]
         if microstate:
             args.setdefault("microstate", microstate)
         return [sys.executable, *module, *_args_to_cli(args)], None
     if function == "reduced-masked-total":
-        module = ["-m", "protocharge.reduced_masked_total.reduced"]
+        module = ["-m", "protocharge.training.reduced_masked_total.reduced"]
         if microstate:
             args.setdefault("microstate", microstate)
         return [sys.executable, *module, *_args_to_cli(args)], None
     if function == "reduced-group":
-        module = ["-m", "protocharge.reduced_group_constraints.reduced"]
+        module = ["-m", "protocharge.training.reduced_group_constraints.reduced"]
         if microstate:
             args.setdefault("microstate", microstate)
         return [sys.executable, *module, *_args_to_cli(args)], None
     if function == "multimolecule":
-        module = ["-m", "protocharge.multimoleculeresp.mmresp"]
+        module = ["-m", "protocharge.training.multimoleculeresp.mmresp"]
         return [sys.executable, *module, *_args_to_cli(args)], None
 
     raise ValueError(f"Unknown function '{function}'")

@@ -37,9 +37,9 @@ from typing import Dict, List, Sequence, Tuple
 import numpy as np
 import yaml
 
-from protocharge.multiconfresp.mcresp import _project_root
+from protocharge.training.multiconfresp.mcresp import _project_root
 from protocharge.paths import microstate_config_root, microstate_output_root, output_root
-from protocharge.twostepresp_masked_total.tsresp import (
+from protocharge.training.twostepresp_masked_total.tsresp import (
     build_total_constraint_mask,
     load_total_constraint,
     load_atom_labels_from_pdb,
@@ -358,7 +358,7 @@ def main(argv: Sequence[str] | None = None) -> None:
                 constraint_rows.append(row)
                 constraint_targets.append(target)
         else:
-            from protocharge.twostepresp_masked_total.tsresp import load_total_constraint  # local import to avoid cycle issues
+            from protocharge.training.twostepresp_masked_total.tsresp import load_total_constraint  # local import to avoid cycle issues
 
             total_charge, total_constraint_labels = load_total_constraint(spec.total_constraint_path)
             total_mask_local = build_total_constraint_mask(labels, total_constraint_labels)

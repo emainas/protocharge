@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from protocharge.multiconfresp.mcresp import ConfigurationSystem, stack_configurations
+from protocharge.training.multiconfresp.mcresp import ConfigurationSystem, stack_configurations
 
 
 def _config(stem: str, m: int, n: int, total_charge: float) -> ConfigurationSystem:

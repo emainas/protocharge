@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+
+from protocharge.paths import microstate_output_root
 from typing import List
 
 import numpy as np
@@ -13,14 +15,12 @@ def _load_p_linear() -> np.ndarray:
         _project_root,
         build_expansion_matrix,
         build_atom_constraint_system,
-        build_total_constraint_mask,
         load_bucket_constraints,
         load_symmetry_buckets,
-        load_total_constraint,
-        load_atom_labels_from_pdb,
+        load_total_charge,
         solve_least_squares_with_constraints,
     )
-    from protocharge.linearESPcharges.linear import prepare_linear_system
+    from protocharge.training.linearESPcharges.linear import prepare_linear_system
 
     project_root = _project_root()
     symmetry_buckets = load_symmetry_buckets(
@@ -33,16 +33,13 @@ def _load_p_linear() -> np.ndarray:
     )
     P = build_expansion_matrix(symmetry_buckets)
     atom_count = P.shape[0]
-    atom_labels = load_atom_labels_from_pdb(
-        project_root / "input" / "microstates" / "PPP" / "ppp.pdb"
-    )
     design_matrix, esp_values, _, _ = prepare_linear_system(
         project_root / "input" / "raw" / "resp.out",
         project_root / "input" / "raw" / "esp.xyz",
         atom_count,
     )
 
-    total_charge_target, total_labels = load_total_constraint(
+    total_charge_target = load_total_charge(
         project_root
         / "input"
         / "microstates"
@@ -50,7 +47,6 @@ def _load_p_linear() -> np.ndarray:
         / "charge-contraints"
         / "total_constraint.yaml"
     )
-    total_mask = build_total_constraint_mask(atom_labels, total_labels)
     bucket_constraints = load_bucket_constraints(
         project_root
         / "input"
@@ -59,7 +55,7 @@ def _load_p_linear() -> np.ndarray:
         / "charge-contraints"
         / "bucket_constraints.yaml"
     )
-    C, d = build_atom_constraint_system(P, total_charge_target, bucket_constraints, total_mask)
+    C, d = build_atom_constraint_system(P, total_charge_target, bucket_constraints)
     theta, _ = solve_least_squares_with_constraints(
         design_matrix, esp_values, P, C, d
     )
@@ -115,7 +111,7 @@ def main() -> None:
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("input/microstates/PPP/dou_new.mol2"),
+        default=microstate_output_root("PPP") / "dou_new.mol2",
         help="Output MOL2 file with swapped charges.",
     )
     args = parser.parse_args()

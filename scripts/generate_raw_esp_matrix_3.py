@@ -8,7 +8,7 @@ import numpy as np
 
 from protocharge.paths import ensure_results_dir
 
-from protocharge.linearESPcharges import prepare_linear_system
+from protocharge.training.linearESPcharges import prepare_linear_system
 
 
 def parse_args() -> argparse.Namespace:

@@ -5,9 +5,9 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from protocharge.linearESPcharges.linear import prepare_linear_system, explicit_solution
-from protocharge.resp_parser import ParseRespDotOut
-from protocharge.resp.resp import fit_resp_charges, load_geometry_symbols
+from protocharge.training.linearESPcharges.linear import prepare_linear_system, explicit_solution
+from protocharge.training.resp_parser import ParseRespDotOut
+from protocharge.training.resp.resp import fit_resp_charges, load_geometry_symbols
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "input" / "raw"
 RESP_OUT = DATA_DIR / "resp.out"

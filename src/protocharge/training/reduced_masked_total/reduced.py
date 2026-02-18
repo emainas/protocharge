@@ -13,7 +13,7 @@ try:  # SciPy >=1.14
 except ImportError:  # pragma: no cover
     from scipy.optimize.nonlin import NoConvergence  # type: ignore[attr-defined]
 
-from protocharge.multiconfresp.mcresp import (
+from protocharge.training.multiconfresp.mcresp import (
     ConfigurationSystem,
     _load_configuration_system,
     _microstate_root,
@@ -28,7 +28,7 @@ from protocharge.paths import (
     microstate_constraints_root,
     microstate_output_root,
 )
-from protocharge.twostepresp_masked_total.tsresp import (
+from protocharge.training.twostepresp_masked_total.tsresp import (
     build_atom_constraint_system,
     build_expansion_matrix,
     build_total_constraint_mask,

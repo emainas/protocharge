@@ -9,8 +9,8 @@ import numpy as np
 from protocharge.paths import ensure_results_dir, microstate_constraints_root
 import yaml
 
-from protocharge.linearESPcharges.linear import prepare_linear_system
-from protocharge.twostepresp_group_constraints.tsresp import (
+from protocharge.training.linearESPcharges.linear import prepare_linear_system
+from protocharge.training.twostepresp_group_constraints.tsresp import (
     build_atom_constraint_system,
     build_expansion_matrix,
     load_atom_labels_from_pdb,

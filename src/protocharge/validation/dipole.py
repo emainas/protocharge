@@ -6,9 +6,9 @@ from typing import Dict
 import numpy as np
 import yaml
 
-from protocharge.linearESPcharges.linear import explicit_solution, prepare_linear_system
-from protocharge.resp_parser import ParseRespDotOut
-from protocharge.dipole.dipole import (
+from protocharge.training.linearESPcharges.linear import explicit_solution, prepare_linear_system
+from protocharge.training.resp_parser import ParseRespDotOut
+from protocharge.utils.dipole import (
     BOHR_PER_ANG,
     _dipole_from_charges,
     _normalize_frame_index,
